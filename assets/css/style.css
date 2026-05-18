@@ -30,7 +30,6 @@ a {
     text-decoration: none;
 }
 
-/* Enhanced Scrollbar */
 ::-webkit-scrollbar {
     width: 6px;
     height: 6px;
@@ -50,9 +49,8 @@ a {
     background: #CBD5E1;
 }
 
-/* Firefox support */
 * {
-    scrollbar-width: thin;
+    /* scrollbar-width: thin; */
     scrollbar-color: #E2E8F0 transparent;
 }
 
@@ -60,6 +58,13 @@ a {
     color: var(--text-primary);
     background-color: #ffffff;
     font-family: "Mulish", sans-serif;
+    overflow-x: hidden;
+}
+
+html.no-scroll,
+body.no-scroll {
+    overflow: hidden !important;
+    height: 100% !important;
 }
 
 @keyframes fadeInUp {
@@ -74,7 +79,6 @@ a {
     }
 }
 
-/* Modal Styles */
 .modal-backdrop {
     position: fixed;
     top: 0;
@@ -135,34 +139,11 @@ a {
     display: block;
 }
 
-.modal-input {
-    width: 100%;
-    padding: 14px 20px;
-    border: 1px solid #E2E8F0;
-    border-radius: 12px;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.3s;
-}
-
-.modal-input:focus {
-    border-color: #003EB7;
-    box-shadow: 0 0 0 3px rgba(0, 62, 183, 0.1);
-}
-
-.main-container {
-    max-width: 1392px;
-    margin: 0 auto;
-    padding: 24px;
-}
-
-/* Layout Structure */
 .app-container {
     display: flex;
     min-height: 100vh;
 }
 
-/* Sidebar Styles */
 .sidebar {
     width: var(--sidebar-width);
     background-color: var(--dashboard-bg);
@@ -251,7 +232,6 @@ a {
     transition: scrollbar-color 0.3s;
 }
 
-/* Custom Scrollbar for Webkit */
 .nav-menu::-webkit-scrollbar {
     width: 5px;
 }
@@ -304,6 +284,7 @@ a {
 }
 
 @media (max-width: 992px) {
+
     .nav-group-title {
         opacity: 1 !important;
         height: auto !important;
@@ -367,8 +348,6 @@ a {
     margin-right: 0;
 }
 
-/* removed transform on hover */
-
 .nav-item.active {
     background-color: #F8F9FC;
     color: #334155;
@@ -413,7 +392,6 @@ a {
     margin-right: 8px;
 }
 
-/* Main Content Area */
 .main-content {
     margin-left: var(--sidebar-width);
     flex: 1 1 auto;
@@ -491,7 +469,6 @@ a {
     border-color: var(--primary-color);
 }
 
-
 .mobile-sidebar-toggle {
     display: none;
     background: none;
@@ -549,18 +526,6 @@ a {
     border-color: rgba(226, 232, 240, 0.8);
 }
 
-.top-bar-title {
-    font-size: 18px;
-    font-weight: 600;
-    animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
-}
-
-@media screen and (max-width: 992px) {
-    .top-bar-title {
-        display: none;
-    }
-}
-
 .top-bar-right {
     display: flex;
     align-items: center;
@@ -589,18 +554,6 @@ a {
     animation: bellJiggle 0.5s ease-in-out;
 }
 
-/* .notification-bell::after {
-    content: '';
-    position: absolute;
-    top: 10px;
-    right: 12px;
-    width: 6px;
-    height: 6px;
-    background-color: var(--danger-color);
-    border-radius: 50%;
-    border: 1px solid var(--white);
-} */
-
 .user-profile {
     display: flex;
     align-items: center;
@@ -621,22 +574,6 @@ a {
     transform: translateY(0);
 }
 
-.user-info {
-    text-align: right;
-    animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
-}
-
-.user-name {
-    font-size: 14px;
-    font-weight: 600;
-    display: block;
-}
-
-.user-role {
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
 .user-avatar {
     width: 40px;
     height: 40px;
@@ -644,7 +581,6 @@ a {
     object-fit: cover;
 }
 
-/* Dashboard Content */
 .dashboard-container {
     margin: 24px 24px 24px 48px;
     padding: 32px;
@@ -690,7 +626,6 @@ a {
     background-color: #002D87;
 }
 
-/* Stats Cards */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -730,115 +665,11 @@ a {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* Pickup Specific Stats Cards */
-.pickup-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 16px;
-    margin-bottom: 32px;
-}
-
-@media (min-width: 640px) {
-    .pickup-stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 20px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .pickup-stats-grid {
-        grid-template-columns: repeat(3, 1fr);
-        margin-bottom: 40px;
-    }
-}
-
-.pickup-stat-card {
-    background: #FFFFFF;
-    border-radius: 20px;
-    padding: 24px;
-    position: relative;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    border: 1px solid #F8FAFC;
-    transition: var(--transition);
-    min-width: 240px;
-    flex: 1;
-}
-
-.pickup-stat-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
-}
-
-.pickup-stat-icon-box {
-    width: 44px;
-    height: 44px;
-    border-radius: 12px;
-    background: #F8FAFC;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #003EB7;
-    font-size: 18px;
-    margin-bottom: 24px;
-}
-
-.pickup-stat-arrow {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: #F8FAFC;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #003EB7;
-    font-size: 12px;
-    transition: var(--transition);
-}
-
-.pickup-stat-card:hover .pickup-stat-arrow {
-    background: #003EB7;
-    color: #FFFFFF;
-}
-
-.pickup-stat-value {
-    font-size: 32px;
-    font-weight: 700;
-    color: #111827;
-    display: block;
-    margin-bottom: 4px;
-    font-family: 'Mulish', sans-serif;
-}
-
-.pickup-stat-label {
-    font-size: 14px;
-    font-weight: 500;
-    color: #64748B;
-}
-
-.badge-assigned {
-    background-color: #E1EFFF !important;
-    color: #003EB7 !important;
-}
-
 .badge-pending {
     background-color: #FFF1E7 !important;
     color: #F18721 !important;
 }
 
-.badge-active {
-    background-color: #E7F9ED !important;
-    color: #22C55E !important;
-}
-
-.badge-inactive {
-    background-color: #FFF1E7 !important;
-    color: #F18721 !important;
-}
-
-/* Pricing Page Styles */
 .pricing-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -847,6 +678,7 @@ a {
 }
 
 @media (min-width: 1024px) {
+
     .pricing-grid {
         grid-template-columns: 1.2fr 0.8fr;
         gap: 32px;
@@ -1036,7 +868,6 @@ a {
     color: var(--text-secondary);
 }
 
-/* Middle Section */
 .dashboard-grid-2 {
     display: grid;
     grid-template-columns: 1.6fr 1fr;
@@ -1093,12 +924,6 @@ a {
     color: #166534;
 }
 
-.badge-blue {
-    background-color: #DBEAFE;
-    color: #1E40AF;
-}
-
-/* Map Section */
 .map-container {
     height: 300px;
     background-color: #F1F5F9;
@@ -1188,15 +1013,6 @@ a {
     border-radius: 50%;
 }
 
-
-
-Pickup Management Styles .pickup-management-section {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-    margin-top: 24px;
-}
-
 .pickup-stats .stat-card {
     display: flex;
     flex-direction: column;
@@ -1221,13 +1037,6 @@ Pickup Management Styles .pickup-management-section {
     color: #9CA3AF;
 }
 
-.pickup-card {
-    border-radius: 20px;
-    overflow: hidden;
-    border: none;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-}
-
 .pickup-card .card-header {
     padding: 24px 32px;
     border-bottom: 1px solid #F1F5F9;
@@ -1239,50 +1048,6 @@ Pickup Management Styles .pickup-management-section {
     color: #111827;
 }
 
-.badge-unassigned {
-    background-color: #FEE2E2;
-    color: #EF4444;
-    padding: 10px 20px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-}
-
-.custom-table {
-    width: 100%;
-    min-width: 1100px;
-    border-collapse: separate;
-    border-spacing: 0;
-}
-
-.custom-table th,
-.custom-table td {
-    white-space: nowrap;
-}
-
-.custom-table thead th {
-    background-color: #F9FAFB;
-    padding: 16px 24px;
-    text-align: left;
-    font-size: 14px;
-    font-weight: 600;
-    color: #374151;
-    border-bottom: 1px solid #F1F5F9;
-}
-
-.custom-table tbody td {
-    padding: 20px 24px;
-    font-size: 14px;
-    color: #4B5563;
-    border-bottom: 1px solid #F1F5F9;
-    vertical-align: middle;
-}
-
-.custom-table tbody tr:last-child td {
-    border-bottom: none;
-}
-
-/* Pixel-Perfect Parcel Table & Filter Styles */
 .filter-tab {
     padding: 8px 20px;
     border-radius: 9999px;
@@ -1325,29 +1090,14 @@ Pickup Management Styles .pickup-management-section {
     color: #F18721;
 }
 
-.badge-approval-pending {
-    background-color: #F3E8FF;
-    color: #7E22CE;
-}
-
 .badge-delivered {
     background-color: #E1F9ED;
     color: #34C759;
 }
 
-.badge-partly-delivered {
-    background-color: #DBEAFE;
-    color: #1D4ED8;
-}
-
 .badge-cancelled {
     background-color: #FFE5E5;
     color: #FF3B30;
-}
-
-.badge-in-review {
-    background-color: #FEF3C7;
-    color: #D97706;
 }
 
 .badge-exceptional {
@@ -1356,39 +1106,6 @@ Pickup Management Styles .pickup-management-section {
     border: 1px solid #FCE7F3;
 }
 
-/* .btn-exceptional {
-    background: linear-gradient(135deg, #DB2777 0%, #F472B6 100%);
-    color: white;
-    box-shadow: 0 4px 15px rgba(219, 39, 119, 0.2);
-    border: none;
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.btn-exceptional:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(219, 39, 119, 0.3);
-    filter: brightness(1.1);
-}
-
-.filter-tab.exceptional-tab {
-    background-color: #FDF2F8;
-    color: #DB2777;
-    border: 1px solid #FCE7F3;
-}
-
-.filter-tab.exceptional-tab.active {
-    background: linear-gradient(135deg, #DB2777 0%, #F472B6 100%);
-    color: white;
-    border: none;
-    box-shadow: 0 4px 12px rgba(219, 39, 119, 0.3);
-} */
-
-
-/* Notification Dropdown */
 .notification-bell {
     position: relative;
 }
@@ -1417,7 +1134,6 @@ Pickup Management Styles .pickup-management-section {
     transform: translateY(0);
 }
 
-/* Arrow for dropdown */
 .notification-dropdown::before {
     content: '';
     position: absolute;
@@ -1550,7 +1266,6 @@ Pickup Management Styles .pickup-management-section {
     text-decoration: underline;
 }
 
-/* Profile Dropdown */
 .user-profile {
     position: relative;
 }
@@ -1607,7 +1322,6 @@ Pickup Management Styles .pickup-management-section {
     color: #475569;
 }
 
-/* Active/My Account Item */
 .profile-item.active {
     background: #EBF5FF;
 }
@@ -1632,7 +1346,6 @@ Pickup Management Styles .pickup-management-section {
     color: #1E293B;
 }
 
-/* Pagination Styles */
 .pagination-btn {
     display: inline-flex;
     align-items: center;
@@ -1703,8 +1416,6 @@ Pickup Management Styles .pickup-management-section {
     box-shadow: 0 4px 12px rgba(0, 62, 183, 0.25);
 }
 
-
-
 .consignments-table td {
     padding: 18px 24px;
     vertical-align: middle;
@@ -1730,54 +1441,9 @@ Pickup Management Styles .pickup-management-section {
     color: #00306B;
 }
 
-.status-badge {
-    padding: 6px 16px;
-    border-radius: 50px;
-    font-size: 13px;
-    font-weight: 600;
-    display: inline-block;
-}
-
 .status-pending {
     background-color: #FEF2F2;
     color: #EF4444;
-}
-
-.status-assigned {
-    background-color: #FFFBEB;
-    color: #F59E0B;
-}
-
-.status-picked {
-    background-color: #ECFDF5;
-    color: #10B981;
-}
-
-.btn-action {
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: white;
-    border: 1.5px solid #003EB7;
-    color: #003EB7;
-}
-
-.btn-action:hover {
-    background-color: #003EB7;
-    color: white;
-}
-
-.ai-assignment-card {
-    margin-top: 8px;
-}
-
-.rider-info {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
 
 .rider-name {
@@ -1785,44 +1451,19 @@ Pickup Management Styles .pickup-management-section {
     color: #111827;
 }
 
-.badge-recommended {
-    font-size: 12px;
-    font-weight: 600;
-    color: #10B981;
-}
-
-.zone-match {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-}
-
-.zone-match i {
-    font-size: 12px;
-}
-
 .fa-check {
     color: #10B981;
 }
 
-.fa-caret-up {
-    color: #6B7280;
-}
-
-/* Responsive Table */
-.table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-}
-
 @media (max-width: 1200px) {
+
     .stats-grid.pickup-stats {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
 @media (max-width: 640px) {
+
     .stats-grid.pickup-stats {
         grid-template-columns: 1fr;
     }
@@ -1833,24 +1474,6 @@ Pickup Management Styles .pickup-management-section {
         gap: 12px;
     }
 }
-
-/* Parcel Detail Styles - Pixel Perfect */
-.detail-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 24px;
-    margin-top: 24px;
-}
-
-.detail-card {
-    background: var(--white);
-    border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
-    border: 1px solid #E2E8F0;
-}
-
 
 .detail-card .card-header {
     display: flex;
@@ -1868,12 +1491,6 @@ Pickup Management Styles .pickup-management-section {
     color: var(--text-primary);
 }
 
-/* Timeline */
-.timeline-body {
-    position: relative;
-    padding-left: 30px;
-}
-
 .timeline-body::before {
     content: '';
     position: absolute;
@@ -1884,328 +1501,16 @@ Pickup Management Styles .pickup-management-section {
     background-color: #E2E8F0;
 }
 
-.timeline-item {
-    position: relative;
-    margin-bottom: 30px;
-}
-
-.timeline-item:last-child {
-    margin-bottom: 0;
-}
-
-.timeline-dot {
-    position: absolute;
-    left: -30px;
-    top: 4px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background-color: #CBD5E1;
-    border: 3px solid var(--white);
-    z-index: 1;
-}
-
-.timeline-item.success .timeline-dot {
-    background-color: #10B981;
-}
-
 .timeline-item.warning .timeline-dot {
     background-color: #F59E0B;
-}
-
-.timeline-item.pending .timeline-dot {
-    background-color: #CBD5E1;
-}
-
-.timeline-content h4 {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 4px;
-}
-
-.timeline-content p {
-    font-size: 13px;
-    color: var(--text-secondary);
-}
-
-/* Proof Grid */
-.proof-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-}
-
-.proof-box {
-    background-color: #F8FAFC;
-    border-radius: 10px;
-    padding: 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border: 1px solid #F1F5F9;
-}
-
-.proof-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.proof-value {
-    font-size: 13px;
-    color: #94A3B8;
-}
-
-/* Info List */
-.info-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.info-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.info-item .label {
-    font-size: 14px;
-    color: #64748B;
-}
-
-.info-item .value {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-}
-
-.info-item.total {
-    margin-top: 8px;
-    padding-top: 16px;
-    border-top: 1px dotted #E2E8F0;
-}
-
-.info-item.total .value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--primary-color);
-}
-
-/* Rider Section */
-.rider-profile-section {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.rider-info-main {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-
-.rider-avatar-large {
-    width: 54px;
-    height: 54px;
-    border-radius: 12px;
-    object-fit: cover;
-}
-
-.rider-name-row {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.rider-name-row h4 {
-    font-size: 16px;
-    font-weight: 700;
-}
-
-.rider-status-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background-color: #CBD5E1;
 }
 
 .rider-status-dot.active {
     background-color: #10B981;
 }
 
-.rider-status-text {
-    font-size: 12px;
-    font-weight: 600;
-    color: #64748B;
-}
-
-.rider-zone {
-    font-size: 13px;
-    color: #94A3B8;
-}
-
-.rider-contact-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 16px 0;
-    border-top: 1px solid #F1F5F9;
-}
-
-.contact-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 12px;
-    color: #64748B;
-}
-
-.contact-item i {
-    color: #94A3B8;
-}
-
-.btn-reassign {
-    background-color: #EFF6FF;
-    color: var(--primary-color);
-    border: none;
-    width: 100%;
-    justify-content: center;
-}
-
-.btn-reassign:hover {
-    background-color: #DBEAFE;
-}
-
-/* Responsive Parcel Detail */
-@media (max-width: 1200px) {
-    .detail-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .detail-right {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-    }
-}
-
-@media (max-width: 768px) {
-    .detail-right {
-        grid-template-columns: 1fr;
-    }
-
-    .proof-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .rider-contact-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Shipment Page Styles - Pixel Perfect */
-.shipment-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-top: 8px;
-}
-
-.shipment-card {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid #F1F5F9;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-}
-
-.shipment-card-custom {
-    background: none !important;
-    box-shadow: none !important;
-    padding: 0 !important;
-    border: none !important;
-}
-
-.shipment-card:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.shipment-card:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.shipment-card:nth-child(3) {
-    animation-delay: 0.3s;
-}
-
-.shipment-card:nth-child(4) {
-    animation-delay: 0.4s;
-}
-
-.shipment-card .charge-list {
-    background: white;
-    border-radius: 16px;
-    padding: 32px;
-    border: 1px solid #F1F5F9;
-}
-
-
-
-.shipment-card .charge-list h3 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #111827;
-    margin-bottom: 24px;
-}
-
-.form-group {
-    margin-bottom: 24px;
-}
-
-.form-group label {
-    display: block;
-    font-size: 13px;
-    font-weight: 600;
-    color: #374151;
-    margin-bottom: 10px;
-}
-
-.shipment-input,
-.shipment-select {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid #E5E7EB;
-    font-size: 14px;
-    color: #111827;
-    background: white;
-    transition: all 0.2s ease;
-}
-
-.shipment-input:focus,
-.shipment-select:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(0, 62, 183, 0.1);
-}
-
 .shipment-input::placeholder {
     color: #9CA3AF;
-}
-
-.input-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-}
-
-/* Custom Select Arrow */
-.custom-select-wrapper {
-    position: relative;
 }
 
 .custom-select-wrapper::after {
@@ -2221,93 +1526,6 @@ Pickup Management Styles .pickup-management-section {
     font-size: 12px;
 }
 
-.shipment-select {
-    appearance: none;
-    cursor: pointer;
-}
-
-/* Charge Card */
-.charge-list {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.charge-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 14px;
-    color: #6B7280;
-}
-
-.charge-item .value {
-    font-weight: 600;
-    color: #111827;
-}
-
-.charge-item.total {
-    padding-top: 16px;
-    border-top: 1px solid #F1F5F9;
-    margin-top: 8px;
-    color: #111827;
-    font-weight: 700;
-}
-
-.charge-item.total .value {
-    font-size: 16px;
-}
-
-/* Bottom Actions */
-.bottom-actions {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 32px;
-}
-
-.btn-preview-label {
-    background: #003EB7;
-    color: white;
-    border: none;
-    padding: 14px 40px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-preview-label:hover {
-    background: #002D87;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 62, 183, 0.2);
-}
-
-.btn-create-shipment {
-    background: transparent;
-    border: 1.5px solid #003EB7;
-    color: #003EB7;
-    padding: 14px 40px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.btn-create-shipment:hover {
-    background: #F0F4FF;
-    transform: translateY(-2px);
-}
-
-@media (max-width: 1200px) {
-    .shipment-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Chart Section */
 .chart-toggle {
     display: flex;
     background-color: #F1F5F9;
@@ -2373,6 +1591,7 @@ Pickup Management Styles .pickup-management-section {
 }
 
 @media (max-width: 480px) {
+
     .chart-label {
         font-size: 8px;
         margin-top: 8px;
@@ -2402,7 +1621,6 @@ Pickup Management Styles .pickup-management-section {
     color: var(--text-secondary);
 }
 
-/* Bottom Section */
 .dashboard-grid-bottom {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2443,7 +1661,6 @@ Pickup Management Styles .pickup-management-section {
     color: var(--text-secondary);
 }
 
-/* Riders List */
 .rider-item {
     display: flex;
     align-items: center;
@@ -2491,33 +1708,19 @@ Pickup Management Styles .pickup-management-section {
     font-size: 10px;
 }
 
-/* Responsive */
-/* @media (max-width: 1400px) {
-    .dashboard-container {
-        margin-left: 24px;
-        width: calc(100% - 48px);
-    }
-
-    .top-bar {
-        margin-left: 24px;
-    }
-} */
-
 @media (max-width: 1200px) {
+
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .shipment-grid {
-        grid-template-columns: 1fr;
     }
 }
 
 @media (max-width: 992px) {
+
     .sidebar {
         left: -300px;
         /* Hide completely */
-        height: 100vh;
+        height: 100%;
         top: 0;
         border-radius: 0;
         box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);
@@ -2546,7 +1749,6 @@ Pickup Management Styles .pickup-management-section {
     }
 }
 
-/* Dashboard Global Header & Buttons */
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -2556,16 +1758,14 @@ Pickup Management Styles .pickup-management-section {
     gap: 16px;
 }
 
-.header-left-content h1,
-.header-left-content-content h1 {
+.header-left-content h1 {
     font-size: 28px;
     font-weight: 700;
     color: #1E293B;
     margin-bottom: 4px;
 }
 
-.header-left-content p,
-.header-left-content-content p {
+.header-left-content p {
     color: #64748B;
     font-size: 14px;
 }
@@ -2576,52 +1776,8 @@ Pickup Management Styles .pickup-management-section {
     gap: 12px;
 }
 
-.btn {
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    border: 1px solid transparent;
-}
-
-.btn-outline {
-    background: transparent;
-    border: 1px solid #003EB7;
-    color: #003EB7;
-}
-
-.btn-outline:hover {
-    background-color: #f0f4ff;
-}
-
-.btn-primary {
-    background-color: #003EB7;
-    color: #ffffff;
-}
-
-.btn-primary:hover {
-    background-color: #002D87;
-    box-shadow: 0 4px 12px rgba(0, 62, 183, 0.2);
-}
-
-.btn-primary i {
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border: 1.5px solid rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    padding: 2px;
-}
-
 @media (max-width: 992px) {
+
     .sidebar-toggle {
         display: none;
     }
@@ -2641,13 +1797,10 @@ Pickup Management Styles .pickup-management-section {
     .dashboard-grid-bottom {
         grid-template-columns: 1fr;
     }
-
-    .user-info {
-        display: none;
-    }
 }
 
 @media (max-width: 768px) {
+
     .dashboard-header {
         flex-direction: column;
         align-items: flex-start;
@@ -2660,17 +1813,6 @@ Pickup Management Styles .pickup-management-section {
 
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .pagination-footer {
-        flex-direction: column;
-        gap: 20px;
-        text-align: center;
-    }
-
-    .filter-toolbar {
-        flex-direction: column;
-        align-items: stretch;
     }
 
     .search-box {
@@ -2688,12 +1830,9 @@ Pickup Management Styles .pickup-management-section {
 }
 
 @media (max-width: 576px) {
+
     .stats-grid {
         grid-template-columns: 1fr;
-    }
-
-    .top-bar-title {
-        font-size: 16px;
     }
 
     .user-profile {
@@ -2707,62 +1846,23 @@ Pickup Management Styles .pickup-management-section {
     .stat-value {
         font-size: 24px;
     }
-
-    .input-row {
-        grid-template-columns: 1fr;
-    }
-
-    .bottom-actions {
-        flex-direction: column;
-    }
-
-    .bottom-actions button {
-        width: 100%;
-    }
 }
 
-/* Tablet/Mobile Table Scroll */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    margin-bottom: 24px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-}
-
-.parcels-table {
-    min-width: 900px;
-}
-
-/* Overlay for mobile sidebar */
 .sidebar-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: 2000;
     display: none;
-    backdrop-filter: blur(4px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
 }
 
 .sidebar-overlay.active {
     display: block;
-}
-
-/* Parcels Page Component Styles */
-.tab-pill button {
-    padding: 10px 24px;
-    border-radius: 50px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #003EB7;
-    background-color: #EEF2FF;
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
 }
 
 .tab-pill.active button {
@@ -2772,22 +1872,6 @@ Pickup Management Styles .pickup-management-section {
 
 .tab-pill:not(.active) button:hover {
     background-color: #DBEAFE;
-}
-
-.btn-export {
-    background-color: #003EB7;
-    color: #ffffff;
-    padding: 12px 32px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    border: none;
-}
-
-.btn-export:hover {
-    background-color: #002D87;
-    box-shadow: 0 4px 12px rgba(0, 62, 183, 0.2);
 }
 
 .badge-status {
@@ -2822,23 +1906,6 @@ Pickup Management Styles .pickup-management-section {
 .status-returned {
     background-color: #FEE2E2;
     color: #B91C1C;
-}
-
-.btn-view {
-    padding: 6px 20px;
-    border-radius: 50px;
-    border: 1.5px solid #003EB7;
-    background-color: transparent;
-    color: #003EB7;
-    font-weight: 600;
-    font-size: 13px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-view:hover {
-    background-color: #003EB7;
-    color: #ffffff;
 }
 
 .pagination-circle-btn {
@@ -2877,40 +1944,6 @@ Pickup Management Styles .pickup-management-section {
     flex-shrink: 0 !important;
 }
 
-/* Consignment Summary View Styles */
-.summary-view-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    animation: fadeIn 0.5s ease-out;
-}
-
-.summary-view-header h2 {
-    font-size: 32px;
-    font-weight: 700;
-    color: #111827;
-    letter-spacing: -0.02em;
-}
-
-.btn-all-consignments {
-    background: #003EB7;
-    color: white;
-    padding: 12px 28px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: none;
-    cursor: pointer;
-}
-
-.btn-all-consignments:hover {
-    background: #002D87;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 62, 183, 0.2);
-}
-
 .summary-table-container {
     background: white;
     border-radius: 20px;
@@ -2926,14 +1959,12 @@ Pickup Management Styles .pickup-management-section {
     border-radius: 20px;
 }
 
-.summary-table,
 .consignments-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
 }
 
-.summary-table th,
 .consignments-table th {
     background: var(--dashboard-bg) !important;
     padding: 18px 24px !important;
@@ -2943,18 +1974,15 @@ Pickup Management Styles .pickup-management-section {
     color: #374151;
 }
 
-.summary-table th:first-child,
 .consignments-table th:first-child {
     border-radius: 12px 0 0 12px;
 }
 
-.summary-table th:last-child,
 .consignments-table th:last-child {
     border-radius: 0 12px 12px 0;
     text-align: right;
 }
 
-.summary-table td,
 .consignments-table td {
     padding: 20px 24px !important;
     border-bottom: 1px solid #F1F5F9 !important;
@@ -2963,52 +1991,14 @@ Pickup Management Styles .pickup-management-section {
     font-weight: 500;
 }
 
-.summary-table tr:last-child td,
 .consignments-table tr:last-child td {
     border-bottom: none !important;
 }
 
-.summary-table tr td:last-child,
 .consignments-table tr td:last-child {
     text-align: right;
 }
 
-.view-link {
-    color: #003EB7;
-    font-weight: 700;
-    text-decoration: underline;
-    transition: color 0.2s;
-}
-
-.view-link:hover {
-    color: #002D87;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Moved from HTML files */
-
-/* Payment Details Page Styles */
 .payment-section {
     font-family: 'Mulish', sans-serif;
 }
@@ -3021,13 +2011,6 @@ button {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
-@media (max-width: 640px) {
-    .text-\[56px\] {
-        font-size: 40px;
-    }
-}
-
-/* Track Parcel Page Styles */
 #date-modal .modal-container {
     border: 1px solid #F1F5F9;
 }
@@ -3060,7 +2043,6 @@ button {
     opacity: 1;
 }
 
-/* Pagination Styles */
 .pagination-btn {
     padding: 8px 20px;
     border: 1px solid #E2E8F0;
@@ -3099,7 +2081,6 @@ button {
     border-color: #E2E8F0;
 }
 
-/* Badge Styles */
 .badge {
     padding: 6px 14px;
     border-radius: 50px;
@@ -3124,32 +2105,11 @@ button {
     color: #EF4444;
 }
 
-.badge-approval-pending {
-    background-color: #EFF6FF;
-    color: #3B82F6;
-}
-
-.badge-partly-delivered {
-    background-color: #F5F3FF;
-    color: #8B5CF6;
-}
-
-.badge-in-review {
-    background-color: #FFF7ED;
-    color: #F97316;
-}
-
 .badge-exceptional {
     background-color: #F8FAFC;
     color: #64748B;
 }
 
-.badge-assigned {
-    background-color: #F0F9FF;
-    color: #0284C7;
-}
-
-/* Existing Cancellation Requests Page Styles */
 .cancellation-filter-tab {
     padding: 10px 24px;
     border-radius: 50px;
@@ -3222,36 +2182,6 @@ button {
     color: #94A3B8;
 }
 
-.btn-action-accept {
-    background-color: #ECFDF5;
-    color: #10B981 !important;
-    padding: 8px 24px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-action-accept:hover {
-    background-color: #D1FAE5;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
-}
-
-.details-view-link {
-    color: #003EB7;
-    font-weight: 600;
-    text-decoration: underline;
-    font-size: 14px;
-    transition: color 0.2s;
-}
-
-.details-view-link:hover {
-    color: #002D87;
-}
-
 .cancellation-table-container {
     background: white;
     border-radius: 24px;
@@ -3285,11 +2215,6 @@ button {
     border-bottom: none !important;
 }
 
-/* ==========================================================================
-   PERFECTLY RESPONSIVE HEADER & TOP BAR STYLES
-   ========================================================================== */
-
-/* Dropdowns Show States on Mobile */
 .notification-dropdown.show-mobile,
 .profile-dropdown.show-mobile {
     visibility: visible !important;
@@ -3297,8 +2222,8 @@ button {
     transform: translateY(0) !important;
 }
 
-/* Stick to the top margin on smaller viewports */
 @media (max-width: 992px) {
+
     .top-bar {
         top: 16px !important;
         margin: 16px !important;
@@ -3307,52 +2232,48 @@ button {
     }
 }
 
-/* Tablet & Mobile Responsiveness for Header Content */
 @media (max-width: 768px) {
-    /* Reduce spacing inside top bar right */
+
     .top-bar-right {
         gap: 8px !important;
     }
 
-    /* Make balance widget more compact */
     .top-bar .balance-widget {
         padding-left: 12px !important;
         padding-right: 4px !important;
         gap: 8px !important;
     }
-    
+
     .top-bar .balance-widget span {
         font-size: 13px !important;
     }
-    
+
     .top-bar .balance-widget .details-btn {
         padding: 6px 14px !important;
         font-size: 11px !important;
     }
 
-    /* Reduce header icon sizes (EN, Notification Bell, User Avatar) */
-    .top-bar .header-icon, 
+    .top-bar .header-icon,
     .top-bar .notification-bell {
         width: 38px !important;
         height: 38px !important;
         font-size: 12px !important;
     }
-    
+
     .top-bar .notification-bell svg {
         width: 18px !important;
         height: 18px !important;
     }
-    
+
     .top-bar .user-profile {
         padding: 0 !important;
     }
-    
+
     .top-bar .user-avatar {
         width: 38px !important;
         height: 38px !important;
     }
-    
-    /* Super Premium Expandable Search Bar on Tablet/Mobile */
+
     .top-bar .search-box {
         width: 38px !important;
         height: 38px !important;
@@ -3365,7 +2286,7 @@ button {
         overflow: hidden;
         border-color: #E2E8F0 !important;
     }
-    
+
     .top-bar .search-box i {
         margin: 0 !important;
         font-size: 14px;
@@ -3374,7 +2295,7 @@ button {
         align-items: center;
         justify-content: center;
     }
-    
+
     .top-bar .search-box input {
         width: 0 !important;
         padding: 0 !important;
@@ -3382,8 +2303,7 @@ button {
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
         margin: 0 !important;
     }
-    
-    /* Expand search bar when clicked or focused */
+
     .top-bar .search-box:focus-within {
         width: 200px !important;
         border-radius: 50px !important;
@@ -3391,7 +2311,7 @@ button {
         border-color: var(--primary-color) !important;
         box-shadow: 0 4px 20px rgba(0, 62, 183, 0.08) !important;
     }
-    
+
     .top-bar .search-box:focus-within input {
         width: 100% !important;
         opacity: 1 !important;
@@ -3399,13 +2319,12 @@ button {
     }
 }
 
-/* Extra Mobile Responsiveness */
 @media (max-width: 640px) {
-    /* Hide balance Details button to fit all icons perfectly */
+
     .top-bar .balance-widget .details-btn {
         display: none !important;
     }
-    
+
     .top-bar .balance-widget {
         padding-right: 12px !important;
         height: 38px !important;
@@ -3413,6 +2332,7 @@ button {
 }
 
 @media (max-width: 576px) {
+
     .top-bar {
         margin: 12px !important;
         top: 12px !important;
@@ -3421,21 +2341,20 @@ button {
         border-radius: 16px !important;
     }
 
-    /* Expand search bar slightly less on narrow screens to avoid overlapping balance widget */
     .top-bar .search-box:focus-within {
         width: 140px !important;
     }
-    
-    /* Make dropdowns fit narrow viewports beautifully */
+
     .notification-dropdown {
         width: 300px !important;
         right: -80px !important;
     }
-    
+
     .notification-dropdown::before {
-        right: 93px !important; /* Re-align the dropdown pointer arrow to point to the bell */
+        right: 93px !important;
+        /* Re-align the dropdown pointer arrow to point to the bell */
     }
-    
+
     .profile-dropdown {
         width: 260px !important;
         right: -10px !important;
@@ -3443,22 +2362,18 @@ button {
 }
 
 @media (max-width: 480px) {
-    /* Slide in language switcher or bell cleanly */
+
     .top-bar-right {
         gap: 6px !important;
     }
 }
 
 @media (max-width: 360px) {
-    /* Hide EN translation switcher on extremely narrow devices (320px) to prevent any overflow */
+
     .top-bar .header-icon:not(.notification-bell) {
         display: none !important;
     }
 }
-
-/* ==========================================================================
-   SIDEBAR MOBILE UTILITIES
-   ========================================================================== */
 
 .sidebar-mobile-utilities {
     display: none;
@@ -3471,12 +2386,11 @@ button {
 }
 
 @media (max-width: 992px) {
-    /* Show mobile utilities inside the sidebar drawer */
+
     .sidebar-mobile-utilities {
         display: flex !important;
     }
-    
-    /* Make the cloned items inside the sidebar fit the sidebar width beautifully */
+
     .sidebar-mobile-utilities .search-box {
         max-width: 100% !important;
         width: 100% !important;
@@ -3488,13 +2402,13 @@ button {
         display: flex !important;
         align-items: center !important;
     }
-    
+
     .sidebar-mobile-utilities .search-box i {
         font-size: 14px !important;
         color: #94A3B8 !important;
         margin: 0 !important;
     }
-    
+
     .sidebar-mobile-utilities .search-box input {
         width: 100% !important;
         opacity: 1 !important;
@@ -3506,7 +2420,7 @@ button {
         font-size: 13.5px !important;
         color: #64748B !important;
     }
-    
+
     .sidebar-mobile-utilities .balance-widget {
         width: 100% !important;
         background-color: #FFFFFF !important;
@@ -3519,16 +2433,17 @@ button {
         gap: 12px !important;
         height: auto !important;
     }
-    
+
     .sidebar-mobile-utilities .balance-widget span {
         font-size: 14px !important;
         font-weight: 700 !important;
         color: #1E293B !important;
         margin-left: 8px !important;
     }
-    
+
     .sidebar-mobile-utilities .balance-widget .details-btn {
-        display: block !important; /* Always show details button inside the sidebar menu */
+        display: block !important;
+        /* Always show details button inside the sidebar menu */
         background-color: #003EB7 !important;
         color: #ffffff !important;
         border-radius: 50px !important;
@@ -3539,11 +2454,11 @@ button {
         cursor: pointer !important;
         transition: all 0.2s !important;
     }
-    
+
     .sidebar-mobile-utilities .balance-widget .details-btn:hover {
         background-color: #002D87 !important;
     }
-    
+
     .sidebar-mobile-utilities .header-icon {
         width: 100% !important;
         height: 44px !important;
@@ -3559,13 +2474,12 @@ button {
         cursor: pointer !important;
         gap: 8px !important;
     }
-    
+
     .sidebar-mobile-utilities .header-icon i {
         font-size: 14px !important;
         color: #8E9BAE !important;
     }
 
-    /* Hide the original items in the top-bar header on mobile/tablet viewports */
     .top-bar .search-box,
     .top-bar .balance-widget,
     .top-bar .header-icon:not(.notification-bell) {

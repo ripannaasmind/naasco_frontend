@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Naascco - Create Parcel</title>
+    <title>Naascco - Consignments</title>
     <link rel="stylesheet" href="../assets/css/tailwind.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -446,164 +446,394 @@
                 </header>
 
                 <!-- Dashboard Body -->
-                <div class="dashboard-container">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 class="text-[28px] font-bold text-[#111827] tracking-tight">Create Parcel</h1>
-                            <p class="text-sm text-[#64748B] mt-1">Tracking ID auto-generated on submit</p>
-                        </div>
-                        <div class="relative">
-                            <select
-                                class="appearance-none bg-white border border-[#E2E8F0] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-[#475569] cursor-pointer hover:border-[#003EB7] transition-all outline-none min-w-[160px]">
-                                <option>Home Delivery</option>
-                                <option>Point Delivery</option>
-                            </select>
-                            <i
-                                class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
-                        </div>
-                    </div>
-
-                    <!-- Service Tabs -->
-                    <div class="bg-white rounded-2xl p-2 mb-8 flex gap-2 border border-[#F1F5F9] shadow-sm">
-                        <button
-                            class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all bg-[#003EB7] text-white shadow-lg shadow-blue-100">Regular</button>
-                        <button
-                            class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all text-[#64748B] hover:bg-slate-50">Express</button>
-                        <button
-                            class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all text-[#64748B] hover:bg-slate-50">Pick
-                            & Drop</button>
-                    </div>
-
-                    <!-- Form Grid -->
-                    <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Left Column: Recipient Details -->
-                        <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6">
-                            <div>
-                                <label class="block text-sm font-bold text-[#1E293B] mb-2.5">Auto Fraud check</label>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Phone</label>
-                                        <input type="text" placeholder="Type Phone Number"
-                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                                    </div>
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Name</label>
-                                        <input type="text" placeholder="Type Recipient Name"
-                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Address
-                                    (AI auto-corrects)</label>
-                                <input type="text" placeholder="House 12, Road 7, Sector 3, Uttara, Dhaka"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">District</label>
-                                    <div class="relative">
-                                        <select
-                                            class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
-                                            <option>Dhaka</option>
-                                            <option>Chittagong</option>
-                                        </select>
-                                        <i
-                                            class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Thana
-                                        (Auto-detected)</label>
-                                    <input type="text" placeholder="Uttara Zone"
-                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                                </div>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Alternative
-                                    Phone</label>
-                                <input type="text" placeholder="Type Alternative Phone"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Recipient
-                                    Email</label>
-                                <input type="email" placeholder="Type Recipient Email"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
+                <div class="dashboard-container px-10 py-8 bg-[#F9FAFB] min-h-screen">
+                    <!-- Cancellation Details Card View -->
+                    <div class="max-w-7xl mx-auto">
+                        <!-- Top Header Title -->
+                        <div class="mb-8">
+                            <h1 class="text-[28px] font-bold text-[#1E293B] tracking-tight">Parcel ID - #24333553</h1>
                         </div>
 
-                        <!-- Right Column: Parcel Details -->
+                        <!-- Details Main Card -->
                         <div
-                            class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6 flex flex-col">
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">COD
-                                    Amount</label>
-                                <input type="text" placeholder="Type Cash on Delivery Amount"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
+                            class="bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 lg:p-10 mb-8 border border-[#F1F5F9]">
+                            <!-- Main 2-column info grid -->
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                                <!-- Left Column: Metadata & Customer Info -->
+                                <div class="flex flex-col gap-6">
+                                    <!-- Tracking Metadata -->
+                                    <div class="flex flex-col gap-2.5">
+                                        <div class="text-[13px] text-[#94A3B8] font-medium">Mar 26, 2024 04:31 pm</div>
+                                        <div class="text-[14px] text-[#64748B]">Id : <span
+                                                class="font-bold text-[#1E293B] ml-1">78764916</span></div>
+                                        <div class="text-[14px] text-[#64748B]">Invoice : <span
+                                                class="font-bold text-[#1E293B] ml-1">63626</span></div>
+                                        <div class="text-[14px] text-[#64748B]">Tracking Code : <span
+                                                class="font-bold text-[#1E293B] ml-1">TRK5821A9</span></div>
+                                        <div class="text-[14px] text-[#64748B] flex items-center">
+                                            Tracking Link :
+                                            <span
+                                                class="text-[#003EB7] font-semibold underline underline-offset-2 ml-1 cursor-pointer">http://steadfast.com.bd/etrtty/tgftgyt</span>
+                                            <button
+                                                class="ml-2 text-[#94A3B8] hover:text-[#003EB7] transition-colors focus:outline-none"
+                                                title="Copy Link"
+                                                onclick="navigator.clipboard.writeText('http://steadfast.com.bd/etrtty/tgftgyt'); alert('Link copied to clipboard!');">
+                                                <i class="far fa-copy text-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
 
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Invoice</label>
-                                <input type="text" placeholder="Type Invoice (If any)"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Item
-                                    Description</label>
-                                <textarea placeholder="Type Item Description (max. 400 Chars)" rows="3"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Note</label>
-                                <textarea placeholder="Type Note (max. 400 Chars)" rows="3"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Weight
-                                        (KG)</label>
-                                    <input type="number" value="0"
-                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                    <!-- Customer Details -->
+                                    <div class="flex flex-col gap-3 pt-6 border-t border-[#F1F5F9]">
+                                        <div class="text-[14px] text-[#64748B] font-medium">Name: <span
+                                                class="text-[#1E293B] font-semibold ml-1">Rahim Uddin</span></div>
+                                        <div class="text-[14px] text-[#64748B] font-medium">Address : <span
+                                                class="text-[#1E293B] font-semibold ml-1">Dhaka, Bangladesh</span></div>
+                                        <div class="text-[14px] text-[#64748B] font-medium">Police Station : <span
+                                                class="text-[#1E293B] font-semibold ml-1">Dhanmondi</span></div>
+                                        <div class="text-[14px] text-[#64748B] font-medium flex items-center">
+                                            Phone : <span class="text-[#1E293B] font-semibold ml-1">01654973769</span>
+                                            <a href="tel:01654973769"
+                                                class="bg-[#003EB7] text-white hover:bg-[#002D87] text-[11px] font-bold px-3.5 py-1.5 rounded-full ml-3 transition-colors shadow-sm">Call</a>
+                                        </div>
+                                        <div class="text-[14px] text-[#64748B] font-medium flex items-center">
+                                            Alternative Phone : <span
+                                                class="text-[#1E293B] font-semibold ml-1">01554373779</span>
+                                            <a href="tel:01554373779"
+                                                class="bg-[#003EB7] text-white hover:bg-[#002D87] text-[11px] font-bold px-3.5 py-1.5 rounded-full ml-3 transition-colors shadow-sm">Call</a>
+                                        </div>
+                                        <div class="text-[14px] text-[#64748B] font-medium">Email : <span
+                                                class="text-[#1E293B] font-semibold ml-1">N/A</span></div>
+                                        <div class="text-[14px] text-[#64748B] font-medium">Entry By : <span
+                                                class="text-[#1E293B] font-semibold ml-1"></span></div>
+                                    </div>
                                 </div>
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Alternative
-                                        Phone</label>
-                                    <input type="text" placeholder="Type Alternative Phone"
-                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+
+                                <!-- Right Column: Approved Info, COD, Actions, Statuses -->
+                                <div class="flex flex-col lg:items-end lg:text-right gap-4">
+                                    <div class="text-[14px] text-[#64748B]">Created at : <span
+                                            class="font-bold text-[#1E293B] ml-1">Mar 27, 2024</span></div>
+                                    <div class="text-[14px] text-[#64748B]">Approved at : <span
+                                            class="font-bold text-[#1E293B] ml-1">Mar 27, 2024</span></div>
+                                    <div class="text-[14px] text-[#64748B]">Weight : <span
+                                            class="font-bold text-[#1E293B] ml-1">0.2KG</span></div>
+                                    <div class="text-[14px] text-[#64748B]">Total Lot : <span
+                                            class="font-bold text-[#1E293B] ml-1">1</span></div>
+
+                                    <!-- COD Details -->
+                                    <div class="text-[15px] font-semibold text-[#475569] mt-2">
+                                        COD: <span class="text-[24px] font-extrabold text-[#1E293B] ml-1">$ 720</span>
+                                    </div>
+
+                                    <!-- Status Pill -->
+                                    <div class="mt-1">
+                                        <span
+                                            class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[12px] font-bold tracking-wide bg-[#DCFCE7] text-[#16A34A]">Delivered</span>
+                                    </div>
+
+                                    <div class="text-[14px] text-[#64748B] mt-3">
+                                        Delivery Charge : <span class="font-extrabold text-[#1E293B] ml-1">75 TK</span>
+                                    </div>
+
+                                    <!-- Create Return Request Button -->
+                                    <div class="mt-2">
+                                        <button
+                                            class="bg-[#003EB7] hover:bg-[#002D87] text-white text-[12px] font-extrabold px-5 py-3 rounded-full transition-all shadow-[0_4px_12px_rgba(0,62,183,0.15)] hover:shadow-[0_6px_20px_rgba(0,62,183,0.25)] focus:outline-none">
+                                            Pay With Bkash
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mt-auto pt-6">
-                                <button type="submit"
-                                    class="w-full bg-[#003EB7] text-white rounded-xl py-4 font-bold text-base hover:bg-[#002D87] shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Submit</button>
+                            <!-- Wide Light Blue Banner Dividers and content -->
+                            <div class="flex flex-col gap-6 mt-10">
+                                <!-- Section 1: Item Descriptions -->
+                                <div class="flex flex-col">
+                                    <div
+                                        class="bg-[#EFF6FF] text-[#475569] text-[14px] font-medium py-3 px-6 rounded-lg text-center tracking-wide">
+                                        Item Descriptions
+                                    </div>
+                                    <div class="py-4 px-6 text-[14px] text-[#64748B] font-semibold">
+                                        N/A
+                                    </div>
+                                </div>
+
+                                <!-- Section 2: Note -->
+                                <div class="flex flex-col">
+                                    <div
+                                        class="bg-[#EFF6FF] text-[#475569] text-[14px] font-medium py-3 px-6 rounded-lg text-center tracking-wide">
+                                        Note
+                                    </div>
+                                    <div class="py-4 px-6 text-[14px] text-[#64748B] font-semibold">
+                                        N/A
+                                    </div>
+                                </div>
+
+                                <!-- Section 3: Assigned To -->
+                                <div class="flex flex-col">
+                                    <div
+                                        class="bg-[#EFF6FF] text-[#475569] text-[14px] font-medium py-3 px-6 rounded-lg text-center tracking-wide mb-4">
+                                        Assigned to
+                                    </div>
+
+                                    <!-- Rider Details Card -->
+                                    <div
+                                        class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[16px] p-5 flex flex-col sm:flex-row items-center sm:items-start gap-5 max-w-md shadow-sm">
+                                        <!-- Rider Avatar -->
+                                        <div class="relative flex-shrink-0">
+                                            <img src="https://i.pravatar.cc/150?u=mitul" alt="Rider Avatar"
+                                                class="w-14 h-14 rounded-full object-cover border border-[#CBD5E1]">
+                                        </div>
+                                        <!-- Rider details -->
+                                        <div class="flex-grow flex flex-col gap-2 text-center sm:text-left">
+                                            <h4 class="text-[16px] font-bold text-[#1E293B]">Md. Mitul Mia (Dhanmondi)
+                                            </h4>
+                                            <div
+                                                class="text-[13.5px] text-[#64748B] font-medium flex items-center justify-center sm:justify-start gap-1">
+                                                Phone : <span class="font-semibold text-[#1E293B]">01654973769</span>
+                                                <a href="tel:01654973769"
+                                                    class="bg-[#003EB7] text-white hover:bg-[#002D87] text-[10px] font-bold px-2.5 py-1 rounded-full ml-2 transition-colors">Call</a>
+                                            </div>
+                                            <div class="text-[13.5px] text-[#64748B] font-medium">
+                                                Hub : <span class="font-semibold text-[#1E293B]">Dhanmondi</span>
+                                            </div>
+                                            <div class="text-[13.5px] text-[#64748B] font-medium">
+                                                Hub Contact : <span
+                                                    class="font-semibold text-[#1E293B]">01654973769</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </form>
 
+                        <!-- Bottom Section: Tracking Updates -->
+                        <div class="mb-6">
+                            <h2 class="text-[24px] font-bold text-[#1E293B] tracking-tight">Tracking Updates</h2>
+                        </div>
+
+                        <!-- Updates Timeline Card -->
+                        <div
+                            class="bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 lg:p-12 border border-[#F1F5F9] mb-8">
+                            <div class="relative max-w-4xl">
+                                <!-- Vertical Line perfectly centered with the circles -->
+                                <div
+                                    class="absolute top-2 bottom-6 left-[105px] md:left-[130px] w-12 flex justify-center">
+                                    <div class="w-[2px] h-full bg-[#22C55E]"></div>
+                                </div>
+
+                                <div class="flex flex-col gap-12">
+                                    <!-- Update 1 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 18,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                09:05 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Consignment has been marked as delivered by rider.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 2 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 18,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                08:20 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Received at KADAMTALI.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 3 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 17,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                02:15 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Sent to KADAMTALI. Dispatch ID: 445566
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 4 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 16,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                06:40 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Sent to RETURN DISTRIBUTION. Dispatch ID: 778699
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 5 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 15,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                02:10 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Consignment has been marked as cancelled by rider.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 6 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 15,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                01:35 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Rider Note: গ্রাহকের ফোন বন্ধ ছিল তাই ডেলিভারি সম্পন্ন করা সম্ভব হয়নি
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update 7 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[105px] md:w-[130px] flex-shrink-0 text-left md:text-right pt-0.5 pr-3 md:pr-4">
+                                            <div class="text-[13px] md:text-[14px] font-bold text-[#003EB7]">Aug 14,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#64748B] font-medium mt-0.5">
+                                                11:25 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center bg-white rounded-full">
+                                                <svg width="32" height="32" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#22C55E" stroke-width="2" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-2">
+                                            <div class="text-[14px] text-[#64748B] font-semibold">
+                                                Rider Note: ২ দিন ধরে গ্রাহকের সাথে যোগাযোগ করা হয়েছে কিন্তু কোনো
+                                                রেসপন্স পাওয়া যায়নি
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </main>
         </div>
+        </main>
+    </div>
     </div>
     <!-- jQuery -->
     <script src="../assets/js/jquery-3.7.1.min.js"></script>

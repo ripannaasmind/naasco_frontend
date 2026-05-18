@@ -4,26 +4,26 @@ $(function () {
     if ($sidebarMenu.length && !$('.sidebar-mobile-utilities').length) {
         // Create mobile utilities section
         const $mobileUtils = $('<div class="sidebar-mobile-utilities"></div>');
-        
+
         // Clone Search Box
         const $searchBox = $('.top-bar .search-box').clone(true);
         if ($searchBox.length) {
             $mobileUtils.append($searchBox);
         }
-        
+
         // Clone Balance Widget
         const $balanceWidget = $('.top-bar .balance-widget').clone(true);
         if ($balanceWidget.length) {
             $mobileUtils.append($balanceWidget);
         }
-        
+
         // Clone Language Switcher
         const $langSwitcher = $('.top-bar .header-icon:not(.notification-bell)').first().clone(true);
         if ($langSwitcher.length) {
             $langSwitcher.html('<i class="fas fa-globe mr-2"></i> Language: English (EN)');
             $mobileUtils.append($langSwitcher);
         }
-        
+
         // Prepend to nav-menu inside sidebar
         $sidebarMenu.prepend($mobileUtils);
     }
@@ -122,20 +122,20 @@ $(function () {
     let $overlay = $('.sidebar-overlay');
     if (!$overlay.length) {
         $overlay = $('<div class="sidebar-overlay"></div>');
-        $('.body-wrap').append($overlay);
+        $('body').append($overlay);
     }
 
     if ($mobileSidebarToggle.length && $sidebar.length) {
         $mobileSidebarToggle.on('click', () => {
             $sidebar.toggleClass('open');
             $overlay.toggleClass('active');
-            $body.css('overflow', $sidebar.hasClass('open') ? 'hidden' : '');
+            $('html, body').toggleClass('no-scroll', $sidebar.hasClass('open'));
         });
 
         const closeSidebar = () => {
             $sidebar.removeClass('open');
             $overlay.removeClass('active');
-            $body.css('overflow', '');
+            $('html, body').removeClass('no-scroll');
         };
 
         $overlay.on('click', closeSidebar);
@@ -157,237 +157,237 @@ $(function () {
     }
 
     // jQuery for Parcels Page
-        if ($('.parcels-details-wrap').length) {
+    if ($('.parcels-details-wrap').length) {
+        const totalPages = 10;
+        let currentPage = 1;
+
+        const renderPagination = (activePage) => {
+            const $container = $('.pagination-controls .flex.items-center.gap-2');
+            $container.empty();
             const totalPages = 10;
-            let currentPage = 1;
+            const isMobile = $(window).width() < 475;
 
-            const renderPagination = (activePage) => {
-                const $container = $('.pagination-controls .flex.items-center.gap-2');
-                $container.empty();
-                const totalPages = 10;
-                const isMobile = $(window).width() < 475;
+            // Show current page
+            $container.append(`<button class="pagination-circle-btn active">${activePage}</button>`);
 
-                // Show current page
-                $container.append(`<button class="pagination-circle-btn active">${activePage}</button>`);
+            // Show next page ONLY if not mobile and not the last page
+            if (activePage < totalPages) {
+                const nextP = activePage + 1;
 
-                // Show next page ONLY if not mobile and not the last page
-                if (activePage < totalPages) {
-                    const nextP = activePage + 1;
-
-                    if (!isMobile && nextP < totalPages) {
-                        $container.append(`<button class="pagination-circle-btn">${nextP}</button>`);
-                    }
-
-                    // Show dots if there is a gap before the last page
-                    // On mobile, always show dots if not on last page
-                    if (isMobile || nextP < totalPages - 1) {
-                        $container.append('<span class="text-[#94A3B8] px-1">...</span>');
-                    }
-
-                    // Always show the last page
-                    const activeClassLast = activePage === totalPages ? 'active' : '';
-                    $container.append(`<button class="pagination-circle-btn ${activeClassLast}">${totalPages}</button>`);
+                if (!isMobile && nextP < totalPages) {
+                    $container.append(`<button class="pagination-circle-btn">${nextP}</button>`);
                 }
 
-                // Update Prev/Next button states
-                const $prevBtn = $('.pagination-circle-btn').first();
-                const $nextBtn = $('.pagination-circle-btn.next');
+                // Show dots if there is a gap before the last page
+                // On mobile, always show dots if not on last page
+                if (isMobile || nextP < totalPages - 1) {
+                    $container.append('<span class="text-[#94A3B8] px-1">...</span>');
+                }
 
-                if (activePage === 1) {
-                    $prevBtn.removeClass('active').attr('disabled', true).css('opacity', '0.5');
+                // Always show the last page
+                const activeClassLast = activePage === totalPages ? 'active' : '';
+                $container.append(`<button class="pagination-circle-btn ${activeClassLast}">${totalPages}</button>`);
+            }
+
+            // Update Prev/Next button states
+            const $prevBtn = $('.pagination-circle-btn').first();
+            const $nextBtn = $('.pagination-circle-btn.next');
+
+            if (activePage === 1) {
+                $prevBtn.removeClass('active').attr('disabled', true).css('opacity', '0.5');
+            } else {
+                $prevBtn.addClass('active').removeAttr('disabled').css('opacity', '1');
+            }
+
+            if (activePage === totalPages) {
+                $nextBtn.removeClass('active').attr('disabled', true).css('opacity', '0.5');
+            } else {
+                $nextBtn.addClass('active').removeAttr('disabled').css('opacity', '1');
+            }
+        };
+
+        // Dynamic Table Data Simulation
+        const updateTableData = (page, filterStatus = 'All') => {
+            currentPage = page;
+            const $rows = $('.table-responsive tbody tr');
+            const startResult = (page - 1) * 25 + 1;
+            const endResult = Math.min(page * 25, 1248);
+
+            // Update "Showing X-Y of Z" text
+            $('.results-count').text(`Showing ${startResult}–${endResult} of 1,248 results`);
+
+            renderPagination(page);
+
+            // Simulate data change
+            $rows.each(function (index) {
+                const randomId = Math.floor(100000 + Math.random() * 900000);
+                const merchants = ['TrendyBD', 'ShajGoj', 'Daraz', 'Aarong', 'Chaldal'];
+                const randomMerchant = merchants[Math.floor(Math.random() * merchants.length)];
+
+                $(this).find('td:nth-child(2) span:first-child').text(`SC-2026-${randomId.toString().substring(0, 3)}`);
+                $(this).find('td:nth-child(2) span:last-child').text(randomId.toString().substring(3));
+                $(this).find('td:nth-child(3)').text(randomMerchant);
+
+                // Update Status Badge
+                const $statusTd = $(this).find('td:nth-child(8)');
+                const cleanStatus = filterStatus.split(' (')[0].trim();
+                let statusText = '';
+                let statusClass = '';
+
+                const statusMap = {
+                    'Pending': 'status-pending',
+                    'In Transit': 'status-transit',
+                    'Out for Delivery': 'status-out-delivery',
+                    'Returned': 'status-returned',
+                    'Delivered': 'status-delivered'
+                };
+
+                if (cleanStatus === 'All' || cleanStatus === '') {
+                    const statuses = Object.keys(statusMap);
+                    statusText = statuses[Math.floor(Math.random() * statuses.length)];
+                    statusClass = statusMap[statusText];
                 } else {
-                    $prevBtn.addClass('active').removeAttr('disabled').css('opacity', '1');
+                    statusText = cleanStatus;
+                    statusClass = statusMap[cleanStatus] || 'status-pending';
                 }
 
-                if (activePage === totalPages) {
-                    $nextBtn.removeClass('active').attr('disabled', true).css('opacity', '0.5');
-                } else {
-                    $nextBtn.addClass('active').removeAttr('disabled').css('opacity', '1');
-                }
-            };
+                $statusTd.html(`<span class="badge-status ${statusClass}">${statusText}</span>`);
 
-            // Dynamic Table Data Simulation
-            const updateTableData = (page, filterStatus = 'All') => {
-                currentPage = page;
-                const $rows = $('.table-responsive tbody tr');
-                const startResult = (page - 1) * 25 + 1;
-                const endResult = Math.min(page * 25, 1248);
+                // Animation
+                $(this).css('opacity', '0');
+                setTimeout(() => {
+                    $(this).css({
+                        'opacity': '1',
+                        'transition': 'opacity 0.3s ease'
+                    });
+                }, index * 20);
+            });
+        };
 
-                // Update "Showing X-Y of Z" text
-                $('.results-count').text(`Showing ${startResult}–${endResult} of 1,248 results`);
+        // Initialize
+        updateTableData(1);
 
-                renderPagination(page);
+        // Tab switching
+        $('.tab-pill').on('click', function () {
+            $('.tab-pill').removeClass('active');
+            $(this).addClass('active');
 
-                // Simulate data change
-                $rows.each(function (index) {
-                    const randomId = Math.floor(100000 + Math.random() * 900000);
-                    const merchants = ['TrendyBD', 'ShajGoj', 'Daraz', 'Aarong', 'Chaldal'];
-                    const randomMerchant = merchants[Math.floor(Math.random() * merchants.length)];
+            const selectedStatus = $(this).find('button').text();
+            updateTableData(1, selectedStatus);
+        });
 
-                    $(this).find('td:nth-child(2) span:first-child').text(`SC-2026-${randomId.toString().substring(0, 3)}`);
-                    $(this).find('td:nth-child(2) span:last-child').text(randomId.toString().substring(3));
-                    $(this).find('td:nth-child(3)').text(randomMerchant);
+        // Page Numbers (delegated)
+        $('.pagination-controls').on('click', '.pagination-circle-btn:not(.next)', function () {
+            const pageNum = parseInt($(this).text());
+            if (!isNaN(pageNum)) {
+                const activeStatus = $('.tab-pill.active button').text();
+                updateTableData(pageNum, activeStatus);
+            }
+        });
 
-                    // Update Status Badge
-                    const $statusTd = $(this).find('td:nth-child(8)');
-                    const cleanStatus = filterStatus.split(' (')[0].trim();
-                    let statusText = '';
-                    let statusClass = '';
+        // Prev Button
+        $('.pagination-controls .pagination-circle-btn').first().on('click', function () {
+            if (currentPage > 1) {
+                const activeStatus = $('.tab-pill.active button').text();
+                updateTableData(currentPage - 1, activeStatus);
+            }
+        });
 
-                    const statusMap = {
-                        'Pending': 'status-pending',
-                        'In Transit': 'status-transit',
-                        'Out for Delivery': 'status-out-delivery',
-                        'Returned': 'status-returned',
-                        'Delivered': 'status-delivered'
-                    };
+        // Next Button
+        $('.pagination-circle-btn.next').on('click', function () {
+            if (currentPage < totalPages) {
+                const activeStatus = $('.tab-pill.active button').text();
+                updateTableData(currentPage + 1, activeStatus);
+            }
+        });
 
-                    if (cleanStatus === 'All' || cleanStatus === '') {
-                        const statuses = Object.keys(statusMap);
-                        statusText = statuses[Math.floor(Math.random() * statuses.length)];
-                        statusClass = statusMap[statusText];
-                    } else {
-                        statusText = cleanStatus;
-                        statusClass = statusMap[cleanStatus] || 'status-pending';
-                    }
+        // Select all checkboxes
+        $('.table-responsive thead input[type="checkbox"]').on('change', function () {
+            const isChecked = $(this).is(':checked');
+            $('.table-responsive tbody input[type="checkbox"]').prop('checked', isChecked);
+        });
 
-                    $statusTd.html(`<span class="badge-status ${statusClass}">${statusText}</span>`);
+        // Handle window resize for responsive pagination
+        $(window).on('resize', function () {
+            renderPagination(currentPage);
+        });
+    }
 
-                    // Animation
-                    $(this).css('opacity', '0');
-                    setTimeout(() => {
-                        $(this).css({
-                            'opacity': '1',
-                            'transition': 'opacity 0.3s ease'
-                        });
-                    }, index * 20);
+    // Shipment Page Interactions
+    $('.btn-preview-label').on('click', function () {
+        console.log('Previewing Label...');
+    });
+
+    $('.btn-create-shipment').on('click', function () {
+        console.log('Creating Shipment...');
+    });
+
+    // Pickup Assignment Interactions
+    $('.btn-assign').on('click', function () {
+        const $aiCard = $('.ai-assignment-card');
+        if ($aiCard.length) {
+            // Scroll to AI Assignment section
+            $('html, body').animate({
+                scrollTop: $aiCard.offset().top - 120
+            }, 500);
+
+            // Add highlight effect
+            $aiCard.css({
+                'transition': 'all 0.5s',
+                'box-shadow': '0 0 20px rgba(0, 62, 183, 0.2)',
+                'border': '1px solid rgba(0, 62, 183, 0.3)'
+            });
+
+            setTimeout(() => {
+                $aiCard.css({
+                    'box-shadow': '0 4px 20px rgba(0, 0, 0, 0.03)',
+                    'border': 'none'
                 });
-            };
+            }, 2000);
+        }
+    });
 
-            // Initialize
-            updateTableData(1);
+    // ==========================================
+    // All Parcel Page Logic
+    // ==========================================
+    if ($('.consignments-table').length) {
+        // Large Sample Dataset (50 entries)
+        const allParcels = [];
+        const statuses = ['Pending', 'Delivered', 'Cancelled', 'Approval Pending', 'Partly Delivered', 'In Review', 'Exceptional'];
+        const names = ['Imran Hossain', 'Karim Sheikh', 'Sadia Islam', 'A. Karim', 'Rahat Ali', 'Mousumi Akter', 'John Doe', 'Jane Smith', 'Rafiqul Islam', 'Nusrat Jahan'];
 
-            // Tab switching
-            $('.tab-pill').on('click', function () {
-                $('.tab-pill').removeClass('active');
-                $(this).addClass('active');
-
-                const selectedStatus = $(this).find('button').text();
-                updateTableData(1, selectedStatus);
-            });
-
-            // Page Numbers (delegated)
-            $('.pagination-controls').on('click', '.pagination-circle-btn:not(.next)', function () {
-                const pageNum = parseInt($(this).text());
-                if (!isNaN(pageNum)) {
-                    const activeStatus = $('.tab-pill.active button').text();
-                    updateTableData(pageNum, activeStatus);
-                }
-            });
-
-            // Prev Button
-            $('.pagination-controls .pagination-circle-btn').first().on('click', function () {
-                if (currentPage > 1) {
-                    const activeStatus = $('.tab-pill.active button').text();
-                    updateTableData(currentPage - 1, activeStatus);
-                }
-            });
-
-            // Next Button
-            $('.pagination-circle-btn.next').on('click', function () {
-                if (currentPage < totalPages) {
-                    const activeStatus = $('.tab-pill.active button').text();
-                    updateTableData(currentPage + 1, activeStatus);
-                }
-            });
-
-            // Select all checkboxes
-            $('.table-responsive thead input[type="checkbox"]').on('change', function () {
-                const isChecked = $(this).is(':checked');
-                $('.table-responsive tbody input[type="checkbox"]').prop('checked', isChecked);
-            });
-
-            // Handle window resize for responsive pagination
-            $(window).on('resize', function () {
-                renderPagination(currentPage);
+        for (let i = 1; i <= 50; i++) {
+            allParcels.push({
+                sl: i.toString().padStart(2, '0'),
+                date: `${(Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0')}-0${Math.floor(Math.random() * 3) + 1}-2026`,
+                id: `ID:${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
+                name: names[Math.floor(Math.random() * names.length)],
+                payment: Math.random() > 0.5 ? 'COD' : 'Prepaid',
+                charge: `${Math.floor(Math.random() * 150) + 50} $`,
+                status: statuses[Math.floor(Math.random() * statuses.length)]
             });
         }
 
-        // Shipment Page Interactions
-        $('.btn-preview-label').on('click', function () {
-            console.log('Previewing Label...');
-        });
+        let filteredParcels = [...allParcels];
+        let currentPage = 1;
+        const rowsPerPage = 15;
+        let isDateSorted = false;
 
-        $('.btn-create-shipment').on('click', function () {
-            console.log('Creating Shipment...');
-        });
-
-        // Pickup Assignment Interactions
-        $('.btn-assign').on('click', function () {
-            const $aiCard = $('.ai-assignment-card');
-            if ($aiCard.length) {
-                // Scroll to AI Assignment section
-                $('html, body').animate({
-                    scrollTop: $aiCard.offset().top - 120
-                }, 500);
-
-                // Add highlight effect
-                $aiCard.css({
-                    'transition': 'all 0.5s',
-                    'box-shadow': '0 0 20px rgba(0, 62, 183, 0.2)',
-                    'border': '1px solid rgba(0, 62, 183, 0.3)'
-                });
-
-                setTimeout(() => {
-                    $aiCard.css({
-                        'box-shadow': '0 4px 20px rgba(0, 0, 0, 0.03)',
-                        'border': 'none'
-                    });
-                }, 2000);
-            }
-        });
-
-        // ==========================================
-        // All Parcel Page Logic
-        // ==========================================
-        if ($('.consignments-table').length) {
-            // Large Sample Dataset (50 entries)
-            const allParcels = [];
-            const statuses = ['Pending', 'Delivered', 'Cancelled', 'Approval Pending', 'Partly Delivered', 'In Review', 'Exceptional'];
-            const names = ['Imran Hossain', 'Karim Sheikh', 'Sadia Islam', 'A. Karim', 'Rahat Ali', 'Mousumi Akter', 'John Doe', 'Jane Smith', 'Rafiqul Islam', 'Nusrat Jahan'];
-
-            for (let i = 1; i <= 50; i++) {
-                allParcels.push({
-                    sl: i.toString().padStart(2, '0'),
-                    date: `${(Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0')}-0${Math.floor(Math.random() * 3) + 1}-2026`,
-                    id: `ID:${Math.random().toString(36).substring(2, 10).toUpperCase()}`,
-                    name: names[Math.floor(Math.random() * names.length)],
-                    payment: Math.random() > 0.5 ? 'COD' : 'Prepaid',
-                    charge: `${Math.floor(Math.random() * 150) + 50} $`,
-                    status: statuses[Math.floor(Math.random() * statuses.length)]
-                });
+        const renderTable = () => {
+            const $tbody = $('.consignments-table tbody');
+            if (!$tbody.length) {
+                console.error('Parcel table tbody not found');
+                return;
             }
 
-            let filteredParcels = [...allParcels];
-            let currentPage = 1;
-            const rowsPerPage = 15;
-            let isDateSorted = false;
+            const startIndex = (currentPage - 1) * rowsPerPage;
+            const endIndex = startIndex + rowsPerPage;
+            const paginatedItems = filteredParcels.slice(startIndex, endIndex);
 
-            const renderTable = () => {
-                const $tbody = $('.consignments-table tbody');
-                if (!$tbody.length) {
-                    console.error('Parcel table tbody not found');
-                    return;
-                }
+            $tbody.empty();
 
-                const startIndex = (currentPage - 1) * rowsPerPage;
-                const endIndex = startIndex + rowsPerPage;
-                const paginatedItems = filteredParcels.slice(startIndex, endIndex);
-
-                $tbody.empty();
-
-                $.each(paginatedItems, function(index, item) {
-                    const row = `
+            $.each(paginatedItems, function (index, item) {
+                const row = `
                         <tr>
                             <td>${item.sl}</td>
                             <td>${item.date}</td>
@@ -403,100 +403,100 @@ $(function () {
                             </td>
                         </tr>
                     `;
-                    $tbody.append(row);
-                });
+                $tbody.append(row);
+            });
 
-                updatePaginationInfo();
-                renderPaginationButtons();
-            };
+            updatePaginationInfo();
+            renderPaginationButtons();
+        };
 
-            const updatePaginationInfo = () => {
-                const startIndex = (currentPage - 1) * rowsPerPage + 1;
-                const endIndex = Math.min(currentPage * rowsPerPage, filteredParcels.length);
-                const total = filteredParcels.length;
+        const updatePaginationInfo = () => {
+            const startIndex = (currentPage - 1) * rowsPerPage + 1;
+            const endIndex = Math.min(currentPage * rowsPerPage, filteredParcels.length);
+            const total = filteredParcels.length;
 
-                const $infoElement = $('#pagination-info');
-                if ($infoElement.length) {
-                    $infoElement.html(total > 0 ? `Showing <span class="font-medium">${startIndex}</span> to <span class="font-medium">${endIndex}</span> of <span class="font-medium">${total}</span> entries` : 'No entries found');
+            const $infoElement = $('#pagination-info');
+            if ($infoElement.length) {
+                $infoElement.html(total > 0 ? `Showing <span class="font-medium">${startIndex}</span> to <span class="font-medium">${endIndex}</span> of <span class="font-medium">${total}</span> entries` : 'No entries found');
+            }
+        };
+
+        const renderPaginationButtons = () => {
+            const totalPages = Math.ceil(filteredParcels.length / rowsPerPage);
+            const $paginationContainer = $('#pagination-container');
+            if (!$paginationContainer.length) return;
+
+            $paginationContainer.empty();
+
+            if (totalPages <= 1) return;
+
+            // Previous Button
+            const $prevBtn = $('<button></button>');
+            $prevBtn.addClass(`pagination-btn ${currentPage === 1 ? 'disabled' : ''}`);
+            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
+            $prevBtn.on('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
+            $paginationContainer.append($prevBtn);
+
+            // Sliding Window Pagination (1 2 ... Last)
+            const range = 1;
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+                    const $pageBtn = $('<button></button>');
+                    $pageBtn.addClass(`pagination-btn ${currentPage === i ? 'active' : ''}`);
+                    $pageBtn.text(i);
+                    $pageBtn.on('click', () => { currentPage = i; renderTable(); });
+                    $paginationContainer.append($pageBtn);
+                } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+                    const $dots = $('<span></span>');
+                    $dots.addClass('px-2 self-center text-gray-400');
+                    $dots.text('...');
+                    $paginationContainer.append($dots);
                 }
-            };
+            }
 
-            const renderPaginationButtons = () => {
-                const totalPages = Math.ceil(filteredParcels.length / rowsPerPage);
-                const $paginationContainer = $('#pagination-container');
-                if (!$paginationContainer.length) return;
+            // Next Button
+            const $nextBtn = $('<button></button>');
+            $nextBtn.addClass(`pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`);
+            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
+            $nextBtn.on('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
+            $paginationContainer.append($nextBtn);
+        };
 
-                $paginationContainer.empty();
+        // Filter & Sort Events
+        const renderSummaryView = () => {
+            const $dashboardBody = $('.dashboard-container');
+            if (!$dashboardBody.length) return;
 
-                if (totalPages <= 1) return;
+            // Store original content
+            if (!window.originalDashboardContent) {
+                window.originalDashboardContent = $dashboardBody.html();
+            }
 
-                // Previous Button
-                const $prevBtn = $('<button></button>');
-                $prevBtn.addClass(`pagination-btn ${currentPage === 1 ? 'disabled' : ''}`);
-                $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-                $prevBtn.on('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
-                $paginationContainer.append($prevBtn);
+            // Group parcels by date dynamically from the table data
+            const grouped = {};
+            $.each(allParcels, function (index, p) {
+                grouped[p.date] = (grouped[p.date] || 0) + 1;
+            });
 
-                // Sliding Window Pagination (1 2 ... Last)
-                const range = 1;
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
-                        const $pageBtn = $('<button></button>');
-                        $pageBtn.addClass(`pagination-btn ${currentPage === i ? 'active' : ''}`);
-                        $pageBtn.text(i);
-                        $pageBtn.on('click', () => { currentPage = i; renderTable(); });
-                        $paginationContainer.append($pageBtn);
-                    } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
-                        const $dots = $('<span></span>');
-                        $dots.addClass('px-2 self-center text-gray-400');
-                        $dots.text('...');
-                        $paginationContainer.append($dots);
-                    }
-                }
+            // Sort dates descending
+            const sortedDates = Object.keys(grouped).sort((a, b) => {
+                const [d1, m1, y1] = a.split('-');
+                const [d2, m2, y2] = b.split('-');
+                return new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
+            });
 
-                // Next Button
-                const $nextBtn = $('<button></button>');
-                $nextBtn.addClass(`pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`);
-                $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-                $nextBtn.on('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
-                $paginationContainer.append($nextBtn);
-            };
-
-            // Filter & Sort Events
-            const renderSummaryView = () => {
-                const $dashboardBody = $('.dashboard-container');
-                if (!$dashboardBody.length) return;
-
-                // Store original content
-                if (!window.originalDashboardContent) {
-                    window.originalDashboardContent = $dashboardBody.html();
-                }
-
-                // Group parcels by date dynamically from the table data
-                const grouped = {};
-                $.each(allParcels, function(index, p) {
-                    grouped[p.date] = (grouped[p.date] || 0) + 1;
-                });
-
-                // Sort dates descending
-                const sortedDates = Object.keys(grouped).sort((a, b) => {
-                    const [d1, m1, y1] = a.split('-');
-                    const [d2, m2, y2] = b.split('-');
-                    return new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
-                });
-
-                let tableRows = '';
-                $.each(sortedDates, function(index, date) {
-                    tableRows += `
+            let tableRows = '';
+            $.each(sortedDates, function (index, date) {
+                tableRows += `
                         <tr>
                             <td>${date}</td>
                             <td>${grouped[date]}</td>
                             <td><a href="#" class="view-link" onclick="event.preventDefault(); window.restoreDashboard();">View</a></td>
                         </tr>
                     `;
-                });
+            });
 
-                $dashboardBody.html(`
+            $dashboardBody.html(`
                     <div class="summary-view-header">
                         <h2>List By Date</h2>
                         <button class="btn-all-consignments" onclick="window.restoreDashboard()">All Consignments</button>
@@ -518,97 +518,97 @@ $(function () {
                         </div>
                     </div>
                 `);
-            };
+        };
 
-            window.restoreDashboard = () => {
-                const $dashboardBody = $('.dashboard-container');
-                if (window.originalDashboardContent) {
-                    $dashboardBody.html(window.originalDashboardContent);
-                    initParcelTable();
-                }
-            };
+        window.restoreDashboard = () => {
+            const $dashboardBody = $('.dashboard-container');
+            if (window.originalDashboardContent) {
+                $dashboardBody.html(window.originalDashboardContent);
+                initParcelTable();
+            }
+        };
 
-            const initParcelTable = () => {
-                const $filterContainer = $('.filter-tabs');
-                if ($filterContainer.length && !$filterContainer.data('listenerAdded')) {
-                    $filterContainer.on('click', '.filter-tab', function() {
-                        const $tab = $(this);
-                        const filter = $tab.text().trim();
+        const initParcelTable = () => {
+            const $filterContainer = $('.filter-tabs');
+            if ($filterContainer.length && !$filterContainer.data('listenerAdded')) {
+                $filterContainer.on('click', '.filter-tab', function () {
+                    const $tab = $(this);
+                    const filter = $tab.text().trim();
 
-                        if (filter === 'List by Date') {
-                            renderSummaryView();
-                            return;
-                        }
+                    if (filter === 'List by Date') {
+                        renderSummaryView();
+                        return;
+                    }
 
-                        // Update active state
-                        $('.filter-tab').removeClass('active');
-                        $tab.addClass('active');
+                    // Update active state
+                    $('.filter-tab').removeClass('active');
+                    $tab.addClass('active');
 
-                        // Filter data
-                        if (filter === 'All') {
-                            filteredParcels = [...allParcels];
-                        } else {
-                            filteredParcels = allParcels.filter(p => p.status === filter);
-                        }
+                    // Filter data
+                    if (filter === 'All') {
+                        filteredParcels = [...allParcels];
+                    } else {
+                        filteredParcels = allParcels.filter(p => p.status === filter);
+                    }
 
-                        isDateSorted = false;
-                        currentPage = 1;
-                        renderTable();
-                    });
-                    $filterContainer.data('listenerAdded', 'true');
-                }
-
-                renderTable();
-            };
-
-            console.log('Initializing Parcel Table Render');
-            initParcelTable();
-        }
-
-        // ==========================================
-        // Clearable Consignments Pagination Logic
-        // ==========================================
-        const $clearableTable = $('#clearable-consignments-table');
-        if ($clearableTable.length) {
-            // Sample Data based on UI
-            const clearableData = [];
-            const statuses = [
-                { text: 'Delivered', class: 'bg-[#D1FAE5] text-[#059669]' },
-                { text: 'Pending', class: 'bg-[#FFEDD5] text-[#D97706]' },
-                { text: 'Returned', class: 'bg-[#FEE2E2] text-[#DC2626]' }
-            ];
-
-            // Generating 45 dummy items to simulate pagination
-            for (let i = 1; i <= 45; i++) {
-                const statusObj = statuses[i % 3];
-                const isDelivered = statusObj.text === 'Delivered';
-                clearableData.push({
-                    date: `May ${(Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0')}, 2026`,
-                    id: `#${Math.floor(1000 + Math.random() * 9000)}`,
-                    invoice: `INV-${9000 + i}`,
-                    customer: i % 2 === 0 ? 'Ariful Islam' : 'Sadia Akter',
-                    amount: '$ 3,500',
-                    charge: '$ 60',
-                    lot: `L-${(80 + (i % 5)).toString().padStart(3, '0')}`,
-                    status: statusObj.text,
-                    statusClass: statusObj.class,
-                    notes: isDelivered ? 'No issues' : (statusObj.text === 'Pending' ? 'Call before d...' : 'Refused by c...')
+                    isDateSorted = false;
+                    currentPage = 1;
+                    renderTable();
                 });
+                $filterContainer.data('listenerAdded', 'true');
             }
 
-            let clearableCurrentPage = 1;
-            const clearableRowsPerPage = 15;
+            renderTable();
+        };
 
-            const renderClearableTable = () => {
-                const $tbody = $clearableTable.find('tbody');
-                $tbody.empty();
+        console.log('Initializing Parcel Table Render');
+        initParcelTable();
+    }
 
-                const startIndex = (clearableCurrentPage - 1) * clearableRowsPerPage;
-                const endIndex = startIndex + clearableRowsPerPage;
-                const paginatedItems = clearableData.slice(startIndex, endIndex);
+    // ==========================================
+    // Clearable Consignments Pagination Logic
+    // ==========================================
+    const $clearableTable = $('#clearable-consignments-table');
+    if ($clearableTable.length) {
+        // Sample Data based on UI
+        const clearableData = [];
+        const statuses = [
+            { text: 'Delivered', class: 'bg-[#D1FAE5] text-[#059669]' },
+            { text: 'Pending', class: 'bg-[#FFEDD5] text-[#D97706]' },
+            { text: 'Returned', class: 'bg-[#FEE2E2] text-[#DC2626]' }
+        ];
 
-                $.each(paginatedItems, function(index, item) {
-                    const row = `
+        // Generating 45 dummy items to simulate pagination
+        for (let i = 1; i <= 45; i++) {
+            const statusObj = statuses[i % 3];
+            const isDelivered = statusObj.text === 'Delivered';
+            clearableData.push({
+                date: `May ${(Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0')}, 2026`,
+                id: `#${Math.floor(1000 + Math.random() * 9000)}`,
+                invoice: `INV-${9000 + i}`,
+                customer: i % 2 === 0 ? 'Ariful Islam' : 'Sadia Akter',
+                amount: '$ 3,500',
+                charge: '$ 60',
+                lot: `L-${(80 + (i % 5)).toString().padStart(3, '0')}`,
+                status: statusObj.text,
+                statusClass: statusObj.class,
+                notes: isDelivered ? 'No issues' : (statusObj.text === 'Pending' ? 'Call before d...' : 'Refused by c...')
+            });
+        }
+
+        let clearableCurrentPage = 1;
+        const clearableRowsPerPage = 15;
+
+        const renderClearableTable = () => {
+            const $tbody = $clearableTable.find('tbody');
+            $tbody.empty();
+
+            const startIndex = (clearableCurrentPage - 1) * clearableRowsPerPage;
+            const endIndex = startIndex + clearableRowsPerPage;
+            const paginatedItems = clearableData.slice(startIndex, endIndex);
+
+            $.each(paginatedItems, function (index, item) {
+                const row = `
                         <tr class="border-b border-[#F1F5F9] hover:bg-slate-50 transition-colors">
                             <td class="px-6 py-5 text-[14px] font-medium text-[#64748B] whitespace-nowrap">${item.date}</td>
                             <td class="px-6 py-5 text-[14px] font-medium text-[#64748B] whitespace-nowrap">${item.id}</td>
@@ -623,117 +623,417 @@ $(function () {
                             <td class="px-6 py-5 text-[14px] font-medium text-[#64748B] whitespace-nowrap">${item.notes}</td>
                         </tr>
                     `;
-                    $tbody.append(row);
-                });
+                $tbody.append(row);
+            });
 
-                // Update Info
-                const $infoElement = $('#clearable-pagination-info');
-                if ($infoElement.length) {
-                    $infoElement.html(`Showing <span class="font-medium">${startIndex + 1}</span> to <span class="font-medium">${Math.min(endIndex, clearableData.length)}</span> of <span class="font-medium">${clearableData.length}</span> entries`);
+            // Update Info
+            const $infoElement = $('#clearable-pagination-info');
+            if ($infoElement.length) {
+                $infoElement.html(`Showing <span class="font-medium">${startIndex + 1}</span> to <span class="font-medium">${Math.min(endIndex, clearableData.length)}</span> of <span class="font-medium">${clearableData.length}</span> entries`);
+            }
+
+            renderClearablePaginationButtons();
+        };
+
+        const renderClearablePaginationButtons = () => {
+            const totalPages = Math.ceil(clearableData.length / clearableRowsPerPage);
+            const $paginationContainer = $('#clearable-pagination-container');
+            if (!$paginationContainer.length) return;
+
+            $paginationContainer.empty();
+
+            if (totalPages <= 1) return;
+
+            // Previous Button
+            const $prevBtn = $('<button></button>');
+            $prevBtn.addClass(`pagination-btn ${clearableCurrentPage === 1 ? 'disabled' : ''}`);
+            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
+            $prevBtn.on('click', () => { if (clearableCurrentPage > 1) { clearableCurrentPage--; renderClearableTable(); } });
+            $paginationContainer.append($prevBtn);
+
+            // Sliding Window Pagination
+            const range = 1;
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= clearableCurrentPage - range && i <= clearableCurrentPage + range)) {
+                    const $pageBtn = $('<button></button>');
+                    $pageBtn.addClass(`pagination-btn ${clearableCurrentPage === i ? 'active' : ''}`);
+                    $pageBtn.text(i);
+                    $pageBtn.on('click', () => { clearableCurrentPage = i; renderClearableTable(); });
+                    $paginationContainer.append($pageBtn);
+                } else if (i === clearableCurrentPage - range - 1 || i === clearableCurrentPage + range + 1) {
+                    const $dots = $('<span></span>');
+                    $dots.addClass('px-2 self-center text-gray-400');
+                    $dots.text('...');
+                    $paginationContainer.append($dots);
                 }
+            }
 
-                renderClearablePaginationButtons();
-            };
+            // Next Button
+            const $nextBtn = $('<button></button>');
+            $nextBtn.addClass(`pagination-btn ${clearableCurrentPage === totalPages ? 'disabled' : ''}`);
+            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
+            $nextBtn.on('click', () => { if (clearableCurrentPage < totalPages) { clearableCurrentPage++; renderClearableTable(); } });
+            $paginationContainer.append($nextBtn);
+        };
 
-            const renderClearablePaginationButtons = () => {
-                const totalPages = Math.ceil(clearableData.length / clearableRowsPerPage);
-                const $paginationContainer = $('#clearable-pagination-container');
-                if (!$paginationContainer.length) return;
+        // Initialize
+        renderClearableTable();
+    }
 
-                $paginationContainer.empty();
+    // ==========================================
+    // Two-Factor Auth Page Logic
+    // ==========================================
+    if ($('#tfa-tabs').length) {
+        // Tab Switching Logic
+        $('.tfa-tab-btn').on('click', function () {
+            const tabId = $(this).attr('id');
 
-                if (totalPages <= 1) return;
+            // Update button styles
+            $('.tfa-tab-btn').removeClass('bg-[#2563EB] text-white').addClass('text-[#475569] hover:bg-slate-50');
+            $(this).removeClass('text-[#475569] hover:bg-slate-50').addClass('bg-[#2563EB] text-white');
 
-                // Previous Button
-                const $prevBtn = $('<button></button>');
-                $prevBtn.addClass(`pagination-btn ${clearableCurrentPage === 1 ? 'disabled' : ''}`);
-                $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-                $prevBtn.on('click', () => { if (clearableCurrentPage > 1) { clearableCurrentPage--; renderClearableTable(); } });
-                $paginationContainer.append($prevBtn);
+            // Hide all content and show selected
+            $('.tfa-tab-content').hide();
 
-                // Sliding Window Pagination
-                const range = 1;
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === 1 || i === totalPages || (i >= clearableCurrentPage - range && i <= clearableCurrentPage + range)) {
-                        const $pageBtn = $('<button></button>');
-                        $pageBtn.addClass(`pagination-btn ${clearableCurrentPage === i ? 'active' : ''}`);
-                        $pageBtn.text(i);
-                        $pageBtn.on('click', () => { clearableCurrentPage = i; renderClearableTable(); });
-                        $paginationContainer.append($pageBtn);
-                    } else if (i === clearableCurrentPage - range - 1 || i === clearableCurrentPage + range + 1) {
-                        const $dots = $('<span></span>');
-                        $dots.addClass('px-2 self-center text-gray-400');
-                        $dots.text('...');
-                        $paginationContainer.append($dots);
-                    }
-                }
+            if (tabId === 'tab-authenticator') {
+                $('#authenticator-tab-content').fadeIn(300);
+            } else if (tabId === 'tab-passkeys') {
+                $('#passkeys-tab-content').fadeIn(300);
+            } else if (tabId === 'tab-recovery') {
+                $('#recovery-tab-content').fadeIn(300);
+            }
+        });
 
-                // Next Button
-                const $nextBtn = $('<button></button>');
-                $nextBtn.addClass(`pagination-btn ${clearableCurrentPage === totalPages ? 'disabled' : ''}`);
-                $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-                $nextBtn.on('click', () => { if (clearableCurrentPage < totalPages) { clearableCurrentPage++; renderClearableTable(); } });
-                $paginationContainer.append($nextBtn);
-            };
+        // Authenticator Setup Logic
+        $('#start-setup-btn').on('click', function () {
+            $('#authenticator-initial-view').fadeOut(300, function () {
+                $('#authenticator-setup-view').fadeIn(300);
+            });
+        });
 
-            // Initialize
-            renderClearableTable();
+        $('#cancel-setup-btn').on('click', function () {
+            $('#authenticator-setup-view').fadeOut(300, function () {
+                $('#authenticator-initial-view').fadeIn(300);
+            });
+        });
+    }
+
+    // ==========================================
+    // Payment Details Page Logic
+    // ==========================================
+    if ($('#payment-summary-view').length) {
+        // Mock Data
+        const paymentData = [
+            { date: 'May 05, 2026', invoice: '#INV-8821', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 05, 2026', invoice: '#INV-8822', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Processing' },
+            { date: 'May 05, 2026', invoice: '#INV-8823', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Unpaid' },
+            { date: 'May 05, 2026', invoice: '#INV-8824', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 05, 2026', invoice: '#INV-8825', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 05, 2026', invoice: '#INV-8826', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 05, 2026', invoice: '#INV-8827', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Processing' },
+            { date: 'May 05, 2026', invoice: '#INV-8828', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Unpaid' },
+            { date: 'May 05, 2026', invoice: '#INV-8829', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 05, 2026', invoice: '#INV-8830', collected: '$ 2,500', bill: '$ 60', subtotal: '$ 2,440', cod: '$ 25', receivable: '$ 2,415', status: 'Paid' },
+            { date: 'May 06, 2026', invoice: '#INV-8831', collected: '$ 3,000', bill: '$ 70', subtotal: '$ 2,930', cod: '$ 30', receivable: '$ 2,900', status: 'Paid' },
+        ];
+
+        let currentPage = 1;
+        const rowsPerPage = 5;
+
+        function renderTable(page) {
+            const start = (page - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const paginatedData = paymentData.slice(start, end);
+
+            let html = '';
+            paginatedData.forEach(item => {
+                let statusClass = '';
+                if (item.status === 'Paid') statusClass = 'bg-emerald-100 text-emerald-600';
+                else if (item.status === 'Processing') statusClass = 'bg-orange-100 text-orange-600';
+                else statusClass = 'bg-slate-100 text-slate-600';
+
+                html += `
+                                <tr>
+                                    <td class="px-6 py-6 text-sm text-[#4B5563] font-medium">${item.date}</td>
+                                    <td class="px-6 py-6 text-sm text-[#4B5563] font-medium">${item.invoice}</td>
+                                    <td class="px-6 py-6 text-sm text-[#1E293B] font-bold">${item.collected}</td>
+                                    <td class="px-6 py-6 text-sm text-[#4B5563] font-medium">${item.bill}</td>
+                                    <td class="px-6 py-6 text-sm text-[#4B5563] font-medium">${item.subtotal}</td>
+                                    <td class="px-6 py-6 text-sm text-[#4B5563] font-medium">${item.cod}</td>
+                                    <td class="px-6 py-6 text-sm text-[#1E293B] font-bold">${item.receivable}</td>
+                                    <td class="px-6 py-6">
+                                        <span class="px-4 py-1.5 rounded-full ${statusClass} text-xs font-bold">${item.status}</span>
+                                    </td>
+                                    <td class="px-6 py-6 text-center">
+                                        <a href="#" class="text-[#003EB7] font-bold text-sm hover:underline">View</a>
+                                    </td>
+                                </tr>
+                            `;
+            });
+            $('#payment-table-body').html(html);
+
+            // Update pagination info
+            const showingStart = paymentData.length === 0 ? 0 : start + 1;
+            const showingEnd = Math.min(end, paymentData.length);
+            $('#pagination-info').text(`Showing ${showingStart} to ${showingEnd} of ${paymentData.length} entries`);
+
+            renderPagination();
         }
 
-        // ==========================================
-        // Create Parcel Form Logic
-        // ==========================================
-        const $serviceTabs = $('.dashboard-container .bg-white.rounded-2xl button');
-        if ($serviceTabs.length > 0) {
-            $serviceTabs.on('click', function () {
-                $serviceTabs.removeClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100').addClass('text-[#64748B] hover:bg-slate-50');
-                $(this).addClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100').removeClass('text-[#64748B] hover:bg-slate-50');
+        function renderPagination() {
+            const totalPages = Math.ceil(paymentData.length / rowsPerPage);
+            let html = `
+                            <button class="prev-page w-10 h-10 flex items-center justify-center rounded-lg border border-[#E2E8F0] text-[#64748B] hover:bg-slate-50 transition-all ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}">
+                                <i class="fas fa-chevron-left text-xs"></i>
+                            </button>
+                        `;
+
+            for (let i = 1; i <= totalPages; i++) {
+                html += `
+                                <button class="page-num w-10 h-10 flex items-center justify-center rounded-lg ${i === currentPage ? 'bg-[#003EB7] text-white' : 'border border-[#E2E8F0] text-[#64748B] hover:bg-slate-50'} font-bold text-sm transition-all" data-page="${i}">${i}</button>
+                            `;
+            }
+
+            html += `
+                            <button class="next-page w-10 h-10 flex items-center justify-center rounded-lg border border-[#E2E8F0] text-[#64748B] hover:bg-slate-50 transition-all ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}">
+                                <i class="fas fa-chevron-right text-xs"></i>
+                            </button>
+                        `;
+            $('#pagination-controls').html(html);
+        }
+
+        // Event Listeners
+        $('#view-payments-btn').on('click', function () {
+            $('#payment-summary-view').fadeOut(300, function () {
+                renderTable(1);
+                $('#payment-history-view').fadeIn(300);
+            });
+        });
+
+        $('#back-to-summary-btn').on('click', function () {
+            $('#payment-history-view').fadeOut(300, function () {
+                $('#payment-summary-view').fadeIn(300);
+            });
+        });
+
+        $('#view-parcel-details-btn').on('click', function () {
+            $('#payment-summary-view').fadeOut(300, function () {
+                $('#parcel-details-view').fadeIn(300);
+            });
+        });
+
+        $('#back-from-parcel-btn').on('click', function () {
+            $('#parcel-details-view').fadeOut(300, function () {
+                $('#payment-summary-view').fadeIn(300);
+            });
+        });
+
+        $(document).on('click', '.page-num', function () {
+            currentPage = parseInt($(this).attr('data-page'));
+            renderTable(currentPage);
+        });
+
+        $(document).on('click', '.prev-page', function () {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable(currentPage);
+            }
+        });
+
+        $(document).on('click', '.next-page', function () {
+            const totalPages = Math.ceil(paymentData.length / rowsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderTable(currentPage);
+            }
+        });
+
+        // Initial render
+        renderTable(1);
+    }
+
+    // ==========================================
+    // Mobile Banking / Settings Page Logic
+    // ==========================================
+    if ($('.settings-tab-btn').length) {
+        $('.settings-tab-btn').on('click', function (e) {
+            e.preventDefault();
+            var tabId = $(this).attr('id');
+
+            // Update active button styling
+            $('.settings-tab-btn').removeClass('bg-[#2563EB] text-white').addClass('text-[#475569] hover:bg-slate-50');
+            $(this).removeClass('text-[#475569] hover:bg-slate-50').addClass('bg-[#2563EB] text-white');
+
+            // Toggle tab contents
+            $('.settings-tab-content').hide();
+
+            if (tabId === 'tab-bank-account') {
+                $('#bank-account-content').show();
+                $('#bank-account-update-view').hide();
+                $('#bank-account-main-view').fadeIn(300);
+            } else if (tabId === 'tab-mobile-banking') {
+                $('#mobile-banking-content').show();
+                $('#mobile-banking-update-view').hide();
+                $('#mobile-banking-main-view').fadeIn(300);
+            } else if (tabId === 'tab-payment-method') {
+                $('#payment-method-content').fadeIn(300);
+            } else if (tabId === 'tab-business-profile') {
+                // Always reset to main view when clicking the tab
+                $('#business-profile-content').show();
+                $('#business-profile-change-name-view').hide();
+                $('#business-profile-update-address-view').hide();
+                $('#business-profile-main-view').fadeIn(300);
+            } else if (tabId === 'tab-label-printing') {
+                $('#label-printing-content').fadeIn(300);
+            }
+        });
+
+        // Bank Account - Update Toggles
+        $('#btn-edit-bank-account').on('click', function () {
+            $('#bank-account-main-view').fadeOut(200, function () {
+                $('#bank-account-update-view').fadeIn(300);
+            });
+        });
+
+        $('#btn-cancel-bank-account').on('click', function () {
+            $('#bank-account-update-view').fadeOut(200, function () {
+                $('#bank-account-main-view').fadeIn(300);
+            });
+        });
+
+        // Mobile Banking - Update Toggles
+        $('#btn-edit-mobile-banking').on('click', function () {
+            $('#mobile-banking-main-view').fadeOut(200, function () {
+                $('#mobile-banking-update-view').fadeIn(300);
+            });
+        });
+
+        $('#btn-cancel-mobile-banking').on('click', function () {
+            $('#mobile-banking-update-view').fadeOut(200, function () {
+                $('#mobile-banking-main-view').fadeIn(300);
+            });
+        });
+
+        // Business Profile - Change Company Name Toggles
+        $('#btn-change-company-name').on('click', function () {
+            $('#business-profile-main-view').fadeOut(200, function () {
+                $('#business-profile-change-name-view').fadeIn(300);
+            });
+        });
+
+        $('#btn-back-business-profile').on('click', function () {
+            $('#business-profile-change-name-view').fadeOut(200, function () {
+                $('#business-profile-main-view').fadeIn(300);
+            });
+        });
+
+        // Business Profile - Update Address Toggles
+        $('#btn-update-address').on('click', function () {
+            $('#business-profile-main-view').fadeOut(200, function () {
+                $('#business-profile-update-address-view').fadeIn(300);
+            });
+        });
+
+        $('#btn-back-from-address').on('click', function () {
+            $('#business-profile-update-address-view').fadeOut(200, function () {
+                $('#business-profile-main-view').fadeIn(300);
+            });
+        });
+
+        // Label Printing Selection
+        $('.label-option-card').on('click', function () {
+            // Reset all
+            $('.label-option-card')
+                .removeClass('border-[#2563EB]')
+                .addClass('border-[#E2E8F0]');
+
+            $('.label-option-card .label-dashed-box')
+                .removeClass('border-[#2563EB]')
+                .addClass('border-[#CBD5E1]');
+
+            $('.label-option-card .label-dashed-text')
+                .removeClass('text-[#1E293B]')
+                .addClass('text-[#64748B]');
+
+            $('.label-option-card .label-check-circle')
+                .removeClass('bg-[#003EB7] border-transparent')
+                .addClass('border border-[#CBD5E1] bg-white')
+                .empty();
+
+            // Set Active
+            $(this)
+                .removeClass('border-[#E2E8F0]')
+                .addClass('border-[#2563EB]');
+
+            $(this).find('.label-dashed-box')
+                .removeClass('border-[#CBD5E1]')
+                .addClass('border-[#2563EB]');
+
+            $(this).find('.label-dashed-text')
+                .removeClass('text-[#64748B]')
+                .addClass('text-[#1E293B]');
+
+            $(this).find('.label-check-circle')
+                .removeClass('border border-[#CBD5E1] bg-white')
+                .addClass('bg-[#003EB7] border-transparent')
+                .html('<i class="fas fa-check text-white text-[10px]"></i>');
+        });
+    }
+
+    // ==========================================
+    // Create Parcel Form Logic
+    // ==========================================
+    const $serviceTabs = $('.dashboard-container .bg-white.rounded-2xl button');
+    if ($serviceTabs.length > 0) {
+        $serviceTabs.on('click', function () {
+            $serviceTabs.removeClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100').addClass('text-[#64748B] hover:bg-slate-50');
+            $(this).addClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100').removeClass('text-[#64748B] hover:bg-slate-50');
+        });
+    }
+
+    // ==========================================
+    // Pickup Request Page Logic
+    // ==========================================
+    const $pickupTable = $('.pickup-table');
+    if ($pickupTable.length) {
+        const pickupData = [
+            { sl: '01', date: '05-03-2026', address: 'Dhanmondi 27, Dhaka', status: 'Pending', rider: 'Not Assigned' },
+            { sl: '02', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Assigned', rider: 'Rakib Hasan' },
+            { sl: '03', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Assigned', rider: 'Arif Hossain' },
+            { sl: '04', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Pending', rider: 'S.M. Kamrul' },
+            { sl: '05', date: '04-12-2026', address: 'Gulshan 1, Dhaka', status: 'Assigned', rider: 'M. Ali' },
+            { sl: '06', date: '04-10-2026', address: 'Banani 11, Dhaka', status: 'Pending', rider: 'Not Assigned' },
+            { sl: '07', date: '04-08-2026', address: 'Mirpur 10, Dhaka', status: 'Assigned', rider: 'Sohail Rana' },
+            { sl: '08', date: '04-05-2026', address: 'Bashundhara R/A, Dhaka', status: 'Pending', rider: 'Not Assigned' },
+        ];
+
+        // Generating dummy data to fill 45 entries as per UI
+        for (let i = 9; i <= 45; i++) {
+            pickupData.push({
+                sl: i.toString().padStart(2, '0'),
+                date: `03-${(i % 28 + 1).toString().padStart(2, '0')}-2026`,
+                address: i % 2 === 0 ? 'Mohakhali DOHS, Dhaka' : 'Malibagh, Dhaka',
+                status: i % 3 === 0 ? 'Pending' : 'Assigned',
+                rider: i % 3 === 0 ? 'Not Assigned' : 'Hossain Khan'
             });
         }
 
-        // ==========================================
-        // Pickup Request Page Logic
-        // ==========================================
-        const $pickupTable = $('.pickup-table');
-        if ($pickupTable.length) {
-            const pickupData = [
-                { sl: '01', date: '05-03-2026', address: 'Dhanmondi 27, Dhaka', status: 'Pending', rider: 'Not Assigned' },
-                { sl: '02', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Assigned', rider: 'Rakib Hasan' },
-                { sl: '03', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Assigned', rider: 'Arif Hossain' },
-                { sl: '04', date: '05-01-2026', address: 'Uttara Sector 10, Dhaka', status: 'Pending', rider: 'S.M. Kamrul' },
-                { sl: '05', date: '04-12-2026', address: 'Gulshan 1, Dhaka', status: 'Assigned', rider: 'M. Ali' },
-                { sl: '06', date: '04-10-2026', address: 'Banani 11, Dhaka', status: 'Pending', rider: 'Not Assigned' },
-                { sl: '07', date: '04-08-2026', address: 'Mirpur 10, Dhaka', status: 'Assigned', rider: 'Sohail Rana' },
-                { sl: '08', date: '04-05-2026', address: 'Bashundhara R/A, Dhaka', status: 'Pending', rider: 'Not Assigned' },
-            ];
+        let currentPickupPage = 1;
+        const pickupRowsPerPage = 10;
 
-            // Generating dummy data to fill 45 entries as per UI
-            for (let i = 9; i <= 45; i++) {
-                pickupData.push({
-                    sl: i.toString().padStart(2, '0'),
-                    date: `03-${(i % 28 + 1).toString().padStart(2, '0')}-2026`,
-                    address: i % 2 === 0 ? 'Mohakhali DOHS, Dhaka' : 'Malibagh, Dhaka',
-                    status: i % 3 === 0 ? 'Pending' : 'Assigned',
-                    rider: i % 3 === 0 ? 'Not Assigned' : 'Hossain Khan'
-                });
-            }
+        const renderPickupTable = () => {
+            const $tbody = $pickupTable.find('tbody');
+            $tbody.empty();
 
-            let currentPickupPage = 1;
-            const pickupRowsPerPage = 10;
+            const start = (currentPickupPage - 1) * pickupRowsPerPage;
+            const end = start + pickupRowsPerPage;
+            const paginatedData = pickupData.slice(start, end);
 
-            const renderPickupTable = () => {
-                const $tbody = $pickupTable.find('tbody');
-                $tbody.empty();
+            $.each(paginatedData, function (index, item) {
+                const $tr = $('<tr></tr>');
+                if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
 
-                const start = (currentPickupPage - 1) * pickupRowsPerPage;
-                const end = start + pickupRowsPerPage;
-                const paginatedData = pickupData.slice(start, end);
-
-                $.each(paginatedData, function(index, item) {
-                    const $tr = $('<tr></tr>');
-                    if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
-
-                    $tr.html(`
+                $tr.html(`
                         <td class="px-6 py-6 text-gray-medium">${item.sl}</td>
                         <td class="px-6 py-6 text-gray-medium">${item.date}</td>
                         <td class="px-6 py-6 text-dark-contrast">${item.address}</td>
@@ -742,104 +1042,104 @@ $(function () {
                         </td>
                         <td class="px-6 py-6 ${item.rider === 'Not Assigned' ? 'text-gray-medium' : 'text-dark-contrast'}">${item.rider}</td>
                     `);
-                    $tbody.append($tr);
-                });
+                $tbody.append($tr);
+            });
 
-                // Update Info
-                const $info = $('#track-pagination-info');
-                if ($info.length) {
-                    $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, pickupData.length)}</span> of <span class="font-medium">${pickupData.length}</span> entries`);
-                }
-
-                renderPickupPagination();
-            };
-
-            const renderPickupPagination = () => {
-                const $container = $('#track-pagination-container');
-                if (!$container.length) return;
-                $container.empty();
-
-                const totalPages = Math.ceil(pickupData.length / pickupRowsPerPage);
-                if (totalPages <= 1) return;
-
-                // Prev
-                const $prevBtn = $('<button></button>');
-                $prevBtn.addClass(`pagination-btn ${currentPickupPage === 1 ? 'disabled' : ''}`);
-                $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-                $prevBtn.on('click', () => { if (currentPickupPage > 1) { currentPickupPage--; renderPickupTable(); } });
-                $container.append($prevBtn);
-
-                // Pages
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === 1 || i === totalPages || (i >= currentPickupPage - 1 && i <= currentPickupPage + 1)) {
-                        const $btn = $('<button></button>');
-                        $btn.addClass(`pagination-btn ${currentPickupPage === i ? 'active' : ''}`);
-                        $btn.text(i);
-                        $btn.on('click', () => { currentPickupPage = i; renderPickupTable(); });
-                        $container.append($btn);
-                    } else if (i === currentPickupPage - 2 || i === currentPickupPage + 2) {
-                        const $dots = $('<span></span>');
-                        $dots.addClass('px-2 self-center text-gray-400');
-                        $dots.text('...');
-                        $container.append($dots);
-                    }
-                }
-
-                // Next
-                const $nextBtn = $('<button></button>');
-                $nextBtn.addClass(`pagination-btn ${currentPickupPage === totalPages ? 'disabled' : ''}`);
-                $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-                $nextBtn.on('click', () => { if (currentPickupPage < totalPages) { currentPickupPage++; renderPickupTable(); } });
-                $container.append($nextBtn);
-            };
-
-            renderPickupTable();
-        }
-
-        // ==========================================
-        // Moderator Page Logic
-        // ==========================================
-        const $moderatorTable = $('.moderator-table');
-        if ($moderatorTable.length) {
-            const moderatorData = [
-                { id: 'MOD1001', name: 'Rahim Uddin', email: 'rahim@comp...', phone: '01711123456', date: '2026-04-20', status: 'Active', permission: 'Full Access' },
-                { id: 'MOD1002', name: 'Nusrat Jahan', email: 'nusrat@comp...', phone: '01822234567', date: '2026-04-22', status: 'Inactive', permission: 'Order Management' },
-                { id: 'MOD1003', name: 'Tanvir Hasan', email: 'tanvir@comp...', phone: '01933345678', date: '2026-04-25', status: 'Active', permission: 'Viewer' },
-                { id: 'MOD1004', name: 'Sadia Islam', email: 'sadia@comp...', phone: '01644456789', date: '2026-04-28', status: 'Active', permission: 'Finance' },
-            ];
-
-            // Generating dummy data for pagination demonstration
-            const names = ['Ariful Islam', 'Kamrun Nahar', 'Mehedi Hasan', 'Sumaiya Akter', 'Rakibul Islam'];
-            const permissions = ['Full Access', 'Order Management', 'Viewer', 'Finance'];
-
-            for (let i = 5; i <= 25; i++) {
-                moderatorData.push({
-                    id: `MOD${1000 + i}`,
-                    name: names[i % names.length],
-                    email: `${names[i % names.length].toLowerCase().replace(' ', '')}@comp...`,
-                    phone: `017${Math.floor(Math.random() * 90000000 + 10000000)}`,
-                    date: `2026-05-${(i % 28 + 1).toString().padStart(2, '0')}`,
-                    status: i % 5 === 0 ? 'Inactive' : 'Active',
-                    permission: permissions[i % permissions.length]
-                });
+            // Update Info
+            const $info = $('#track-pagination-info');
+            if ($info.length) {
+                $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, pickupData.length)}</span> of <span class="font-medium">${pickupData.length}</span> entries`);
             }
 
-            let currentModPage = 1;
-            const modRowsPerPage = 8;
+            renderPickupPagination();
+        };
 
-            const renderModeratorTable = () => {
-                const $tbody = $moderatorTable.find('tbody');
-                $tbody.empty();
+        const renderPickupPagination = () => {
+            const $container = $('#track-pagination-container');
+            if (!$container.length) return;
+            $container.empty();
 
-                const start = (currentModPage - 1) * modRowsPerPage;
-                const end = start + modRowsPerPage;
-                const paginatedData = moderatorData.slice(start, end);
+            const totalPages = Math.ceil(pickupData.length / pickupRowsPerPage);
+            if (totalPages <= 1) return;
 
-                $.each(paginatedData, function(index, item) {
-                    const $tr = $('<tr></tr>');
-                    if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+            // Prev
+            const $prevBtn = $('<button></button>');
+            $prevBtn.addClass(`pagination-btn ${currentPickupPage === 1 ? 'disabled' : ''}`);
+            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
+            $prevBtn.on('click', () => { if (currentPickupPage > 1) { currentPickupPage--; renderPickupTable(); } });
+            $container.append($prevBtn);
 
-                    $tr.html(`
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentPickupPage - 1 && i <= currentPickupPage + 1)) {
+                    const $btn = $('<button></button>');
+                    $btn.addClass(`pagination-btn ${currentPickupPage === i ? 'active' : ''}`);
+                    $btn.text(i);
+                    $btn.on('click', () => { currentPickupPage = i; renderPickupTable(); });
+                    $container.append($btn);
+                } else if (i === currentPickupPage - 2 || i === currentPickupPage + 2) {
+                    const $dots = $('<span></span>');
+                    $dots.addClass('px-2 self-center text-gray-400');
+                    $dots.text('...');
+                    $container.append($dots);
+                }
+            }
+
+            // Next
+            const $nextBtn = $('<button></button>');
+            $nextBtn.addClass(`pagination-btn ${currentPickupPage === totalPages ? 'disabled' : ''}`);
+            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
+            $nextBtn.on('click', () => { if (currentPickupPage < totalPages) { currentPickupPage++; renderPickupTable(); } });
+            $container.append($nextBtn);
+        };
+
+        renderPickupTable();
+    }
+
+    // ==========================================
+    // Moderator Page Logic
+    // ==========================================
+    const $moderatorTable = $('.moderator-table');
+    if ($moderatorTable.length) {
+        const moderatorData = [
+            { id: 'MOD1001', name: 'Rahim Uddin', email: 'rahim@comp...', phone: '01711123456', date: '2026-04-20', status: 'Active', permission: 'Full Access' },
+            { id: 'MOD1002', name: 'Nusrat Jahan', email: 'nusrat@comp...', phone: '01822234567', date: '2026-04-22', status: 'Inactive', permission: 'Order Management' },
+            { id: 'MOD1003', name: 'Tanvir Hasan', email: 'tanvir@comp...', phone: '01933345678', date: '2026-04-25', status: 'Active', permission: 'Viewer' },
+            { id: 'MOD1004', name: 'Sadia Islam', email: 'sadia@comp...', phone: '01644456789', date: '2026-04-28', status: 'Active', permission: 'Finance' },
+        ];
+
+        // Generating dummy data for pagination demonstration
+        const names = ['Ariful Islam', 'Kamrun Nahar', 'Mehedi Hasan', 'Sumaiya Akter', 'Rakibul Islam'];
+        const permissions = ['Full Access', 'Order Management', 'Viewer', 'Finance'];
+
+        for (let i = 5; i <= 25; i++) {
+            moderatorData.push({
+                id: `MOD${1000 + i}`,
+                name: names[i % names.length],
+                email: `${names[i % names.length].toLowerCase().replace(' ', '')}@comp...`,
+                phone: `017${Math.floor(Math.random() * 90000000 + 10000000)}`,
+                date: `2026-05-${(i % 28 + 1).toString().padStart(2, '0')}`,
+                status: i % 5 === 0 ? 'Inactive' : 'Active',
+                permission: permissions[i % permissions.length]
+            });
+        }
+
+        let currentModPage = 1;
+        const modRowsPerPage = 8;
+
+        const renderModeratorTable = () => {
+            const $tbody = $moderatorTable.find('tbody');
+            $tbody.empty();
+
+            const start = (currentModPage - 1) * modRowsPerPage;
+            const end = start + modRowsPerPage;
+            const paginatedData = moderatorData.slice(start, end);
+
+            $.each(paginatedData, function (index, item) {
+                const $tr = $('<tr></tr>');
+                if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+
+                $tr.html(`
                         <td class="px-6 py-6 text-gray-medium">${item.id}</td>
                         <td class="px-6 py-6 text-dark-contrast font-medium">${item.name}</td>
                         <td class="px-6 py-6 text-gray-medium">${item.email}</td>
@@ -859,164 +1159,164 @@ $(function () {
                             </button>
                         </td>
                     `);
-                    $tbody.append($tr);
+                $tbody.append($tr);
 
-                    // Add Event Listener to Edit Button
-                    $tr.find('.edit-moderator-btn').on('click', () => {
-                        $listView.hide();
-                        $addView.show();
-                    });
-                });
-
-                // Update Info
-                const $info = $('#pagination-info');
-                if ($info.length) {
-                    $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, moderatorData.length)}</span> of <span class="font-medium">${moderatorData.length}</span> entries`);
-                }
-
-                renderModPagination();
-            };
-
-            const renderModPagination = () => {
-                const $container = $('#pagination-container');
-                if (!$container.length) return;
-                $container.empty();
-
-                const totalPages = Math.ceil(moderatorData.length / modRowsPerPage);
-                if (totalPages <= 1) return;
-
-                // Prev
-                const $prevBtn = $('<button></button>');
-                $prevBtn.addClass(`pagination-btn ${currentModPage === 1 ? 'disabled' : ''}`);
-                $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-                $prevBtn.on('click', () => { if (currentModPage > 1) { currentModPage--; renderModeratorTable(); } });
-                $container.append($prevBtn);
-
-                // Pages
-                for (let i = 1; i <= totalPages; i++) {
-                    if (i === 1 || i === totalPages || (i >= currentModPage - 1 && i <= currentModPage + 1)) {
-                        const $btn = $('<button></button>');
-                        $btn.addClass(`pagination-btn ${currentModPage === i ? 'active' : ''}`);
-                        $btn.text(i);
-                        $btn.on('click', () => { currentModPage = i; renderModeratorTable(); });
-                        $container.append($btn);
-                    } else if (i === currentModPage - 2 || i === currentModPage + 2) {
-                        const $dots = $('<span></span>');
-                        $dots.addClass('px-2 self-center text-gray-400');
-                        $dots.text('...');
-                        $container.append($dots);
-                    }
-                }
-
-                // Next
-                const $nextBtn = $('<button></button>');
-                $nextBtn.addClass(`pagination-btn ${currentModPage === totalPages ? 'disabled' : ''}`);
-                $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-                $nextBtn.on('click', () => { if (currentModPage < totalPages) { currentModPage++; renderModeratorTable(); } });
-                $container.append($nextBtn);
-            };
-
-            // View Switching Logic
-            const $listView = $('#moderator-list');
-            const $addView = $('#add-moderator');
-            const $showAddBtn = $('#show-add-moderator');
-
-            if ($showAddBtn.length) {
-                $showAddBtn.on('click', () => {
+                // Add Event Listener to Edit Button
+                $tr.find('.edit-moderator-btn').on('click', () => {
                     $listView.hide();
                     $addView.show();
                 });
-            }
-
-            // Add Moderator Form Mock Logic
-            const $addModForm = $('#add-moderator-form');
-            if ($addModForm.length) {
-                $addModForm.on('submit', (e) => {
-                    e.preventDefault();
-                    alert('Moderator added successfully!');
-                    $addView.hide();
-                    $listView.show();
-                });
-            }
-
-            renderModeratorTable();
-        }
-
-        // ==========================================
-        // Modal Logic (General)
-        // ==========================================
-        const $registerModal = $('#register-modal');
-        const $openModalBtn = $('#open-register-modal');
-        const $closeModalBtn = $('#close-register-modal');
-
-        if ($registerModal.length && $openModalBtn.length) {
-            $openModalBtn.on('click', () => {
-                $registerModal.css('display', 'flex').addClass('active');
-                $('body').css('overflow', 'hidden'); // Prevent scroll
             });
 
-            const closeModal = () => {
-                $registerModal.hide().removeClass('active');
-                $('body').css('overflow', '');
-            };
-
-            if ($closeModalBtn.length) $closeModalBtn.on('click', closeModal);
-
-            // Close on click outside
-            $registerModal.on('click', (e) => {
-                if (e.target === $registerModal[0]) closeModal();
-            });
-
-            // Form Submit (Mock)
-            const $registerForm = $('#moderator-register-form');
-            if ($registerForm.length) {
-                $registerForm.on('submit', (e) => {
-                    e.preventDefault();
-                    alert('Moderator registered successfully!');
-                    closeModal();
-                });
+            // Update Info
+            const $info = $('#pagination-info');
+            if ($info.length) {
+                $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, moderatorData.length)}</span> of <span class="font-medium">${moderatorData.length}</span> entries`);
             }
+
+            renderModPagination();
+        };
+
+        const renderModPagination = () => {
+            const $container = $('#pagination-container');
+            if (!$container.length) return;
+            $container.empty();
+
+            const totalPages = Math.ceil(moderatorData.length / modRowsPerPage);
+            if (totalPages <= 1) return;
+
+            // Prev
+            const $prevBtn = $('<button></button>');
+            $prevBtn.addClass(`pagination-btn ${currentModPage === 1 ? 'disabled' : ''}`);
+            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
+            $prevBtn.on('click', () => { if (currentModPage > 1) { currentModPage--; renderModeratorTable(); } });
+            $container.append($prevBtn);
+
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === 1 || i === totalPages || (i >= currentModPage - 1 && i <= currentModPage + 1)) {
+                    const $btn = $('<button></button>');
+                    $btn.addClass(`pagination-btn ${currentModPage === i ? 'active' : ''}`);
+                    $btn.text(i);
+                    $btn.on('click', () => { currentModPage = i; renderModeratorTable(); });
+                    $container.append($btn);
+                } else if (i === currentModPage - 2 || i === currentModPage + 2) {
+                    const $dots = $('<span></span>');
+                    $dots.addClass('px-2 self-center text-gray-400');
+                    $dots.text('...');
+                    $container.append($dots);
+                }
+            }
+
+            // Next
+            const $nextBtn = $('<button></button>');
+            $nextBtn.addClass(`pagination-btn ${currentModPage === totalPages ? 'disabled' : ''}`);
+            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
+            $nextBtn.on('click', () => { if (currentModPage < totalPages) { currentModPage++; renderModeratorTable(); } });
+            $container.append($nextBtn);
+        };
+
+        // View Switching Logic
+        const $listView = $('#moderator-list');
+        const $addView = $('#add-moderator');
+        const $showAddBtn = $('#show-add-moderator');
+
+        if ($showAddBtn.length) {
+            $showAddBtn.on('click', () => {
+                $listView.hide();
+                $addView.show();
+            });
         }
-        // Track Parcel Logic
-        // ==========================================
-        const $trackTable = $('#track-parcel-table');
-        const trackData = [
-            { date: '2026-04-21', code: 'TRK5821A9', name: 'Rahim Uddin', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' },
-            { date: '2026-04-21', code: 'TRK5821A9', name: 'Nusrat Jahan', cod: 1300, status: 'Inactive', charge: 80, rider: 'Delivered' },
-            { date: '2026-04-21', code: 'TRK5821A9', name: 'Tanvir Hasan', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' },
-            { date: '2026-04-21', code: 'TRK5821A9', name: 'Sadia Islam', cod: 1200, status: 'Inactive', charge: 75, rider: 'Delivered' },
-            { date: '2026-04-22', code: 'TRK5821B2', name: 'Abdur Rahman', cod: 1500, status: 'Active', charge: 90, rider: 'Delivered' },
-            { date: '2026-04-22', code: 'TRK5821C5', name: 'Farzana Akter', cod: 1100, status: 'Active', charge: 70, rider: 'Delivered' },
-            { date: '2026-04-23', code: 'TRK5821D8', name: 'Jasim Uddin', cod: 1400, status: 'Inactive', charge: 85, rider: 'Delivered' },
-            { date: '2026-04-23', code: 'TRK5821E1', name: 'Mehedi Hasan', cod: 1250, status: 'Active', charge: 75, rider: 'Delivered' },
-            { date: '2026-04-24', code: 'TRK5821F4', name: 'Sultana Begum', cod: 1350, status: 'Inactive', charge: 80, rider: 'Delivered' },
-            { date: '2026-04-24', code: 'TRK5821G7', name: 'Kamrul Islam', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' }
-        ];
 
-        if ($trackTable.length) {
-            let filteredTrackData = [...trackData];
-            let currentTrackPage = 1;
-            const trackRowsPerPage = 8;
+        // Add Moderator Form Mock Logic
+        const $addModForm = $('#add-moderator-form');
+        if ($addModForm.length) {
+            $addModForm.on('submit', (e) => {
+                e.preventDefault();
+                alert('Moderator added successfully!');
+                $addView.hide();
+                $listView.show();
+            });
+        }
 
-            const renderTrackTable = () => {
-                const $tbody = $trackTable.find('tbody');
-                if (!$tbody.length) return;
-                $tbody.empty();
+        renderModeratorTable();
+    }
 
-                const start = (currentTrackPage - 1) * trackRowsPerPage;
-                const end = start + trackRowsPerPage;
-                const paginatedData = filteredTrackData.slice(start, end);
+    // ==========================================
+    // Modal Logic (General)
+    // ==========================================
+    const $registerModal = $('#register-modal');
+    const $openModalBtn = $('#open-register-modal');
+    const $closeModalBtn = $('#close-register-modal');
 
-                $.each(paginatedData, function(index, item) {
-                    const $tr = $('<tr></tr>');
-                    if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+    if ($registerModal.length && $openModalBtn.length) {
+        $openModalBtn.on('click', () => {
+            $registerModal.css('display', 'flex').addClass('active');
+            $('body').css('overflow', 'hidden'); // Prevent scroll
+        });
 
-                    const statusClass = item.status === 'Active' ? 'bg-[#E8F5E9] text-[#2E7D32]' : 'bg-[#FFF3E0] text-[#EF6C00]';
+        const closeModal = () => {
+            $registerModal.hide().removeClass('active');
+            $('body').css('overflow', '');
+        };
 
-                    // Format date for display
-                    const displayDate = new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        if ($closeModalBtn.length) $closeModalBtn.on('click', closeModal);
 
-                    $tr.html(`
+        // Close on click outside
+        $registerModal.on('click', (e) => {
+            if (e.target === $registerModal[0]) closeModal();
+        });
+
+        // Form Submit (Mock)
+        const $registerForm = $('#moderator-register-form');
+        if ($registerForm.length) {
+            $registerForm.on('submit', (e) => {
+                e.preventDefault();
+                alert('Moderator registered successfully!');
+                closeModal();
+            });
+        }
+    }
+    // Track Parcel Logic
+    // ==========================================
+    const $trackTable = $('#track-parcel-table');
+    const trackData = [
+        { date: '2026-04-21', code: 'TRK5821A9', name: 'Rahim Uddin', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' },
+        { date: '2026-04-21', code: 'TRK5821A9', name: 'Nusrat Jahan', cod: 1300, status: 'Inactive', charge: 80, rider: 'Delivered' },
+        { date: '2026-04-21', code: 'TRK5821A9', name: 'Tanvir Hasan', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' },
+        { date: '2026-04-21', code: 'TRK5821A9', name: 'Sadia Islam', cod: 1200, status: 'Inactive', charge: 75, rider: 'Delivered' },
+        { date: '2026-04-22', code: 'TRK5821B2', name: 'Abdur Rahman', cod: 1500, status: 'Active', charge: 90, rider: 'Delivered' },
+        { date: '2026-04-22', code: 'TRK5821C5', name: 'Farzana Akter', cod: 1100, status: 'Active', charge: 70, rider: 'Delivered' },
+        { date: '2026-04-23', code: 'TRK5821D8', name: 'Jasim Uddin', cod: 1400, status: 'Inactive', charge: 85, rider: 'Delivered' },
+        { date: '2026-04-23', code: 'TRK5821E1', name: 'Mehedi Hasan', cod: 1250, status: 'Active', charge: 75, rider: 'Delivered' },
+        { date: '2026-04-24', code: 'TRK5821F4', name: 'Sultana Begum', cod: 1350, status: 'Inactive', charge: 80, rider: 'Delivered' },
+        { date: '2026-04-24', code: 'TRK5821G7', name: 'Kamrul Islam', cod: 1200, status: 'Active', charge: 75, rider: 'Delivered' }
+    ];
+
+    if ($trackTable.length) {
+        let filteredTrackData = [...trackData];
+        let currentTrackPage = 1;
+        const trackRowsPerPage = 8;
+
+        const renderTrackTable = () => {
+            const $tbody = $trackTable.find('tbody');
+            if (!$tbody.length) return;
+            $tbody.empty();
+
+            const start = (currentTrackPage - 1) * trackRowsPerPage;
+            const end = start + trackRowsPerPage;
+            const paginatedData = filteredTrackData.slice(start, end);
+
+            $.each(paginatedData, function (index, item) {
+                const $tr = $('<tr></tr>');
+                if (index < paginatedData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+
+                const statusClass = item.status === 'Active' ? 'bg-[#E8F5E9] text-[#2E7D32]' : 'bg-[#FFF3E0] text-[#EF6C00]';
+
+                // Format date for display
+                const displayDate = new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+                $tr.html(`
                         <td class="px-6 py-6 text-[#64748B] font-medium text-sm">${displayDate}</td>
                         <td class="px-6 py-6 text-[#64748B] font-medium text-sm">${item.code}</td>
                         <td class="px-6 py-6 text-[#1E293B] font-bold text-sm">${item.name}</td>
@@ -1028,157 +1328,157 @@ $(function () {
                             <a href="#" class="text-[#003EB7] font-bold text-sm underline hover:text-[#002D87] transition-all">Track</a>
                         </td>
                     `);
-                    $tbody.append($tr);
-                });
-
-                // Update Info
-                const $info = $('#track-pagination-info');
-                if ($info.length) {
-                    $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, filteredTrackData.length)}</span> of <span class="font-medium">${filteredTrackData.length}</span> entries`);
-                }
-
-                renderTrackPagination();
-            };
-
-            const renderTrackPagination = () => {
-                const $container = $('#track-pagination-container');
-                if (!$container.length) return;
-                $container.empty();
-
-                const totalPages = Math.ceil(filteredTrackData.length / trackRowsPerPage);
-                if (totalPages <= 1) return;
-
-                // Prev
-                const $prevBtn = $('<button></button>');
-                $prevBtn.addClass(`pagination-btn ${currentTrackPage === 1 ? 'disabled' : ''}`);
-                $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-                $prevBtn.on('click', () => { if (currentTrackPage > 1) { currentTrackPage--; renderTrackTable(); } });
-                $container.append($prevBtn);
-
-                // Pages
-                for (let i = 1; i <= totalPages; i++) {
-                    const $btn = $('<button></button>');
-                    $btn.addClass(`pagination-btn ${currentTrackPage === i ? 'active' : ''}`);
-                    $btn.text(i);
-                    $btn.on('click', () => { currentTrackPage = i; renderTrackTable(); });
-                    $container.append($btn);
-                }
-
-                // Next
-                const $nextBtn = $('<button></button>');
-                $nextBtn.addClass(`pagination-btn ${currentTrackPage === totalPages ? 'disabled' : ''}`);
-                $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-                $nextBtn.on('click', () => { if (currentTrackPage < totalPages) { currentTrackPage++; renderTrackTable(); } });
-                $container.append($nextBtn);
-            };
-
-            // Search Logic
-            const $searchInput = $('#track-search-input');
-            if ($searchInput.length) {
-                $searchInput.on('input', (e) => {
-                    const term = $(e.target).val().toLowerCase();
-                    filteredTrackData = trackData.filter(item =>
-                        item.code.toLowerCase().includes(term) ||
-                        item.name.toLowerCase().includes(term)
-                    );
-                    currentTrackPage = 1;
-                    renderTrackTable();
-                });
-            }
-
-            renderTrackTable();
-        }
-
-        // ==========================================
-        // Pick Date Modal Logic
-        // ==========================================
-        const $dateModal = $('#date-modal');
-        const $openDateModalBtn = $('#open-date-modal');
-        const $closeDateModalBtn = $('#close-date-modal');
-        const $cancelDateModalBtn = $('#cancel-date-modal');
-        const $dateTimeForm = $('#date-time-form');
-
-        if ($dateModal.length && $openDateModalBtn.length) {
-            const openModal = () => {
-                $dateModal.css('display', 'flex');
-                setTimeout(() => $dateModal.addClass('active'), 10);
-                $('body').css('overflow', 'hidden');
-
-                const now = new Date();
-                const today = now.toISOString().split('T')[0];
-                const startTime = "00:00";
-                const endTime = now.toTimeString().split(' ')[0].substring(0, 5);
-
-                $('#selected-from-date').val(today);
-                $('#selected-from-time').val(startTime);
-                $('#selected-to-date').val(today);
-                $('#selected-to-time').val(endTime);
-            };
-
-            const closeModal = () => {
-                $dateModal.removeClass('active');
-                setTimeout(() => {
-                    $dateModal.hide();
-                }, 300);
-                $('body').css('overflow', '');
-            };
-
-            $openDateModalBtn.on('click', openModal);
-            if ($closeDateModalBtn.length) $closeDateModalBtn.on('click', closeModal);
-            if ($cancelDateModalBtn.length) $cancelDateModalBtn.on('click', closeModal);
-
-            // Close on click outside
-            $dateModal.on('click', (e) => {
-                if (e.target === $dateModal[0]) closeModal();
+                $tbody.append($tr);
             });
 
-            // Form Submit
-            if ($dateTimeForm.length) {
-                $dateTimeForm.on('submit', (e) => {
-                    e.preventDefault();
+            // Update Info
+            const $info = $('#track-pagination-info');
+            if ($info.length) {
+                $info.html(`Showing <span class="font-medium">${start + 1}</span> to <span class="font-medium">${Math.min(end, filteredTrackData.length)}</span> of <span class="font-medium">${filteredTrackData.length}</span> entries`);
+            }
 
-                    const fromDateStr = $('#selected-from-date').val();
-                    const fromTimeStr = $('#selected-from-time').val();
-                    const toDateStr = $('#selected-to-date').val();
-                    const toTimeStr = $('#selected-to-time').val();
+            renderTrackPagination();
+        };
 
-                    const fromDT = new Date(`${fromDateStr}T${fromTimeStr}`);
-                    const toDT = new Date(`${toDateStr}T${toTimeStr}`);
+        const renderTrackPagination = () => {
+            const $container = $('#track-pagination-container');
+            if (!$container.length) return;
+            $container.empty();
 
-                    const formatDT = (dt) => {
-                        const dateStr = dt.toLocaleDateString('en-CA').replace(/-/g, '/');
-                        const timeStr = dt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
-                        return `${dateStr} , ${timeStr}`;
-                    };
+            const totalPages = Math.ceil(filteredTrackData.length / trackRowsPerPage);
+            if (totalPages <= 1) return;
 
-                    // Update display labels
-                    $('#display-from-date').text(formatDT(fromDT));
-                    $('#display-to-date').text(formatDT(toDT));
+            // Prev
+            const $prevBtn = $('<button></button>');
+            $prevBtn.addClass(`pagination-btn ${currentTrackPage === 1 ? 'disabled' : ''}`);
+            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
+            $prevBtn.on('click', () => { if (currentTrackPage > 1) { currentTrackPage--; renderTrackTable(); } });
+            $container.append($prevBtn);
 
-                    // Switch views
-                    $('#track-summary-view').hide();
-                    $('#track-filtered-view').show();
+            // Pages
+            for (let i = 1; i <= totalPages; i++) {
+                const $btn = $('<button></button>');
+                $btn.addClass(`pagination-btn ${currentTrackPage === i ? 'active' : ''}`);
+                $btn.text(i);
+                $btn.on('click', () => { currentTrackPage = i; renderTrackTable(); });
+                $container.append($btn);
+            }
 
-                    // FILTER THE DATA DYNAMICALLY
-                    const filteredData = trackData.filter(item => {
-                        const itemDT = new Date(item.date);
-                        return itemDT >= new Date(fromDateStr) && itemDT <= new Date(toDateStr);
-                    });
+            // Next
+            const $nextBtn = $('<button></button>');
+            $nextBtn.addClass(`pagination-btn ${currentTrackPage === totalPages ? 'disabled' : ''}`);
+            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
+            $nextBtn.on('click', () => { if (currentTrackPage < totalPages) { currentTrackPage++; renderTrackTable(); } });
+            $container.append($nextBtn);
+        };
 
-                    // Populate Table
-                    const $filteredTbody = $('#filtered-track-table tbody');
-                    $filteredTbody.empty();
+        // Search Logic
+        const $searchInput = $('#track-search-input');
+        if ($searchInput.length) {
+            $searchInput.on('input', (e) => {
+                const term = $(e.target).val().toLowerCase();
+                filteredTrackData = trackData.filter(item =>
+                    item.code.toLowerCase().includes(term) ||
+                    item.name.toLowerCase().includes(term)
+                );
+                currentTrackPage = 1;
+                renderTrackTable();
+            });
+        }
 
-                    let totalCOD = 0;
+        renderTrackTable();
+    }
 
-                    $.each(filteredData, function(index, item) {
-                        const $tr = $('<tr></tr>');
-                        if (index < filteredData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+    // ==========================================
+    // Pick Date Modal Logic
+    // ==========================================
+    const $dateModal = $('#date-modal');
+    const $openDateModalBtn = $('#open-date-modal');
+    const $closeDateModalBtn = $('#close-date-modal');
+    const $cancelDateModalBtn = $('#cancel-date-modal');
+    const $dateTimeForm = $('#date-time-form');
 
-                        const displayDate = new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                        totalCOD += item.cod;
+    if ($dateModal.length && $openDateModalBtn.length) {
+        const openModal = () => {
+            $dateModal.css('display', 'flex');
+            setTimeout(() => $dateModal.addClass('active'), 10);
+            $('body').css('overflow', 'hidden');
 
-                        $tr.html(`
+            const now = new Date();
+            const today = now.toISOString().split('T')[0];
+            const startTime = "00:00";
+            const endTime = now.toTimeString().split(' ')[0].substring(0, 5);
+
+            $('#selected-from-date').val(today);
+            $('#selected-from-time').val(startTime);
+            $('#selected-to-date').val(today);
+            $('#selected-to-time').val(endTime);
+        };
+
+        const closeModal = () => {
+            $dateModal.removeClass('active');
+            setTimeout(() => {
+                $dateModal.hide();
+            }, 300);
+            $('body').css('overflow', '');
+        };
+
+        $openDateModalBtn.on('click', openModal);
+        if ($closeDateModalBtn.length) $closeDateModalBtn.on('click', closeModal);
+        if ($cancelDateModalBtn.length) $cancelDateModalBtn.on('click', closeModal);
+
+        // Close on click outside
+        $dateModal.on('click', (e) => {
+            if (e.target === $dateModal[0]) closeModal();
+        });
+
+        // Form Submit
+        if ($dateTimeForm.length) {
+            $dateTimeForm.on('submit', (e) => {
+                e.preventDefault();
+
+                const fromDateStr = $('#selected-from-date').val();
+                const fromTimeStr = $('#selected-from-time').val();
+                const toDateStr = $('#selected-to-date').val();
+                const toTimeStr = $('#selected-to-time').val();
+
+                const fromDT = new Date(`${fromDateStr}T${fromTimeStr}`);
+                const toDT = new Date(`${toDateStr}T${toTimeStr}`);
+
+                const formatDT = (dt) => {
+                    const dateStr = dt.toLocaleDateString('en-CA').replace(/-/g, '/');
+                    const timeStr = dt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }).toLowerCase();
+                    return `${dateStr} , ${timeStr}`;
+                };
+
+                // Update display labels
+                $('#display-from-date').text(formatDT(fromDT));
+                $('#display-to-date').text(formatDT(toDT));
+
+                // Switch views
+                $('#track-summary-view').hide();
+                $('#track-filtered-view').show();
+
+                // FILTER THE DATA DYNAMICALLY
+                const filteredData = trackData.filter(item => {
+                    const itemDT = new Date(item.date);
+                    return itemDT >= new Date(fromDateStr) && itemDT <= new Date(toDateStr);
+                });
+
+                // Populate Table
+                const $filteredTbody = $('#filtered-track-table tbody');
+                $filteredTbody.empty();
+
+                let totalCOD = 0;
+
+                $.each(filteredData, function (index, item) {
+                    const $tr = $('<tr></tr>');
+                    if (index < filteredData.length - 1) $tr.addClass('border-b border-[#F1F5F9]');
+
+                    const displayDate = new Date(item.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    totalCOD += item.cod;
+
+                    $tr.html(`
                             <td class="px-6 py-6 text-[#64748B] font-medium text-sm">${displayDate}</td>
                             <td class="px-6 py-6 text-[#64748B] font-medium text-sm">${item.code}</td>
                             <td class="px-6 py-6 text-[#1E293B] font-bold text-sm">${item.name}</td>
@@ -1191,26 +1491,26 @@ $(function () {
                                 <a href="#" class="text-[#003EB7] font-bold text-sm underline hover:text-[#002D87] transition-all">Track</a>
                             </td>
                         `);
-                        $filteredTbody.append($tr);
-                    });
-
-                    // Update stats
-                    $('#total-parcels-count').text(filteredData.length);
-                    $('#total-cod-amount').text(`${totalCOD} TK`);
-
-                    closeModal();
+                    $filteredTbody.append($tr);
                 });
-            }
 
-            // Back to summary logic
-            const $backBtn = $('#back-to-summary');
-            if ($backBtn.length) {
-                $backBtn.on('click', () => {
-                    $('#track-filtered-view').hide();
-                    $('#track-summary-view').show();
-                });
-            }
+                // Update stats
+                $('#total-parcels-count').text(filteredData.length);
+                $('#total-cod-amount').text(`${totalCOD} TK`);
+
+                closeModal();
+            });
         }
+
+        // Back to summary logic
+        const $backBtn = $('#back-to-summary');
+        if ($backBtn.length) {
+            $backBtn.on('click', () => {
+                $('#track-filtered-view').hide();
+                $('#track-summary-view').show();
+            });
+        }
+    }
 
     // ==========================================
     // Cancellation Request Page Logic
@@ -1256,7 +1556,7 @@ $(function () {
             const end = start + cancelRowsPerPage;
             const paginatedData = cancellationData.slice(start, end);
 
-            $.each(paginatedData, function(index, item) {
+            $.each(paginatedData, function (index, item) {
                 const $tr = $('<tr></tr>');
                 $tr.html(`
                     <td class="text-[#64748B] font-medium">${item.date}</td>
@@ -1345,13 +1645,13 @@ $(function () {
     const $inputCurrent = $('#input-current');
     const $inputNew = $('#input-new');
 
-    $('.edit-trigger').on('click', function() {
+    $('.edit-trigger').on('click', function () {
         const field = $(this).data('field');
         const value = $(this).data('value');
 
         // Update Edit Card Content based on field
         if ($editTitle.length) $editTitle.text('Change ' + field);
-        
+
         if (field.includes('Phone') || field.includes('Number')) {
             $labelCurrent.text('Prime Phone Number');
             $labelNew.text('Add New Primary Phone');
@@ -1383,7 +1683,7 @@ $(function () {
             'opacity': '0',
             'transform': 'translateY(-10px)'
         });
-        
+
         setTimeout(() => {
             $mainCard.hide();
             $editCard.show().css({
@@ -1391,11 +1691,11 @@ $(function () {
                 'opacity': '0',
                 'transform': 'translateY(10px)'
             });
-            
+
             // Trigger reflow
             // Trigger reflow using jQuery
             $editCard.height();
-            
+
             $editCard.css({
                 'transition': 'all 0.4s cubic-bezier(0.16, 1, 0.3, 1)',
                 'opacity': '1',
@@ -1404,12 +1704,12 @@ $(function () {
         }, 300);
     });
 
-    $('#btn-back, #btn-cancel').on('click', function() {
+    $('#btn-back, #btn-cancel').on('click', function () {
         if ($(this).attr('id') === 'btn-cancel' && $(this).text() === 'View Change History') {
             // Placeholder for change history
             return;
         }
-        
+
         $editCard.css({
             'transition': 'all 0.3s ease',
             'opacity': '0',
@@ -1422,10 +1722,10 @@ $(function () {
                 'opacity': '0',
                 'transform': 'translateY(-10px)'
             });
-            
+
             // Trigger reflow using jQuery
             $mainCard.height();
-            
+
             $mainCard.css({
                 'opacity': '1',
                 'transform': 'translateY(0)'
@@ -1477,12 +1777,12 @@ $(function () {
 
         const renderMyOrdersTable = () => {
             $myOrderTableBody.empty();
-            
+
             const start = (currentOrderPage - 1) * ordersPerPage;
             const end = start + ordersPerPage;
             const paginatedData = myOrdersData.slice(start, end);
 
-            $.each(paginatedData, function(index, item) {
+            $.each(paginatedData, function (index, item) {
                 const rowHtml = `
                     <tr class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
                         <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.sl}</td>
@@ -1557,7 +1857,7 @@ $(function () {
         renderMyOrdersTable();
 
         // Track View Toggle Logic
-        $myOrderTableBody.on('click', '.track-btn', function(e) {
+        $myOrderTableBody.on('click', '.track-btn', function (e) {
             e.preventDefault();
             $('#my-orders-list-view').hide();
             $('#my-orders-track-view').show();
@@ -1565,7 +1865,7 @@ $(function () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         });
 
-        $('#btn-back-to-orders').on('click', function(e) {
+        $('#btn-back-to-orders').on('click', function (e) {
             e.preventDefault();
             $('#my-orders-track-view').hide();
             $('#my-orders-list-view').show();
@@ -1575,7 +1875,7 @@ $(function () {
     // ==========================================================================
     // PERFECTLY RESPONSIVE HEADER INTERACTIONS
     // ==========================================================================
-    
+
     // Mobile Search Box Focus Helper
     $(document).on('click', '.top-bar .search-box', function (e) {
         if ($(window).width() <= 768) {
@@ -1589,13 +1889,13 @@ $(function () {
     // Mobile Dropdowns Toggle Logic (Taps/Clicks on Mobile/Tablet)
     $(document).on('click', function (e) {
         const $target = $(e.target);
-        
+
         // Notification bell click toggle
         if ($target.closest('.notification-bell').length) {
             if ($(window).width() <= 992) {
                 const $bell = $target.closest('.notification-bell');
                 const $dropdown = $bell.find('.notification-dropdown');
-                
+
                 if ($dropdown.hasClass('show-mobile')) {
                     $dropdown.removeClass('show-mobile');
                 } else {
@@ -1604,13 +1904,13 @@ $(function () {
                 }
                 e.stopPropagation();
             }
-        } 
+        }
         // User profile click toggle
         else if ($target.closest('.user-profile').length) {
             if ($(window).width() <= 992) {
                 const $profile = $target.closest('.user-profile');
                 const $dropdown = $profile.find('.profile-dropdown');
-                
+
                 if ($dropdown.hasClass('show-mobile')) {
                     $dropdown.removeClass('show-mobile');
                 } else {
@@ -1619,7 +1919,7 @@ $(function () {
                 }
                 e.stopPropagation();
             }
-        } 
+        }
         // Click outside closes all
         else {
             $('.notification-dropdown, .profile-dropdown').removeClass('show-mobile');
