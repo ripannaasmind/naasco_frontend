@@ -1,4 +1,30 @@
 $(function () {
+    // Helper function for consistent pagination
+    function getPaginationPages(currentPage, totalPages, isMobile) {
+        const pages = [];
+        pages.push({ type: 'page', value: currentPage });
+
+        if (isMobile) {
+            if (currentPage < totalPages) {
+                pages.push({ type: 'page', value: currentPage + 1 });
+            }
+        } else {
+            if (currentPage < totalPages) {
+                const nextP = currentPage + 1;
+                pages.push({ type: 'page', value: nextP });
+
+                if (nextP < totalPages - 1) {
+                    pages.push({ type: 'dots' });
+                }
+
+                if (nextP < totalPages) {
+                    pages.push({ type: 'page', value: totalPages });
+                }
+            }
+        }
+        return pages;
+    }
+
     // Clone header items into sidebar for mobile menu if not already cloned
     const $sidebarMenu = $('.sidebar .nav-menu');
     if ($sidebarMenu.length && !$('.sidebar-mobile-utilities').length) {
@@ -167,27 +193,16 @@ $(function () {
             const totalPages = 10;
             const isMobile = $(window).width() < 475;
 
-            // Show current page
-            $container.append(`<button class="pagination-circle-btn active">${activePage}</button>`);
+            const pages = getPaginationPages(activePage, totalPages, isMobile);
 
-            // Show next page ONLY if not mobile and not the last page
-            if (activePage < totalPages) {
-                const nextP = activePage + 1;
-
-                if (!isMobile && nextP < totalPages) {
-                    $container.append(`<button class="pagination-circle-btn">${nextP}</button>`);
-                }
-
-                // Show dots if there is a gap before the last page
-                // On mobile, always show dots if not on last page
-                if (isMobile || nextP < totalPages - 1) {
+            pages.forEach(p => {
+                if (p.type === 'page') {
+                    const activeClass = p.value === activePage ? 'active' : '';
+                    $container.append(`<button class="pagination-circle-btn ${activeClass}">${p.value}</button>`);
+                } else if (p.type === 'dots') {
                     $container.append('<span class="text-[#94A3B8] px-1">...</span>');
                 }
-
-                // Always show the last page
-                const activeClassLast = activePage === totalPages ? 'active' : '';
-                $container.append(`<button class="pagination-circle-btn ${activeClassLast}">${totalPages}</button>`);
-            }
+            });
 
             // Update Prev/Next button states
             const $prevBtn = $('.pagination-circle-btn').first();
@@ -437,22 +452,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
             $paginationContainer.append($prevBtn);
 
-            // Sliding Window Pagination (1 2 ... Last)
-            const range = 1;
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentPage - range && i <= currentPage + range)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $pageBtn = $('<button></button>');
-                    $pageBtn.addClass(`pagination-btn ${currentPage === i ? 'active' : ''}`);
-                    $pageBtn.text(i);
-                    $pageBtn.on('click', () => { currentPage = i; renderTable(); });
+                    $pageBtn.addClass(`pagination-btn ${currentPage === p.value ? 'active' : ''}`);
+                    $pageBtn.text(p.value);
+                    $pageBtn.on('click', () => { currentPage = p.value; renderTable(); });
                     $paginationContainer.append($pageBtn);
-                } else if (i === currentPage - range - 1 || i === currentPage + range + 1) {
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-gray-400');
                     $dots.text('...');
                     $paginationContainer.append($dots);
                 }
-            }
+            });
 
             // Next Button
             const $nextBtn = $('<button></button>');
@@ -651,22 +667,23 @@ $(function () {
             $prevBtn.on('click', () => { if (clearableCurrentPage > 1) { clearableCurrentPage--; renderClearableTable(); } });
             $paginationContainer.append($prevBtn);
 
-            // Sliding Window Pagination
-            const range = 1;
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= clearableCurrentPage - range && i <= clearableCurrentPage + range)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(clearableCurrentPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $pageBtn = $('<button></button>');
-                    $pageBtn.addClass(`pagination-btn ${clearableCurrentPage === i ? 'active' : ''}`);
-                    $pageBtn.text(i);
-                    $pageBtn.on('click', () => { clearableCurrentPage = i; renderClearableTable(); });
+                    $pageBtn.addClass(`pagination-btn ${clearableCurrentPage === p.value ? 'active' : ''}`);
+                    $pageBtn.text(p.value);
+                    $pageBtn.on('click', () => { clearableCurrentPage = p.value; renderClearableTable(); });
                     $paginationContainer.append($pageBtn);
-                } else if (i === clearableCurrentPage - range - 1 || i === clearableCurrentPage + range + 1) {
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-gray-400');
                     $dots.text('...');
                     $paginationContainer.append($dots);
                 }
-            }
+            });
 
             // Next Button
             const $nextBtn = $('<button></button>');
@@ -1069,21 +1086,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentPickupPage > 1) { currentPickupPage--; renderPickupTable(); } });
             $container.append($prevBtn);
 
-            // Pages
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentPickupPage - 1 && i <= currentPickupPage + 1)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentPickupPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $btn = $('<button></button>');
-                    $btn.addClass(`pagination-btn ${currentPickupPage === i ? 'active' : ''}`);
-                    $btn.text(i);
-                    $btn.on('click', () => { currentPickupPage = i; renderPickupTable(); });
+                    $btn.addClass(`pagination-btn ${currentPickupPage === p.value ? 'active' : ''}`);
+                    $btn.text(p.value);
+                    $btn.on('click', () => { currentPickupPage = p.value; renderPickupTable(); });
                     $container.append($btn);
-                } else if (i === currentPickupPage - 2 || i === currentPickupPage + 2) {
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-gray-400');
                     $dots.text('...');
                     $container.append($dots);
                 }
-            }
+            });
 
             // Next
             const $nextBtn = $('<button></button>');
@@ -1192,21 +1211,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentModPage > 1) { currentModPage--; renderModeratorTable(); } });
             $container.append($prevBtn);
 
-            // Pages
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentModPage - 1 && i <= currentModPage + 1)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentModPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $btn = $('<button></button>');
-                    $btn.addClass(`pagination-btn ${currentModPage === i ? 'active' : ''}`);
-                    $btn.text(i);
-                    $btn.on('click', () => { currentModPage = i; renderModeratorTable(); });
+                    $btn.addClass(`pagination-btn ${currentModPage === p.value ? 'active' : ''}`);
+                    $btn.text(p.value);
+                    $btn.on('click', () => { currentModPage = p.value; renderModeratorTable(); });
                     $container.append($btn);
-                } else if (i === currentModPage - 2 || i === currentModPage + 2) {
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-gray-400');
                     $dots.text('...');
                     $container.append($dots);
                 }
-            }
+            });
 
             // Next
             const $nextBtn = $('<button></button>');
@@ -1355,14 +1376,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentTrackPage > 1) { currentTrackPage--; renderTrackTable(); } });
             $container.append($prevBtn);
 
-            // Pages
-            for (let i = 1; i <= totalPages; i++) {
-                const $btn = $('<button></button>');
-                $btn.addClass(`pagination-btn ${currentTrackPage === i ? 'active' : ''}`);
-                $btn.text(i);
-                $btn.on('click', () => { currentTrackPage = i; renderTrackTable(); });
-                $container.append($btn);
-            }
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentTrackPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
+                    const $btn = $('<button></button>');
+                    $btn.addClass(`pagination-btn ${currentTrackPage === p.value ? 'active' : ''}`);
+                    $btn.text(p.value);
+                    $btn.on('click', () => { currentTrackPage = p.value; renderTrackTable(); });
+                    $container.append($btn);
+                } else if (p.type === 'dots') {
+                    const $dots = $('<span></span>');
+                    $dots.addClass('px-2 self-center text-gray-400');
+                    $dots.text('...');
+                    $container.append($dots);
+                }
+            });
 
             // Next
             const $nextBtn = $('<button></button>');
@@ -1598,22 +1628,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentCancelPage > 1) { currentCancelPage--; renderCancellationTable(); } });
             $container.append($prevBtn);
 
-            // Sliding Window Pagination (1 2 ... Last)
-            const range = 1;
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentCancelPage - range && i <= currentCancelPage + range)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentCancelPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $pageBtn = $('<button></button>');
-                    $pageBtn.addClass(`pagination-btn ${currentCancelPage === i ? 'active' : ''}`);
-                    $pageBtn.text(i);
-                    $pageBtn.on('click', () => { currentCancelPage = i; renderCancellationTable(); });
-                    $container.append($pageBtn);
-                } else if (i === currentCancelPage - range - 1 || i === currentCancelPage + range + 1) {
+                    $pageBtn.addClass(`pagination-btn ${currentCancelPage === p.value ? 'active' : ''}`);
+                    $pageBtn.text(p.value);
+                    $pageBtn.on('click', () => { currentCancelPage = p.value; renderCancellationTable(); });
+                    $paginationContainer.append($pageBtn);
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-[#94A3B8]');
                     $dots.text('...');
-                    $container.append($dots);
+                    $paginationContainer.append($dots);
                 }
-            }
+            });
 
             // Next Button
             const $nextBtn = $('<button></button>');
@@ -1830,21 +1861,23 @@ $(function () {
             $prevBtn.on('click', () => { if (currentOrderPage > 1) { currentOrderPage--; renderMyOrdersTable(); } });
             $container.append($prevBtn);
 
-            // Pages
-            for (let i = 1; i <= totalPages; i++) {
-                if (i === 1 || i === totalPages || (i >= currentOrderPage - 1 && i <= currentOrderPage + 1)) {
+            const isMobile = $(window).width() < 475;
+            const pages = getPaginationPages(currentOrderPage, totalPages, isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
                     const $btn = $('<button></button>');
-                    $btn.addClass(`pagination-btn ${currentOrderPage === i ? 'active' : ''}`);
-                    $btn.text(i);
-                    $btn.on('click', () => { currentOrderPage = i; renderMyOrdersTable(); });
+                    $btn.addClass(`pagination-btn ${currentOrderPage === p.value ? 'active' : ''}`);
+                    $btn.text(p.value);
+                    $btn.on('click', () => { currentOrderPage = p.value; renderMyOrdersTable(); });
                     $container.append($btn);
-                } else if (i === currentOrderPage - 2 || i === currentOrderPage + 2) {
+                } else if (p.type === 'dots') {
                     const $dots = $('<span></span>');
                     $dots.addClass('px-2 self-center text-gray-400');
                     $dots.text('...');
                     $container.append($dots);
                 }
-            }
+            });
 
             // Next Button
             const $nextBtn = $('<button></button>');

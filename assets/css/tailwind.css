@@ -2002,7 +2002,6 @@ ul, li, a {
   color: var(--text-primary);
   background-color: #ffffff;
   font-family: "Mulish", sans-serif;
-  overflow-x: hidden;
 }
 html.no-scroll, body.no-scroll {
   overflow: hidden !important;
@@ -2309,6 +2308,7 @@ html.no-scroll, body.no-scroll {
   border: 1px solid var(--border-color);
   animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   transition: var(--transition);
+  overflow: hidden;
 }
 .search-box {
   background-color: #FFFFFF;
@@ -4029,6 +4029,17 @@ button {
   }
   .top-bar .search-box, .top-bar .balance-widget, .top-bar .header-icon:not(.notification-bell) {
     display: none !important;
+  }
+}
+@media (max-width: 575px) {
+  .create-parcel-style {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+}
+@media (max-width: 450px) {
+  .create-parcel-tab {
+    flex-direction: column;
   }
 }
 @property --tw-translate-x {
