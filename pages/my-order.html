@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naascco - Consignments</title>
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="body-wrap">
+        <div class="app-container flex min-h-screen">
+            <!-- Sidebar -->
+            <aside
+                class="sidebar fixed left-6 top-6 z-[1000] flex flex-col overflow-hidden transition-all duration-300">
+                <div class="logo-container border-b-2 border-[#fff]">
+                    <div class="logo-box">
+                        <img src="../assets/images/logo.png" alt="Logo" class="full-logo">
+                        <img src="../assets/images/logo-icon.png" alt="Logo Icon" class="mini-logo"
+                            style="display: none;">
+                    </div>
+                    <button id="sidebar-toggle" class="sidebar-toggle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="sidebar-close" class="sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <nav class="nav-menu">
+                    <div class="nav-group">
+                        <div class="nav-group-title">MAIN MENU</div>
+                        <a href="../index.html" class="nav-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="create-parcel.html" class="nav-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Parcel</span>
+                        </a>
+                        <a href="consignment.html" class="nav-item active">
+                            <i class="fas fa-archive"></i>
+                            <span>Consignments</span>
+                        </a>
+                        <a href="add-fund.html" class="nav-item">
+                            <i class="fas fa-wallet"></i>
+                            <span>Add Fund</span>
+                        </a>
+                        <a href="pickup-request.html" class="nav-item">
+                            <i class="fas fa-truck-pickup"></i>
+                            <span>Pickup Request</span>
+                        </a>
+                        <a href="pricing.html" class="nav-item">
+                            <i class="fas fa-tag"></i>
+                            <span>Pricing</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-print"></i>
+                            <span>Bulk Print</span>
+                        </a>
+                        <a href="moderator.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Moderators</span>
+                        </a>
+                        <a href="track-parcel.html" class="nav-item">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Track Orders</span>
+                        </a>
+                        <a href="my-order.html" class="nav-item">
+                            <i class="fas fa-list-ul"></i>
+                            <span>My Orders</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-share-alt"></i>
+                            <span>API</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-group">
+                        <div class="nav-group-title">OTHERS</div>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="change-pass.html" class="nav-item">
+                            <i class="fas fa-lock"></i>
+                            <span>Change Password</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-history"></i>
+                            <span>Login History</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Two-Factor Auth</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log out</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content  flex-1 flex flex-col relative transition-all duration-300">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <div class="top-bar-left flex items-center gap-4 flex-1">
+                        <button id="mobile-sidebar-toggle" class="mobile-sidebar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div
+                            class="search-box gap-2 flex items-center bg-white border border-[#E2E8F0] rounded-full p-2 w-full max-w-[400px]">
+                            <i class="fas fa-search text-[#94A3B8]"></i>
+                            <input name="search" id="search" type="text" placeholder="Search consignment"
+                                class="bg-transparent border-none outline-none text-sm w-full text-[#64748B]">
+                        </div>
+                    </div>
+                    <div class="top-bar-right flex items-center gap-4">
+                        <!-- Balance Widget -->
+                        <div
+                            class="balance-widget flex items-center bg-white border border-[#E2E8F0] rounded-full p-1 pl-6 gap-8">
+                            <span class="text-[#1E293B] font-semibold text-sm whitespace-nowrap">0 $</span>
+                            <button
+                                class="details-btn bg-[#003EB7] text-white rounded-full px-6 py-2 text-xs font-bold hover:bg-[#002D87] transition-all">Details</button>
+                        </div>
+
+                        <!-- Language Switcher -->
+                        <div
+                            class="header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#64748B] font-bold text-xs hover:bg-slate-50 hover:text-[#003EB7] transition-all">
+                            EN
+                        </div>
+
+                        <div
+                            class="notification-bell header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#003EB7] hover:bg-slate-50 transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2.52992 14.394C2.31727 15.7471 3.268 16.6862 4.43205 17.1542C8.89481 18.9486 15.1052 18.9486 19.5679 17.1542C20.732 16.6862 21.6827 15.7471 21.4701 14.394C21.3394 13.5625 20.6932 12.8701 20.2144 12.194C19.5873 11.2975 19.525 10.3197 19.5249 9.27941C19.5249 5.2591 16.1559 2 12 2C7.84413 2 4.47513 5.2591 4.47513 9.27941C4.47503 10.3197 4.41272 11.2975 3.78561 12.194C3.30684 12.8701 2.66061 13.5625 2.52992 14.394Z"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M9 21C9.79613 21.6219 10.8475 22 12 22C13.1525 22 14.2039 21.6219 15 21"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                            <!-- Notification Dropdown -->
+                            <div class="notification-dropdown">
+                                <div class="notif-header">
+                                    <h3>Notification</h3>
+                                </div>
+                                <div class="notif-filters">
+                                    <div class="notif-filter-btn active">All</div>
+                                    <div class="notif-filter-btn outline">Unread</div>
+                                </div>
+                                <div class="notif-list">
+                                    <!-- Item 1 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 2 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 3 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 4 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="notif-footer">
+                                    <a href="#" class="see-all-notif">See all notification</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-profile">
+                            <img src="https://i.pravatar.cc/150?u=yeasin" alt="User Avatar"
+                                class="user-avatar w-11 h-11 rounded-full border border-[#E2E8F0] cursor-pointer">
+
+                            <!-- Profile Dropdown -->
+                            <div class="profile-dropdown">
+                                <a href="#" class="profile-item active">
+                                    <i class="far fa-user"></i>
+                                    <span>My Account</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-lock"></i>
+                                    <span>Change Password</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>Login History</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-shield-alt"></i>
+                                    <span>Two Factor Auth</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-cog"></i>
+                                    <span>Setting</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Dashboard Body -->
+                <div class="dashboard-container px-10 py-8 bg-[#F9FAFB] min-h-screen">
+                    <!-- List View -->
+                    <div id="my-orders-list-view">
+                        <div class="dashboard-header flex items-center justify-between mb-8">
+                            <h1 class="text-[28px] font-bold text-[#334155] tracking-tight">My Incoming Consignments
+                            </h1>
+                            <p class="text-[14px] text-[#94A3B8]">Registered number: 01531419326</p>
+                        </div>
+
+                        <!-- Table Container -->
+                        <div class="bg-white rounded-[16px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] p-6 mb-8">
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse whitespace-nowrap min-w-[1000px]">
+                                    <thead>
+                                        <tr class="bg-[#F8F9FA]">
+                                            <th
+                                                class="px-6 py-4 text-[14px] font-semibold text-[#475569] first:rounded-l-xl last:rounded-r-xl">
+                                                SL</th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">Date & Time
+                                            </th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">Tracking Code
+                                            </th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">Customer Name
+                                            </th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">Address</th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">COD</th>
+                                            <th class="px-6 py-4 text-[14px] font-semibold text-[#475569]">Merchant</th>
+                                            <th class="px-6 py-4 text-center text-[14px] font-semibold text-[#475569]">
+                                                Status</th>
+                                            <th
+                                                class="px-6 py-4 text-center text-[14px] font-semibold text-[#475569] first:rounded-l-xl last:rounded-r-xl">
+                                                Track</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="my-order-table-body">
+                                        <!-- Row 1 -->
+                                        <tr
+                                            class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">01</td>
+                                            <td class="px-6 py-5">
+                                                <div class="text-[14px] font-medium text-[#64748B]">Apr 21, 2026</div>
+                                                <div class="text-[13px] text-[#94A3B8] mt-1">30 min ago</div>
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">TRK5821A9</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Rahim Uddin
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Dhaka,
+                                                Bangladesh</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">1200 $</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">ShopEase</td>
+                                            <td class="px-6 py-5 text-center">
+                                                <span
+                                                    class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium bg-[#DCFCE7] text-[#16A34A]">Delivered</span>
+                                            </td>
+                                            <td class="px-6 py-5 text-center">
+                                                <a href="#"
+                                                    class="text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 2 -->
+                                        <tr
+                                            class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">02</td>
+                                            <td class="px-6 py-5">
+                                                <div class="text-[14px] font-medium text-[#64748B]">Apr 21, 2026</div>
+                                                <div class="text-[13px] text-[#94A3B8] mt-1">30 min ago</div>
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">TRK5821B1</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Karim Hasan
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Chittagong</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">850 $</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">QuickBuy</td>
+                                            <td class="px-6 py-5 text-center">
+                                                <span
+                                                    class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium bg-[#FFEDD5] text-[#EA580C]">Pending</span>
+                                            </td>
+                                            <td class="px-6 py-5 text-center">
+                                                <a href="#"
+                                                    class="text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 3 -->
+                                        <tr
+                                            class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">03</td>
+                                            <td class="px-6 py-5">
+                                                <div class="text-[14px] font-medium text-[#64748B]">Apr 21, 2026</div>
+                                                <div class="text-[13px] text-[#94A3B8] mt-1">30 min ago</div>
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">TRK5821C3</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Nusrat Jahan
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Sylhet,
+                                                Bangladesh</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">1000 $</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">BD Mart</td>
+                                            <td class="px-6 py-5 text-center">
+                                                <span
+                                                    class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium bg-[#DCFCE7] text-[#16A34A]">Delivered</span>
+                                            </td>
+                                            <td class="px-6 py-5 text-center">
+                                                <a href="#"
+                                                    class="text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                                            </td>
+                                        </tr>
+                                        <!-- Row 4 -->
+                                        <tr
+                                            class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">04</td>
+                                            <td class="px-6 py-5">
+                                                <div class="text-[14px] font-medium text-[#64748B]">Apr 21, 2026</div>
+                                                <div class="text-[13px] text-[#94A3B8] mt-1">30 min ago</div>
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">TRK5821D7</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Tanvir Ahmed
+                                            </td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">Khulna,
+                                                Bangladesh</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">1500 $</td>
+                                            <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">EasyShop</td>
+                                            <td class="px-6 py-5 text-center">
+                                                <span
+                                                    class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium bg-[#FEE2E2] text-[#EF4444]">Cancelled</span>
+                                            </td>
+                                            <td class="px-6 py-5 text-center">
+                                                <a href="#"
+                                                    class="text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div class="px-8 py-6 flex items-center justify-between border-t border-[#F1F5F9]">
+                                <div id="my-order-pagination-info" class="text-sm text-[#64748B]">
+                                    Showing <span class="font-medium">1</span> to <span class="font-medium">15</span> of
+                                    <span class="font-medium">45</span> entries
+                                </div>
+                                <div id="my-order-pagination-container" class="flex gap-2">
+                                    <button class="pagination-btn disabled"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="pagination-btn active">1</button>
+                                    <button class="pagination-btn">2</button>
+                                    <button class="pagination-btn">3</button>
+                                    <button class="pagination-btn"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tracking Details View -->
+                    <div id="my-orders-track-view" style="display: none;">
+                        <h2 class="text-[24px] font-bold text-[#334155] mb-6">Tracking ID -TRK5821A9</h2>
+
+                        <!-- Details Card -->
+                        <div class="bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 lg:p-8 mb-8">
+                            <div class="flex flex-col lg:flex-row justify-between gap-8">
+                                <!-- Left Info -->
+                                <div class="flex flex-col gap-[10px]">
+                                    <div class="text-[13px] text-[#64748B]">Mar 26, 2024 04:31 pm</div>
+                                    <div class="text-[14px]"><span class="text-[#64748B]">Id :</span> <span
+                                            class="font-semibold text-[#1E293B]">78764916</span></div>
+                                    <div class="text-[14px]"><span class="text-[#64748B]">Invoice :</span> <span
+                                            class="font-semibold text-[#1E293B]">63626</span></div>
+                                    <div class="text-[14px]"><span class="text-[#64748B]">Tracking Code :</span> <span
+                                            class="font-semibold text-[#1E293B]">TRK5821A9</span></div>
+
+                                    <div class="mt-[14px] text-[14px]"><span class="text-[#64748B]">Name:</span> <span
+                                            class="text-[#475569]">Rahim Uddin</span></div>
+                                    <div class="text-[14px]"><span class="text-[#64748B]">Address :</span> <span
+                                            class="text-[#475569]">Dhaka, Bangladesh</span></div>
+                                    <div class="text-[14px] flex items-center gap-2">
+                                        <span class="text-[#64748B]">Phone :</span>
+                                        <span class="text-[#475569]">01654973769</span>
+                                        <a href="tel:01654973769"
+                                            class="bg-[#003EB7] text-white text-[11px] px-[12px] py-[3px] rounded-full font-medium ml-1">Call</a>
+                                    </div>
+                                </div>
+
+                                <!-- Right Info -->
+                                <div class="flex flex-col gap-[10px] lg:items-end text-left lg:text-right pt-2">
+                                    <div class="text-[13px]"><span class="text-[#64748B]">Approved :</span> <span
+                                            class="font-semibold text-[#1E293B]">Mar 27, 2024</span></div>
+                                    <div class="text-[13px]"><span class="text-[#64748B]">Weight :</span> <span
+                                            class="font-semibold text-[#1E293B]">0.2KG</span></div>
+                                    <div class="text-[16px] mt-1"><span class="text-[#475569]">COD:</span> <span
+                                            class="font-bold text-[#1E293B]">$ 720</span></div>
+                                    <div class="mt-1">
+                                        <span
+                                            class="inline-flex items-center justify-center px-4 py-1 rounded-full text-[12px] font-medium bg-[#DCFCE7] text-[#16A34A]">Delivered</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sender / Assigned Info -->
+                            <div class="mt-8 rounded-xl overflow-hidden bg-[#E1EBF9] border border-[#E1EBF9]">
+                                <div class="flex flex-col sm:flex-row text-[#64748B] text-[13px] font-medium">
+                                    <div class="flex-1 px-6 py-3 border-b sm:border-b-0 sm:border-r border-white/20">
+                                        Sender Info</div>
+                                    <div class="flex-1 px-6 py-3 text-left sm:text-right">Assigned to</div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row text-[13px] bg-white">
+                                    <div class="flex-1 px-6 py-4 border-b sm:border-b-0 sm:border-r border-[#E2E8F0]">
+                                        <div class="font-semibold text-[#1E293B]">Ruperhat.com</div>
+                                    </div>
+                                    <div class="flex-1 px-6 py-4 flex flex-col gap-[6px] text-left sm:text-right">
+                                        <div><span class="text-[#1E293B] font-semibold">Rider :</span> <span
+                                                class="text-[#64748B]">Deen Islam kafrul</span></div>
+                                        <div><span class="text-[#1E293B] font-semibold">Phone :</span> <span
+                                                class="text-[#64748B]">01654973769</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 class="text-[24px] font-bold text-[#334155] mb-6">Tracking Updates</h2>
+
+                        <!-- Updates Timeline -->
+                        <div class="bg-white rounded-[16px] shadow-[0_4px_20px_rgba(0,0,0,0.03)] p-6 lg:p-12">
+                            <div class="relative max-w-4xl">
+                                <!-- Vertical Line perfectly centered with the circles -->
+                                <div
+                                    class="absolute top-2 bottom-6 left-[95px] md:left-[115px] w-12 flex justify-center">
+                                    <div class="w-[2px] h-full bg-[#22C55E]"></div>
+                                </div>
+
+                                <div class="flex flex-col gap-12">
+                                    <!-- Update Item 1 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 20,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">03:15 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment has been marked as delivered by rider.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 2 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 20,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">11:05 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Assigned to rider.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 3 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 20,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">01:30 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment has been received at KOLLYANPUR.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 4 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 20,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">12:10 am</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment sent to KOLLYANPUR. Dispatch ID: 98765432
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 5 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 20,
+                                                2022</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">11:55 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment has been received without listing at MIRPUR WAREHOUSE.
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 6 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 19,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">10:20 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment status has been updated as Pending
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Update Item 7 -->
+                                    <div class="relative flex items-start">
+                                        <div
+                                            class="w-[95px] md:w-[115px] flex-shrink-0 text-left md:text-right pt-0.5 pr-0 md:pr-2">
+                                            <div class="text-[13px] md:text-[14px] font-medium text-[#003EB7]">Jun 19,
+                                                2026</div>
+                                            <div class="text-[12px] md:text-[13px] text-[#003EB7] mt-0.5">03:40 pm</div>
+                                        </div>
+                                        <div class="w-12 flex-shrink-0 flex justify-center relative z-10 pt-[2px]">
+                                            <div class="flex items-center justify-center">
+                                                <svg width="35" height="35" viewBox="0 0 35 35" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path
+                                                        d="M34.0833 17.4168C34.0833 8.21208 26.6214 0.750164 17.4167 0.750164C8.21192 0.750164 0.75 8.21208 0.75 17.4168C0.75 26.6216 8.21192 34.0835 17.4167 34.0835C26.6214 34.0835 34.0833 26.6216 34.0833 17.4168Z"
+                                                        fill="white" stroke="#0FA02A" stroke-width="1.5" />
+                                                    <path d="M10.75 18.2503L14.9167 22.417L24.0833 12.417"
+                                                        stroke="#0FA02A" stroke-width="1.5" stroke-linecap="round"
+                                                        stroke-linejoin="round" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="flex-1 pt-1 pl-0 md:pl-2">
+                                            <div class="text-[13.5px] md:text-[14px] text-[#64748B]">
+                                                Consignment created by Sender(API)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </main>
+    </div>
+    </div>
+    <!-- jQuery -->
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>

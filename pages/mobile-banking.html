@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naascco - Create Parcel</title>
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="body-wrap">
+        <div class="app-container flex min-h-screen">
+            <!-- Sidebar -->
+            <aside
+                class="sidebar fixed left-6 top-6 z-[1000] flex flex-col overflow-hidden transition-all duration-300">
+                <div class="logo-container border-b-2 border-[#fff]">
+                    <div class="logo-box">
+                        <img src="../assets/images/logo.png" alt="Logo" class="full-logo">
+                        <img src="../assets/images/logo-icon.png" alt="Logo Icon" class="mini-logo"
+                            style="display: none;">
+                    </div>
+                    <button id="sidebar-toggle" class="sidebar-toggle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="sidebar-close" class="sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <nav class="nav-menu">
+                    <div class="nav-group">
+                        <div class="nav-group-title">MAIN MENU</div>
+                        <a href="../index.html" class="nav-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="create-parcel.html" class="nav-item active">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Parcel</span>
+                        </a>
+                        <a href="consignment.html" class="nav-item">
+                            <i class="fas fa-archive"></i>
+                            <span>Consignments</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-wallet"></i>
+                            <span>Add Fund</span>
+                        </a>
+                        <a href="pickup-request.html" class="nav-item">
+                            <i class="fas fa-truck-pickup"></i>
+                            <span>Pickup Request</span>
+                        </a>
+                        <a href="pricing.html" class="nav-item">
+                            <i class="fas fa-tag"></i>
+                            <span>Pricing</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-print"></i>
+                            <span>Bulk Print</span>
+                        </a>
+                        <a href="moderator.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Moderators</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Track Orders</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-list-ul"></i>
+                            <span>My Orders</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-share-alt"></i>
+                            <span>API</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-group">
+                        <div class="nav-group-title">OTHERS</div>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-lock"></i>
+                            <span>Change Password</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-history"></i>
+                            <span>Login History</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Two-Factor Auth</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log out</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content  flex-1 flex flex-col relative transition-all duration-300">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <div class="top-bar-left flex items-center gap-4 flex-1">
+                        <button id="mobile-sidebar-toggle" class="mobile-sidebar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div
+                            class="search-box gap-2 flex items-center bg-white border border-[#E2E8F0] rounded-full p-2 w-full max-w-[400px]">
+                            <i class="fas fa-search text-[#94A3B8]"></i>
+                            <input name="search" id="search" type="text" placeholder="Search consignment"
+                                class="bg-transparent border-none outline-none text-sm w-full text-[#64748B]">
+                        </div>
+                    </div>
+                    <div class="top-bar-right flex items-center gap-4">
+                        <!-- Balance Widget -->
+                        <div
+                            class="balance-widget flex items-center bg-white border border-[#E2E8F0] rounded-full p-1 pl-6 gap-8">
+                            <span class="text-[#1E293B] font-semibold text-sm whitespace-nowrap">0 $</span>
+                            <button
+                                class="details-btn bg-[#003EB7] text-white rounded-full px-6 py-2 text-xs font-bold hover:bg-[#002D87] transition-all">Details</button>
+                        </div>
+
+                        <!-- Language Switcher -->
+                        <div
+                            class="header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#64748B] font-bold text-xs hover:bg-slate-50 hover:text-[#003EB7] transition-all">
+                            EN
+                        </div>
+
+                        <div
+                            class="notification-bell header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#003EB7] hover:bg-slate-50 transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2.52992 14.394C2.31727 15.7471 3.268 16.6862 4.43205 17.1542C8.89481 18.9486 15.1052 18.9486 19.5679 17.1542C20.732 16.6862 21.6827 15.7471 21.4701 14.394C21.3394 13.5625 20.6932 12.8701 20.2144 12.194C19.5873 11.2975 19.525 10.3197 19.5249 9.27941C19.5249 5.2591 16.1559 2 12 2C7.84413 2 4.47513 5.2591 4.47513 9.27941C4.47503 10.3197 4.41272 11.2975 3.78561 12.194C3.30684 12.8701 2.66061 13.5625 2.52992 14.394Z"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M9 21C9.79613 21.6219 10.8475 22 12 22C13.1525 22 14.2039 21.6219 15 21"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                            <!-- Notification Dropdown -->
+                            <div class="notification-dropdown">
+                                <div class="notif-header">
+                                    <h3>Notification</h3>
+                                </div>
+                                <div class="notif-filters">
+                                    <div class="notif-filter-btn active">All</div>
+                                    <div class="notif-filter-btn outline">Unread</div>
+                                </div>
+                                <div class="notif-list">
+                                    <!-- Item 1 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 2 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 3 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 4 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="notif-footer">
+                                    <a href="#" class="see-all-notif">See all notification</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-profile">
+                            <img src="https://i.pravatar.cc/150?u=yeasin" alt="User Avatar"
+                                class="user-avatar w-11 h-11 rounded-full border border-[#E2E8F0] cursor-pointer">
+
+                            <!-- Profile Dropdown -->
+                            <div class="profile-dropdown">
+                                <a href="#" class="profile-item active">
+                                    <i class="far fa-user"></i>
+                                    <span>My Account</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-lock"></i>
+                                    <span>Change Password</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>Login History</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-shield-alt"></i>
+                                    <span>Two Factor Auth</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-cog"></i>
+                                    <span>Setting</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Dashboard Body -->
+                <div class="dashboard-container">
+                    <div class="mb-8">
+                        <h1 class="text-[28px] font-bold text-[#334155] tracking-tight">Settings</h1>
+                    </div>
+
+                    <!-- Tabs Container -->
+                    <div
+                        class="bg-white rounded-[12px] p-2 mb-8 flex flex-wrap lg:flex-nowrap gap-2 border border-[#F1F5F9] shadow-[0px_2px_10px_rgba(0,0,0,0.02)] overflow-x-auto hide-scrollbar">
+                        <button id="tab-bank-account"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all bg-[#2563EB] text-white whitespace-nowrap">Bank
+                            Account</button>
+                        <button id="tab-mobile-banking"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all text-[#475569] hover:bg-slate-50 whitespace-nowrap">Mobile
+                            Banking</button>
+                        <button id="tab-payment-method"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all text-[#475569] hover:bg-slate-50 whitespace-nowrap">Payment
+                            Method</button>
+                        <button id="tab-business-profile"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all text-[#475569] hover:bg-slate-50 whitespace-nowrap">Business
+                            Profile</button>
+                        <button id="tab-pickup-method"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all text-[#475569] hover:bg-slate-50 whitespace-nowrap">Pickup
+                            Method</button>
+                        <button id="tab-label-printing"
+                            class="settings-tab-btn flex-shrink-0 flex-1 min-w-[150px] text-center py-[14px] px-6 rounded-[10px] font-bold text-[14px] transition-all text-[#475569] hover:bg-slate-50 whitespace-nowrap">Label
+                            Printing</button>
+                    </div>
+
+                    <!-- Main Content Container (Bank Account Tab) -->
+                    <div id="bank-account-content" class="settings-tab-content">
+                        <!-- Main View -->
+                        <div id="bank-account-main-view" class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                            <div class="flex items-center justify-between mb-8 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M2 8.56907C2 7.37289 2.48238 6.63982 3.48063 6.08428L7.58987 3.79744C9.7431 2.59915 10.8197 2 12 2C13.1803 2 14.2569 2.59915 16.4101 3.79744L20.5194 6.08428C21.5176 6.63982 22 7.3729 22 8.56907C22 8.89343 22 9.05561 21.9646 9.18894C21.7785 9.88945 21.1437 10 20.5307 10H3.46928C2.85627 10 2.22152 9.88944 2.03542 9.18894C2 9.05561 2 8.89343 2 8.56907Z"
+                                            stroke="#023FA3" stroke-width="1.5" />
+                                        <path d="M11.9959 7H12.0049" stroke="#023FA3" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M4 10V18.5M8 10V18.5" stroke="#023FA3" stroke-width="1.5" />
+                                        <path d="M16 10V18.5M20 10V18.5" stroke="#023FA3" stroke-width="1.5" />
+                                        <path
+                                            d="M19 18.5H5C3.34315 18.5 2 19.8431 2 21.5C2 21.7761 2.22386 22 2.5 22H21.5C21.7761 22 22 21.7761 22 21.5C22 19.8431 20.6569 18.5 19 18.5Z"
+                                            stroke="#023FA3" stroke-width="1.5" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h2 class="text-[16px] font-bold text-[#1E293B]">Bank Account</h2>
+                                    <p class="text-[14px] text-[#94A3B8]">Your linked bank for withdraws</p>
+                                </div>
+                            </div>
+                            <button id="btn-edit-bank-account"
+                                class="bg-[#003EB7] text-white text-[14px] font-medium px-6 py-2 rounded-[8px] hover:bg-[#002D86] transition-colors">Edit</button>
+                        </div>
+
+                        <form class="flex flex-col gap-6">
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Bank Name</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Branch Name</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Account Name</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Account No</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Routing No</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                        </form>
+                        </div>
+
+                        <!-- Update Bank Account View -->
+                        <div id="bank-account-update-view" style="display: none;">
+                            <h2 class="text-[20px] font-bold text-[#334155] mb-2">Update Bank Account</h2>
+                            <p class="text-[14px] text-[#94A3B8] mb-6">Search and select your bank</p>
+                            
+                            <div class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                                <form class="flex flex-col gap-6">
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Bank Name</label>
+                                        <div class="relative">
+                                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="11" cy="11" r="8"></circle>
+                                                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                                </svg>
+                                            </div>
+                                            <input type="text" placeholder="Search bank..." class="w-full h-[45px] pl-10 pr-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Branch</label>
+                                        <div class="relative">
+                                            <select class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#94A3B8] appearance-none focus:outline-none focus:border-[#2563EB]">
+                                                <option value="" disabled selected>Branch Name</option>
+                                                <option value="1">Dhaka Branch</option>
+                                            </select>
+                                            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none">
+                                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Routing</label>
+                                        <input type="text" placeholder="Routing Number" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Account Name</label>
+                                        <input type="text" placeholder="Account Holder Name" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Account No</label>
+                                        <input type="text" placeholder="A/C Number" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-4 mt-2">
+                                        <button type="button" id="btn-cancel-bank-account" class="flex-1 py-[12px] rounded-[100px] border border-[#003EB7] text-[#003EB7] font-bold text-[14px] hover:bg-[#EFF6FF] transition-all">
+                                            Cancel
+                                        </button>
+                                        <button type="button" class="flex-1 py-[12px] rounded-[100px] bg-[#003EB7] text-white font-bold text-[14px] hover:bg-[#002D86] shadow-lg shadow-blue-100 transition-all">
+                                            Continue
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Mobile Banking Tab Content -->
+                    <div id="mobile-banking-content" class="settings-tab-content" style="display: none;">
+                        <!-- Main View -->
+                        <div id="mobile-banking-main-view" class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                            <div class="flex items-center justify-between mb-8 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <rect x="6" y="2" width="12" height="20" rx="3" stroke="#023FA3"
+                                            stroke-width="1.5" />
+                                        <path d="M11.99 18H12.01" stroke="#023FA3" stroke-width="2"
+                                            stroke-linecap="round" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h2 class="text-[16px] font-bold text-[#1E293B]">Mobile Banking</h2>
+                                    <p class="text-[14px] text-[#94A3B8]">Your bkash , Rokect and Nagad number</p>
+                                </div>
+                            </div>
+                            <button id="btn-edit-mobile-banking"
+                                class="bg-[#003EB7] text-white text-[14px] font-medium px-6 py-2 rounded-[8px] hover:bg-[#002D86] transition-colors">Edit</button>
+                        </div>
+
+                        <form class="flex flex-col gap-6">
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">bkash Number</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Rokect Number</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Nagad Number</label>
+                                <input type="text" placeholder="Not set"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            </form>
+                        </div>
+
+                        <!-- Update Mobile Banking View -->
+                        <div id="mobile-banking-update-view" style="display: none;">
+                            <h2 class="text-[20px] font-bold text-[#334155] mb-2">Update Mobile Banking</h2>
+                            <p class="text-[14px] text-[#94A3B8] mb-6">Type numbers in English digits only</p>
+                            
+                            <div class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                                <form class="flex flex-col gap-6">
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">bKash</label>
+                                        <input type="text" placeholder="11 digit bkash number" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Rocket</label>
+                                        <input type="text" placeholder="12 digit bkash number" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Nagad</label>
+                                        <input type="text" placeholder="11 digit bkash number" class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    
+                                    <div class="flex items-center gap-4 mt-2">
+                                        <button type="button" id="btn-cancel-mobile-banking" class="flex-1 py-[12px] rounded-[100px] border border-[#003EB7] text-[#003EB7] font-bold text-[14px] hover:bg-[#EFF6FF] transition-all">
+                                            Cancel
+                                        </button>
+                                        <button type="button" class="flex-1 py-[12px] rounded-[100px] bg-[#003EB7] text-white font-bold text-[14px] hover:bg-[#002D86] shadow-lg shadow-blue-100 transition-all">
+                                            Continue
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Method Tab Content -->
+                    <div id="payment-method-content"
+                        class="settings-tab-content bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent"
+                        style="display: none;">
+                        <div class="flex items-center justify-between mb-8 pb-4">
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M16 17L9 17" stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                        <path d="M16 13L13 13" stroke="#023FA3" stroke-width="1.5"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M20.5 14C20.5 17.7712 20.5 19.6569 19.2552 20.8284C18.0104 22 16.0069 22 12 22H11.2273C7.96607 22 6.33546 22 5.20307 21.2022C4.87862 20.9736 4.59058 20.7025 4.3477 20.3971C3.5 19.3313 3.5 17.7966 3.5 14.7273V12.1818C3.5 9.21865 3.5 7.73706 3.96894 6.55375C4.72281 4.65142 6.31714 3.15088 8.33836 2.44135C9.59563 2 11.1698 2 14.3182 2C16.1173 2 17.0168 2 17.7352 2.2522C18.8902 2.65765 19.8012 3.5151 20.232 4.60214C20.5 5.27832 20.5 6.12494 20.5 7.81818V14Z"
+                                            stroke="#023FA3" stroke-width="1.5" stroke-linejoin="round" />
+                                        <path
+                                            d="M3.5 12C3.5 10.1591 4.99238 8.66667 6.83333 8.66667C7.49912 8.66667 8.28404 8.78333 8.93137 8.60988C9.50652 8.45576 9.95576 8.00652 10.1099 7.43136C10.2833 6.78404 10.1667 5.99912 10.1667 5.33333C10.1667 3.49238 11.6591 2 13.5 2"
+                                            stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+
+                                </div>
+                                <div>
+                                    <h2 class="text-[16px] font-bold text-[#1E293B]">Default Payment Method</h2>
+                                    <p class="text-[14px] text-[#94A3B8]">Choose how and when you'd like to receive
+                                        payouts</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form class="flex flex-col gap-6">
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Default Method</label>
+                                <input type="text" placeholder="Enter the method"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                            <div>
+                                <label class="block text-[14px] font-bold text-[#334155] mb-2">Withdrawal
+                                    Preference</label>
+                                <input type="text" placeholder="Payment info"
+                                    class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#000] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]"
+                                    disabled>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Business Profile Tab Content -->
+                    <div id="business-profile-content" class="settings-tab-content" style="display: none;">
+                        <!-- Main View -->
+                        <div id="business-profile-main-view"
+                            class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                            <div class="flex items-center justify-between mb-8 pb-4">
+                                <div class="flex items-center gap-4">
+                                    <div
+                                        class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15L12 16.5" stroke="#023FA3" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path
+                                                d="M3 11L3.15288 13.8633C3.31714 17.477 3.39927 19.2839 4.55885 20.3919C5.71843 21.5 7.52716 21.5 11.1446 21.5H12.8554C16.4728 21.5 18.2816 21.5 19.4412 20.3919C20.6007 19.2839 20.6829 17.477 20.8471 13.8633L21 11"
+                                                stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M2.84718 10.4431C4.54648 13.6744 8.3792 15 12 15C15.6208 15 19.4535 13.6744 21.1528 10.4431C21.964 8.90056 21.3498 6 19.352 6H4.648C2.65023 6 2.03603 8.90056 2.84718 10.4431Z"
+                                                stroke="#023FA3" stroke-width="1.5" />
+                                            <path
+                                                d="M16 6L15.9117 5.69094C15.4717 4.15089 15.2517 3.38087 14.7279 2.94043C14.2041 2.5 13.5084 2.5 12.117 2.5H11.883C10.4916 2.5 9.79587 2.5 9.2721 2.94043C8.74832 3.38087 8.52832 4.15089 8.0883 5.69094L8 6"
+                                                stroke="#023FA3" stroke-width="1.5" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h2 class="text-[16px] font-bold text-[#1E293B]">Business Information</h2>
+                                        <p class="text-[14px] text-[#94A3B8]">Your company and pickup address</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-col">
+                                <!-- Company Name Row -->
+                                <div class="flex items-center justify-between py-6 border-b border-[#F1F5F9]">
+                                    <div class="flex items-center">
+                                        <span class="text-[14px] font-medium text-[#64748B] w-[140px]">Company
+                                            Name</span>
+                                        <span class="text-[14px] font-bold text-[#1E293B]">NAAS</span>
+                                    </div>
+                                    <button id="btn-change-company-name"
+                                        class="bg-[#003EB7] text-white text-[14px] font-medium px-5 py-2 rounded-[8px] hover:bg-[#002D86] transition-colors">Change</button>
+                                </div>
+
+                                <!-- Full Address Row -->
+                                <div class="flex items-center justify-between py-6">
+                                    <div class="flex items-center">
+                                        <span class="text-[14px] font-medium text-[#64748B] w-[140px]">Full
+                                            Address</span>
+                                        <span class="text-[14px] font-bold text-[#1E293B]">NAAS</span>
+                                    </div>
+                                    <button id="btn-update-address"
+                                        class="bg-[#003EB7] text-white text-[14px] font-medium px-5 py-2 rounded-[8px] hover:bg-[#002D86] transition-colors">Change</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Change Company Name View -->
+                        <div id="business-profile-change-name-view" style="display: none;">
+                            <h2 class="text-[20px] font-bold text-[#334155] mb-6">Change Company Name</h2>
+
+                            <div
+                                class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                                <!-- Header -->
+                                <div class="flex items-center gap-4 mb-8">
+                                    <div
+                                        class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M12 15L12 16.5" stroke="#023FA3" stroke-width="1.5"
+                                                stroke-linecap="round" stroke-linejoin="round" />
+                                            <path
+                                                d="M3 11L3.15288 13.8633C3.31714 17.477 3.39927 19.2839 4.55885 20.3919C5.71843 21.5 7.52716 21.5 11.1446 21.5H12.8554C16.4728 21.5 18.2816 21.5 19.4412 20.3919C20.6007 19.2839 20.6829 17.477 20.8471 13.8633L21 11"
+                                                stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                                stroke-linejoin="round" />
+                                            <path
+                                                d="M2.84718 10.4431C4.54648 13.6744 8.3792 15 12 15C15.6208 15 19.4535 13.6744 21.1528 10.4431C21.964 8.90056 21.3498 6 19.352 6H4.648C2.65023 6 2.03603 8.90056 2.84718 10.4431Z"
+                                                stroke="#023FA3" stroke-width="1.5" />
+                                            <path
+                                                d="M16 6L15.9117 5.69094C15.4717 4.15089 15.2517 3.38087 14.7279 2.94043C14.2041 2.5 13.5084 2.5 12.117 2.5H11.883C10.4916 2.5 9.79587 2.5 9.2721 2.94043C8.74832 3.38087 8.52832 4.15089 8.0883 5.69094L8 6"
+                                                stroke="#023FA3" stroke-width="1.5" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-[15px] font-bold text-[#1E293B]">Company Name Change Request
+                                        </h3>
+                                        <p class="text-[13px] text-[#94A3B8]">Your request will be reviewed by on admin
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Info Box -->
+                                <div
+                                    class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[10px] p-4 flex items-center gap-3 mb-8">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B"
+                                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                                    </svg>
+                                    <p class="text-[#64748B] text-[13px]">An admin will review and approve your request.
+                                        You'll be notified once it is processed.</p>
+                                </div>
+
+                                <!-- Current Name -->
+                                <div class="flex items-center mb-6 pb-6 border-b border-[#F1F5F9]">
+                                    <span class="text-[14px] font-medium text-[#64748B] w-[140px]">Current Name</span>
+                                    <span class="text-[14px] font-bold text-[#1E293B]">NAAS</span>
+                                </div>
+
+                                <!-- New Name Form -->
+                                <form class="flex flex-col gap-6">
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">New Company
+                                            Name</label>
+                                        <input type="text" placeholder="Enter the company name"
+                                            class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                </form>
+                            </div>
+
+                            <button id="btn-back-business-profile"
+                                class="mt-6 flex items-center gap-2 text-[#64748B] text-sm font-bold hover:text-[#003EB7] transition-all">
+                                <i class="fas fa-arrow-left"></i>
+                                Back to Profile
+                            </button>
+                        </div>
+
+                        <!-- Update Address View -->
+                        <div id="business-profile-update-address-view" style="display: none;">
+                            <h2 class="text-[20px] font-bold text-[#334155] mb-6">Update Address</h2>
+
+                            <div
+                                class="bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] lg:w-2/3 border border-transparent">
+                                <form class="flex flex-col gap-6">
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Address</label>
+                                        <input type="text" placeholder="Enter the address"
+                                            class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">District</label>
+                                        <input type="text" placeholder="Enter the district"
+                                            class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[14px] font-bold text-[#334155] mb-2">Thana</label>
+                                        <input type="text" placeholder="Enter the thana"
+                                            class="w-full h-[45px] px-4 rounded-[12px] border border-[#E2E8F0] bg-white text-[14px] text-[#1E293B] focus:outline-none focus:border-[#2563EB] placeholder-[#94A3B8]">
+                                    </div>
+                                    <button type="button"
+                                        class="w-full py-[14px] rounded-full bg-[#003EB7] text-white font-bold text-[14px] hover:bg-[#002D86] shadow-lg shadow-blue-100 transition-all mt-4">
+                                        Update
+                                    </button>
+                                </form>
+                            </div>
+
+                            <button id="btn-back-from-address"
+                                class="mt-6 flex items-center gap-2 text-[#64748B] text-sm font-bold hover:text-[#003EB7] transition-all">
+                                <i class="fas fa-arrow-left"></i>
+                                Back to Profile
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Label Printing Tab Content -->
+                    <div id="label-printing-content"
+                        class="settings-tab-content bg-white rounded-[16px] p-6 lg:p-8 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-transparent"
+                        style="display: none;">
+                        <!-- Header -->
+                        <div class="flex items-center gap-4 mb-8">
+                            <div
+                                class="w-[50px] h-[50px] rounded-[10px] bg-[#EFF6FF] flex items-center justify-center border border-[#E0E7FF]">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M7.35396 18C5.23084 18 4.16928 18 3.41349 17.5468C2.91953 17.2506 2.52158 16.8271 2.26475 16.3242C1.87179 15.5547 1.97742 14.5373 2.18868 12.5025C2.36503 10.8039 2.45321 9.95455 2.88684 9.33081C3.17153 8.92129 3.55659 8.58564 4.00797 8.35353C4.69548 8 5.58164 8 7.35396 8H16.646C18.4184 8 19.3045 8 19.992 8.35353C20.4434 8.58564 20.8285 8.92129 21.1132 9.33081C21.5468 9.95455 21.635 10.8039 21.8113 12.5025C22.0226 14.5373 22.1282 15.5547 21.7352 16.3242C21.4784 16.8271 21.0805 17.2506 20.5865 17.5468C19.8307 18 18.7692 18 16.646 18"
+                                        stroke="#6A6A6A" stroke-width="1.5" />
+                                    <path
+                                        d="M17 8V6C17 4.11438 17 3.17157 16.4142 2.58579C15.8284 2 14.8856 2 13 2H11C9.11438 2 8.17157 2 7.58579 2.58579C7 3.17157 7 4.11438 7 6V8"
+                                        stroke="#6A6A6A" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path
+                                        d="M13.9887 16L10.0113 16C9.32602 16 8.98337 16 8.69183 16.1089C8.30311 16.254 7.97026 16.536 7.7462 16.9099C7.57815 17.1904 7.49505 17.5511 7.32884 18.2724C7.06913 19.3995 6.93928 19.963 7.02759 20.4149C7.14535 21.0174 7.51237 21.5274 8.02252 21.7974C8.40513 22 8.94052 22 10.0113 22L13.9887 22C15.0595 22 15.5949 22 15.9775 21.7974C16.4876 21.5274 16.8547 21.0174 16.9724 20.4149C17.0607 19.963 16.9309 19.3995 16.6712 18.2724C16.505 17.5511 16.4218 17.1904 16.2538 16.9099C16.0297 16.536 15.6969 16.254 15.3082 16.1089C15.0166 16 14.674 16 13.9887 16Z"
+                                        stroke="#6A6A6A" stroke-width="1.5" stroke-linejoin="round" />
+                                    <path d="M18 12H18.009" stroke="#6A6A6A" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+
+                            </div>
+                            <div>
+                                <h3 class="text-[16px] font-bold text-[#1E293B]">Label Printing</h3>
+                                <p class="text-[14px] text-[#94A3B8]">Choose your preferred label size for printing</p>
+                            </div>
+                        </div>
+
+                        <!-- Info Box -->
+                        <div
+                            class="bg-[#F8FAFC] border border-[#E2E8F0] rounded-[10px] p-4 flex items-center gap-3 mb-8">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#64748B"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="12"></line>
+                                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                            </svg>
+                            <p class="text-[#64748B] text-[13px]">This setting is stored on this device. It will apply
+                                to label printing on this browser only.</p>
+                        </div>
+
+                        <!-- Grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Option 1: 2x3 -->
+                            <div
+                                class="label-option-card border border-[#2563EB] bg-[#F8FAFC] rounded-[8px] p-4 flex items-center cursor-pointer transition-all hover:shadow-md">
+                                <div
+                                    class="label-dashed-box w-[50px] h-[60px] border border-dashed border-[#2563EB] rounded flex items-center justify-center shrink-0 bg-white">
+                                    <span class="label-dashed-text text-[11px] font-bold text-[#1E293B]">2" x 3"</span>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="text-[15px] font-bold text-[#334155] mb-1">2 x 3 inch</h4>
+                                    <p class="text-[13px] text-[#64748B]">Compact size — fits most thermal label
+                                        printers.</p>
+                                </div>
+                                <div
+                                    class="label-check-circle ml-2 w-5 h-5 rounded-full bg-[#003EB7] border border-transparent flex items-center justify-center shrink-0">
+                                    <i class="fas fa-check text-white text-[10px]"></i>
+                                </div>
+                            </div>
+
+                            <!-- Option 2: 3x3 -->
+                            <div
+                                class="label-option-card border border-[#E2E8F0] bg-[#F8FAFC] rounded-[8px] p-4 flex items-center cursor-pointer transition-all hover:border-[#2563EB] hover:shadow-md">
+                                <div
+                                    class="label-dashed-box w-[50px] h-[60px] border border-dashed border-[#CBD5E1] rounded flex items-center justify-center shrink-0 bg-white">
+                                    <span class="label-dashed-text text-[11px] font-bold text-[#64748B]">3" x 3"</span>
+                                </div>
+                                <div class="ml-4 flex-1">
+                                    <h4 class="text-[15px] font-bold text-[#334155] mb-1">3 x 3 inch</h4>
+                                    <p class="text-[13px] text-[#64748B]">Compact size — fits most thermal label
+                                        printers.</p>
+                                </div>
+                                <div
+                                    class="label-check-circle ml-2 w-5 h-5 rounded-full border border-[#CBD5E1] bg-white flex items-center justify-center shrink-0">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- jQuery -->
+                <script src="../assets/js/jquery-3.7.1.min.js"></script>
+                <script src="../assets/js/main.js"></script>
+                <script>
+                    $(document).ready(function () {
+                        $('.settings-tab-btn').on('click', function (e) {
+                            e.preventDefault();
+                            var tabId = $(this).attr('id');
+
+                            // Update active button styling
+                            $('.settings-tab-btn').removeClass('bg-[#2563EB] text-white').addClass('text-[#475569] hover:bg-slate-50');
+                            $(this).removeClass('text-[#475569] hover:bg-slate-50').addClass('bg-[#2563EB] text-white');
+
+                            // Toggle tab contents
+                            $('.settings-tab-content').hide();
+
+                            if (tabId === 'tab-bank-account') {
+                                $('#bank-account-content').show();
+                                $('#bank-account-update-view').hide();
+                                $('#bank-account-main-view').fadeIn(300);
+                            } else if (tabId === 'tab-mobile-banking') {
+                                $('#mobile-banking-content').show();
+                                $('#mobile-banking-update-view').hide();
+                                $('#mobile-banking-main-view').fadeIn(300);
+                            } else if (tabId === 'tab-payment-method') {
+                                $('#payment-method-content').fadeIn(300);
+                            } else if (tabId === 'tab-business-profile') {
+                                // Always reset to main view when clicking the tab
+                                $('#business-profile-content').show();
+                                $('#business-profile-change-name-view').hide();
+                                $('#business-profile-update-address-view').hide();
+                                $('#business-profile-main-view').fadeIn(300);
+                            } else if (tabId === 'tab-label-printing') {
+                                $('#label-printing-content').fadeIn(300);
+                            }
+                            // Add logic for other tabs when their sections are built
+                        });
+
+                        // Bank Account - Update Toggles
+                        $('#btn-edit-bank-account').on('click', function() {
+                            $('#bank-account-main-view').fadeOut(200, function() {
+                                $('#bank-account-update-view').fadeIn(300);
+                            });
+                        });
+                        
+                        $('#btn-cancel-bank-account').on('click', function() {
+                            $('#bank-account-update-view').fadeOut(200, function() {
+                                $('#bank-account-main-view').fadeIn(300);
+                            });
+                        });
+
+                        // Mobile Banking - Update Toggles
+                        $('#btn-edit-mobile-banking').on('click', function() {
+                            $('#mobile-banking-main-view').fadeOut(200, function() {
+                                $('#mobile-banking-update-view').fadeIn(300);
+                            });
+                        });
+                        
+                        $('#btn-cancel-mobile-banking').on('click', function() {
+                            $('#mobile-banking-update-view').fadeOut(200, function() {
+                                $('#mobile-banking-main-view').fadeIn(300);
+                            });
+                        });
+
+                        // Business Profile - Change Company Name Toggles
+                        $('#btn-change-company-name').on('click', function () {
+                            $('#business-profile-main-view').fadeOut(200, function () {
+                                $('#business-profile-change-name-view').fadeIn(300);
+                            });
+                        });
+
+                        $('#btn-back-business-profile').on('click', function () {
+                            $('#business-profile-change-name-view').fadeOut(200, function () {
+                                $('#business-profile-main-view').fadeIn(300);
+                            });
+                        });
+
+                        // Business Profile - Update Address Toggles
+                        $('#btn-update-address').on('click', function () {
+                            $('#business-profile-main-view').fadeOut(200, function () {
+                                $('#business-profile-update-address-view').fadeIn(300);
+                            });
+                        });
+
+                        $('#btn-back-from-address').on('click', function () {
+                            $('#business-profile-update-address-view').fadeOut(200, function () {
+                                $('#business-profile-main-view').fadeIn(300);
+                            });
+                        });
+
+                        // Label Printing Selection
+                        $('.label-option-card').on('click', function () {
+                            // Reset all
+                            $('.label-option-card')
+                                .removeClass('border-[#2563EB]')
+                                .addClass('border-[#E2E8F0]');
+
+                            $('.label-option-card .label-dashed-box')
+                                .removeClass('border-[#2563EB]')
+                                .addClass('border-[#CBD5E1]');
+
+                            $('.label-option-card .label-dashed-text')
+                                .removeClass('text-[#1E293B]')
+                                .addClass('text-[#64748B]');
+
+                            $('.label-option-card .label-check-circle')
+                                .removeClass('bg-[#003EB7] border-transparent')
+                                .addClass('border border-[#CBD5E1] bg-white')
+                                .empty();
+
+                            // Set Active
+                            $(this)
+                                .removeClass('border-[#E2E8F0]')
+                                .addClass('border-[#2563EB]');
+
+                            $(this).find('.label-dashed-box')
+                                .removeClass('border-[#CBD5E1]')
+                                .addClass('border-[#2563EB]');
+
+                            $(this).find('.label-dashed-text')
+                                .removeClass('text-[#64748B]')
+                                .addClass('text-[#1E293B]');
+
+                            $(this).find('.label-check-circle')
+                                .removeClass('border border-[#CBD5E1] bg-white')
+                                .addClass('bg-[#003EB7] border-transparent')
+                                .html('<i class="fas fa-check text-white text-[10px]"></i>');
+                        });
+                    });
+                </script>
+</body>
+
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naascco - Change Password</title>
+    <link rel="stylesheet" href="../assets/css/tailwind.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="body-wrap">
+        <div class="app-container flex min-h-screen">
+            <!-- Sidebar -->
+            <aside
+                class="sidebar fixed left-6 top-6 z-[1000] flex flex-col overflow-hidden transition-all duration-300">
+                <div class="logo-container border-b-2 border-[#fff]">
+                    <div class="logo-box">
+                        <img src="../assets/images/logo.png" alt="Logo" class="full-logo">
+                        <img src="../assets/images/logo-icon.png" alt="Logo Icon" class="mini-logo"
+                            style="display: none;">
+                    </div>
+                    <button id="sidebar-toggle" class="sidebar-toggle">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="sidebar-close" class="sidebar-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <nav class="nav-menu">
+                    <div class="nav-group">
+                        <div class="nav-group-title">MAIN MENU</div>
+                        <a href="../index.html" class="nav-item">
+                            <i class="fas fa-th-large"></i>
+                            <span>Dashboard</span>
+                        </a>
+                        <a href="create-parcel.html" class="nav-item">
+                            <i class="fas fa-plus-circle"></i>
+                            <span>Create Parcel</span>
+                        </a>
+                        <a href="consignment.html" class="nav-item">
+                            <i class="fas fa-archive"></i>
+                            <span>Consignments</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-wallet"></i>
+                            <span>Add Fund</span>
+                        </a>
+                        <a href="pickup-request.html" class="nav-item">
+                            <i class="fas fa-truck-pickup"></i>
+                            <span>Pickup Request</span>
+                        </a>
+                        <a href="pricing.html" class="nav-item">
+                            <i class="fas fa-tag"></i>
+                            <span>Pricing</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-print"></i>
+                            <span>Bulk Print</span>
+                        </a>
+                        <a href="moderator.html" class="nav-item">
+                            <i class="fas fa-users"></i>
+                            <span>Moderators</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>Track Orders</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-list-ul"></i>
+                            <span>My Orders</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-share-alt"></i>
+                            <span>API</span>
+                        </a>
+                    </div>
+
+                    <div class="nav-group">
+                        <div class="nav-group-title">OTHERS</div>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                        <a href="change-pass.html" class="nav-item active">
+                            <i class="fas fa-lock"></i>
+                            <span>Change Password</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-history"></i>
+                            <span>Login History</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Two-Factor Auth</span>
+                        </a>
+                        <a href="#" class="nav-item">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span>Logout</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <div class="sidebar-footer">
+                    <a href="#" class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Log out</span>
+                    </a>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="main-content  flex-1 flex flex-col relative transition-all duration-300">
+                <!-- Top Bar -->
+                <header class="top-bar">
+                    <div class="top-bar-left flex items-center gap-4 flex-1">
+                        <button id="mobile-sidebar-toggle" class="mobile-sidebar-toggle">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div
+                            class="search-box gap-2 flex items-center bg-white border border-[#E2E8F0] rounded-full p-2 w-full max-w-[400px]">
+                            <i class="fas fa-search text-[#94A3B8]"></i>
+                            <input name="search" id="search" type="text" placeholder="Search consignment"
+                                class="bg-transparent border-none outline-none text-sm w-full text-[#64748B]">
+                        </div>
+                    </div>
+                    <div class="top-bar-right flex items-center gap-4">
+                        <!-- Balance Widget -->
+                        <div
+                            class="balance-widget flex items-center bg-white border border-[#E2E8F0] rounded-full p-1 pl-6 gap-8">
+                            <span class="text-[#1E293B] font-semibold text-sm whitespace-nowrap">0 $</span>
+                            <button
+                                class="details-btn bg-[#003EB7] text-white rounded-full px-6 py-2 text-xs font-bold hover:bg-[#002D87] transition-all">Details</button>
+                        </div>
+
+                        <!-- Language Switcher -->
+                        <div
+                            class="header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#64748B] font-bold text-xs hover:bg-slate-50 hover:text-[#003EB7] transition-all">
+                            EN
+                        </div>
+
+                        <div
+                            class="notification-bell header-icon flex items-center justify-center bg-white border border-[#E2E8F0] rounded-full w-11 h-11 cursor-pointer text-[#003EB7] hover:bg-slate-50 transition-all">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M2.52992 14.394C2.31727 15.7471 3.268 16.6862 4.43205 17.1542C8.89481 18.9486 15.1052 18.9486 19.5679 17.1542C20.732 16.6862 21.6827 15.7471 21.4701 14.394C21.3394 13.5625 20.6932 12.8701 20.2144 12.194C19.5873 11.2975 19.525 10.3197 19.5249 9.27941C19.5249 5.2591 16.1559 2 12 2C7.84413 2 4.47513 5.2591 4.47513 9.27941C4.47503 10.3197 4.41272 11.2975 3.78561 12.194C3.30684 12.8701 2.66061 13.5625 2.52992 14.394Z"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M9 21C9.79613 21.6219 10.8475 22 12 22C13.1525 22 14.2039 21.6219 15 21"
+                                    stroke="#023FA3" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+
+                            <!-- Notification Dropdown -->
+                            <div class="notification-dropdown">
+                                <div class="notif-header">
+                                    <h3>Notification</h3>
+                                </div>
+                                <div class="notif-filters">
+                                    <div class="notif-filter-btn active">All</div>
+                                    <div class="notif-filter-btn outline">Unread</div>
+                                </div>
+                                <div class="notif-list">
+                                    <!-- Item 1 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 2 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 3 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                    <!-- Item 4 -->
+                                    <div class="notif-item">
+                                        <div class="notif-icon">
+                                            <i class="fas fa-wallet text-[#023FA3]"></i>
+                                        </div>
+                                        <div class="notif-content">
+                                            <div class="notif-text">The receivable amount of $2,415 for invoice
+                                                #INV-8821 ha...</div>
+                                            <div class="notif-time">20:48 , 18 Dec 2026</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="notif-footer">
+                                    <a href="#" class="see-all-notif">See all notification</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-profile">
+                            <img src="https://i.pravatar.cc/150?u=yeasin" alt="User Avatar"
+                                class="user-avatar w-11 h-11 rounded-full border border-[#E2E8F0] cursor-pointer">
+
+                            <!-- Profile Dropdown -->
+                            <div class="profile-dropdown">
+                                <a href="#" class="profile-item active">
+                                    <i class="far fa-user"></i>
+                                    <span>My Account</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-lock"></i>
+                                    <span>Change Password</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>Login History</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-shield-alt"></i>
+                                    <span>Two Factor Auth</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="far fa-cog"></i>
+                                    <span>Setting</span>
+                                </a>
+                                <a href="#" class="profile-item">
+                                    <i class="fas fa-sign-out-alt"></i>
+                                    <span>Logout</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+
+
+
+                <div class="dashboard-container">
+                    <div class="bg-white rounded-[24px] p-8 md:p-10 border border-[#F1F5F9] max-w-[540px]">
+                        <div class="pb-5 mb-8 border-b border-[#F1F5F9]">
+                            <h1 class="text-[24px] font-bold text-[#111827]">Change Password</h1>
+                        </div>
+                        <form id="change-password-form">
+                            <div class="space-y-4 mb-8">
+                                <!-- Current Password -->
+                                <div
+                                    class="flex items-center gap-2 w-full pl-4 pr-4 py-3.5 bg-white border border-[#E2E8F0] rounded-xl text-[#1E293B] placeholder-[#94A3B8] outline-none focus:border-[#003EB7] transition-all">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14.491 15.5H14.5M9.5 15.5H9.50897" stroke="#6A6A6A" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M4.26781 18.8447C4.49269 20.515 5.87613 21.8235 7.55966 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.879 17.7547 20 16.6376 20 15.5C20 14.3624 19.879 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55966 9.09909C5.87613 9.17649 4.49269 10.485 4.26781 12.1553C4.12105 13.2453 4 14.3624 4 15.5C4 16.6376 4.12105 17.7547 4.26781 18.8447Z"
+                                            stroke="#6A6A6A" stroke-width="1.5" />
+                                        <path
+                                            d="M7.5 9V6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5V9"
+                                            stroke="#6A6A6A" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+
+                                    <input type="password" placeholder="Current Password">
+                                </div>
+
+                                <!-- New Password -->
+                                <div
+                                    class="flex items-center gap-2 w-full pl-4 pr-4 py-3.5 bg-white border border-[#E2E8F0] rounded-xl text-[#1E293B] placeholder-[#94A3B8] outline-none focus:border-[#003EB7] transition-all">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14.491 15.5H14.5M9.5 15.5H9.50897" stroke="#6A6A6A" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M4.26781 18.8447C4.49269 20.515 5.87613 21.8235 7.55966 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.879 17.7547 20 16.6376 20 15.5C20 14.3624 19.879 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55966 9.09909C5.87613 9.17649 4.49269 10.485 4.26781 12.1553C4.12105 13.2453 4 14.3624 4 15.5C4 16.6376 4.12105 17.7547 4.26781 18.8447Z"
+                                            stroke="#6A6A6A" stroke-width="1.5" />
+                                        <path
+                                            d="M7.5 9V6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5V9"
+                                            stroke="#6A6A6A" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+
+                                    <input type="password" placeholder="New Password (min 8 chars)">
+                                </div>
+
+                                <!-- Confirm Password -->
+                                <div
+                                    class="flex items-center gap-2 w-full pl-4 pr-4 py-3.5 bg-white border border-[#E2E8F0] rounded-xl text-[#1E293B] placeholder-[#94A3B8] outline-none focus:border-[#003EB7] transition-all">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14.491 15.5H14.5M9.5 15.5H9.50897" stroke="#6A6A6A" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" />
+                                        <path
+                                            d="M4.26781 18.8447C4.49269 20.515 5.87613 21.8235 7.55966 21.9009C8.97627 21.966 10.4153 22 12 22C13.5847 22 15.0237 21.966 16.4403 21.9009C18.1239 21.8235 19.5073 20.515 19.7322 18.8447C19.879 17.7547 20 16.6376 20 15.5C20 14.3624 19.879 13.2453 19.7322 12.1553C19.5073 10.485 18.1239 9.17649 16.4403 9.09909C15.0237 9.03397 13.5847 9 12 9C10.4153 9 8.97627 9.03397 7.55966 9.09909C5.87613 9.17649 4.49269 10.485 4.26781 12.1553C4.12105 13.2453 4 14.3624 4 15.5C4 16.6376 4.12105 17.7547 4.26781 18.8447Z"
+                                            stroke="#6A6A6A" stroke-width="1.5" />
+                                        <path
+                                            d="M7.5 9V6.5C7.5 4.01472 9.51472 2 12 2C14.4853 2 16.5 4.01472 16.5 6.5V9"
+                                            stroke="#6A6A6A" stroke-width="1.5" stroke-linecap="round"
+                                            stroke-linejoin="round" />
+                                    </svg>
+
+                                    <input type="password" placeholder="Confirm Password">
+                                </div>
+                            </div>
+
+                            <!-- Helper Text -->
+                            <div class="space-y-2 mb-10 text-[#64748B] text-[13px]">
+                                <p>Min 8 characters, uppercase, lowercase, numbers, symbols.</p>
+                                <p>You cannot reuse your last 2 passwords.</p>
+                                <p>An OTP will be sent to your registered mobile number to confirm.</p>
+                            </div>
+
+                            <button type="submit"
+                                class="bg-[#003EB7] text-white w-full py-4 rounded-full font-bold text-sm hover:bg-[#002D87] transition-all">
+                                Send OTP & Continue
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <!-- JS -->
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+
+</html>
