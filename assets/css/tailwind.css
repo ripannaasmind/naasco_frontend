@@ -8,6 +8,8 @@
     'Noto Color Emoji';
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New',
     monospace;
+    --color-red-100: oklch(93.6% 0.032 17.717);
+    --color-red-600: oklch(57.7% 0.245 27.325);
     --color-orange-100: oklch(95.4% 0.038 75.164);
     --color-orange-600: oklch(64.6% 0.222 41.116);
     --color-emerald-100: oklch(95% 0.052 163.051);
@@ -285,6 +287,24 @@
   }
   .z-\[1000\] {
     z-index: 1000;
+  }
+  .container {
+    width: 100%;
+    @media (width >= 40rem) {
+      max-width: 40rem;
+    }
+    @media (width >= 48rem) {
+      max-width: 48rem;
+    }
+    @media (width >= 64rem) {
+      max-width: 64rem;
+    }
+    @media (width >= 80rem) {
+      max-width: 80rem;
+    }
+    @media (width >= 96rem) {
+      max-width: 96rem;
+    }
   }
   .mx-auto {
     margin-inline: auto;
@@ -890,6 +910,9 @@
   .bg-orange-100 {
     background-color: var(--color-orange-100);
   }
+  .bg-red-100 {
+    background-color: var(--color-red-100);
+  }
   .bg-slate-50 {
     background-color: var(--color-slate-50);
   }
@@ -1266,6 +1289,9 @@
   }
   .text-orange-600 {
     color: var(--color-orange-600);
+  }
+  .text-red-600 {
+    color: var(--color-red-600);
   }
   .text-slate-600 {
     color: var(--color-slate-600);
@@ -2298,6 +2324,7 @@ html.no-scroll, body.no-scroll {
   border-radius: var(--border-radius);
   display: flex;
   align-items: center;
+  gap: 10px;
   justify-content: space-between;
   padding: 0 40px;
   margin: 24px 24px 0 48px;
@@ -2398,6 +2425,11 @@ html.no-scroll, body.no-scroll {
   display: flex;
   align-items: center;
   gap: 24px;
+}
+@media screen and (max-width: 1024px) {
+  .top-bar-right {
+    gap: 10px;
+  }
 }
 .notification-bell {
   position: relative;
@@ -2884,6 +2916,18 @@ html.no-scroll, body.no-scroll {
   color: #DB2777;
   border: 1px solid #FCE7F3;
 }
+.badge-approval-pending {
+  background-color: #F3E8FF;
+  color: #7E22CE;
+}
+.badge-partly-delivered {
+  background-color: #CCFBF1;
+  color: #0F766E;
+}
+.badge-in-review {
+  background-color: #E0E7FF;
+  color: #4F46E5;
+}
 .notification-bell {
   position: relative;
 }
@@ -3093,63 +3137,47 @@ html.no-scroll, body.no-scroll {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  padding: 8px 16px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   background: white;
   border: 1px solid #E2E8F0;
-  color: #64748B;
+  color: #475569;
   cursor: pointer;
-  min-width: 40px;
+}
+@media screen and (max-width: 476px) {
+  .pagination-btn {
+    width: 30px;
+    height: 30px;
+  }
 }
 .pagination-btn:hover:not(.disabled):not(.active) {
   border-color: #003EB7;
   color: #003EB7;
-  background: #F8FAFC;
+  background: #EFF6FF;
   transform: translateY(-1px);
 }
 .pagination-btn.active {
   background: #003EB7;
   border-color: #003EB7;
-  color: white;
+  color: white !important;
   box-shadow: 0 4px 12px rgba(0, 62, 183, 0.25);
 }
 .pagination-btn.disabled {
   opacity: 0.5;
   cursor: not-allowed;
   background: #F8FAFC;
+  border-color: #E2E8F0;
 }
 .pagination-btn i {
-  font-size: 12px;
-}
-.pagination-circle-btn {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
   font-size: 14px;
-  font-weight: 600;
-  transition: all 0.2s;
-  background: white;
-  border: 1px solid #E2E8F0;
   color: #64748B;
-  cursor: pointer;
 }
-.pagination-circle-btn:hover:not(.disabled):not(.active) {
-  border-color: #003EB7;
-  color: #003EB7;
-  background: #F8FAFC;
-}
-.pagination-circle-btn.active {
-  background: #003EB7;
-  border-color: #003EB7;
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 62, 183, 0.25);
+.pagination-btn.active i {
+  color: white !important;
 }
 .consignments-table td {
   padding: 18px 24px;
@@ -3467,9 +3495,6 @@ html.no-scroll, body.no-scroll {
     align-items: flex-start;
     gap: 16px;
   }
-  .export-btn {
-    width: 100%;
-  }
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -3547,34 +3572,6 @@ html.no-scroll, body.no-scroll {
 .status-returned {
   background-color: #FEE2E2;
   color: #B91C1C;
-}
-.pagination-circle-btn {
-  width: 40px;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: none;
-  background-color: #F8FAFC;
-  color: #64748B;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.pagination-circle-btn.active {
-  background-color: #ffffff;
-  color: #003EB7;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-}
-.pagination-circle-btn.next.active {
-  background-color: #003EB7;
-  color: #ffffff;
-}
-.pagination-circle-btn:hover:not(.active) {
-  background-color: #EFF6FF;
-  color: #003EB7;
 }
 .flex-shrink-0 {
   flex-shrink: 0 !important;
@@ -3660,40 +3657,6 @@ button {
 .modal-backdrop.active {
   opacity: 1;
 }
-.pagination-btn {
-  padding: 8px 20px;
-  border: 1px solid #E2E8F0;
-  background: white;
-  color: #64748B;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  height: 44px;
-}
-.pagination-btn:hover:not(.disabled) {
-  border-color: #003EB7;
-  color: #003EB7;
-  background: #EFF6FF;
-  transform: translateY(-1px);
-}
-.pagination-btn.active {
-  background: #003EB7;
-  border-color: #003EB7;
-  color: white !important;
-  box-shadow: 0 4px 12px rgba(0, 62, 183, 0.2);
-}
-.pagination-btn.disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  background: #F8FAFC;
-  border-color: #E2E8F0;
-}
 .badge {
   padding: 6px 14px;
   border-radius: 50px;
@@ -3717,6 +3680,18 @@ button {
 .badge-exceptional {
   background-color: #F8FAFC;
   color: #64748B;
+}
+.badge-approval-pending {
+  background-color: #F5F3FF;
+  color: #7C3AED;
+}
+.badge-partly-delivered {
+  background-color: #F0FDFA;
+  color: #0D9488;
+}
+.badge-in-review {
+  background-color: #EFF6FF;
+  color: #2563EB;
 }
 .cancellation-filter-tab {
   padding: 10px 24px;

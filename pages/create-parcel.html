@@ -466,126 +466,69 @@
                     <!-- Service Tabs -->
                     <div
                         class="bg-white rounded-2xl p-2 mb-8 flex gap-2 border border-[#F1F5F9] shadow-sm create-parcel-tab">
-                        <button
+                        <button id="tab-regular"
                             class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all bg-[#003EB7] text-white shadow-lg shadow-blue-100">Regular</button>
-                        <button
+                        <button id="tab-express"
                             class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all text-[#64748B] hover:bg-slate-50">Express</button>
-                        <button
+                        <button id="tab-pick-drop"
                             class="flex-1 py-3.5 px-6 rounded-xl font-bold text-sm transition-all text-[#64748B] hover:bg-slate-50">Pick
                             & Drop</button>
                     </div>
 
-                    <!-- Form Grid -->
-                    <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <!-- Left Column: Recipient Details -->
-                        <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6">
-                            <div>
-                                <label class="block text-sm font-bold text-[#1E293B] mb-2.5">Auto Fraud check</label>
-                                <div class="space-y-4">
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Phone</label>
-                                        <input type="text" placeholder="Type Phone Number"
-                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                                    </div>
-                                    <div>
-                                        <label
-                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Name</label>
-                                        <input type="text" placeholder="Type Recipient Name"
-                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                    <!-- Regular Form Grid -->
+                    <div id="regular-form-container" class="create-parcel-form-content">
+                        <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Left Column: Recipient Details -->
+                            <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-[#1E293B] mb-2.5">Auto Fraud check</label>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label
+                                                class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Phone</label>
+                                            <input type="text" placeholder="Type Phone Number"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                        <div>
+                                            <label
+                                                class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Name</label>
+                                            <input type="text" placeholder="Type Recipient Name"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Address
-                                    (AI auto-corrects)</label>
-                                <input type="text" placeholder="House 12, Road 7, Sector 3, Uttara, Dhaka"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <div>
                                     <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">District</label>
-                                    <div class="relative">
-                                        <select
-                                            class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
-                                            <option>Dhaka</option>
-                                            <option>Chittagong</option>
-                                        </select>
-                                        <i
-                                            class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
-                                    </div>
-                                </div>
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Thana
-                                        (Auto-detected)</label>
-                                    <input type="text" placeholder="Uttara Zone"
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Address
+                                        (AI auto-corrects)</label>
+                                    <input type="text" placeholder="House 12, Road 7, Sector 3, Uttara, Dhaka"
                                         class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
                                 </div>
-                            </div>
 
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Alternative
-                                    Phone</label>
-                                <input type="text" placeholder="Type Alternative Phone"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Recipient
-                                    Email</label>
-                                <input type="email" placeholder="Type Recipient Email"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-                        </div>
-
-                        <!-- Right Column: Parcel Details -->
-                        <div
-                            class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6 flex flex-col">
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">COD
-                                    Amount</label>
-                                <input type="text" placeholder="Type Cash on Delivery Amount"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Invoice</label>
-                                <input type="text" placeholder="Type Invoice (If any)"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Item
-                                    Description</label>
-                                <textarea placeholder="Type Item Description (max. 400 Chars)" rows="3"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
-                            </div>
-
-                            <div>
-                                <label
-                                    class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Note</label>
-                                <textarea placeholder="Type Note (max. 400 Chars)" rows="3"
-                                    class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label
-                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Weight
-                                        (KG)</label>
-                                    <input type="number" value="0"
-                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">District</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>Dhaka</option>
+                                                <option>Chittagong</option>
+                                            </select>
+                                            <i
+                                                class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Thana
+                                            (Auto-detected)</label>
+                                        <input type="text" placeholder="Uttara Zone"
+                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                    </div>
                                 </div>
+
                                 <div>
                                     <label
                                         class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Alternative
@@ -593,14 +536,272 @@
                                     <input type="text" placeholder="Type Alternative Phone"
                                         class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
                                 </div>
+
+                                <div>
+                                    <label
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Recipient
+                                        Email</label>
+                                    <input type="email" placeholder="Type Recipient Email"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
                             </div>
 
-                            <div class="mt-auto pt-6">
-                                <button type="submit"
-                                    class="w-full bg-[#003EB7] text-white rounded-xl py-4 font-bold text-base hover:bg-[#002D87] shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Submit</button>
+                            <!-- Right Column: Parcel Details -->
+                            <div
+                                class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6 flex flex-col">
+                                <div>
+                                    <label
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">COD
+                                        Amount</label>
+                                    <input type="text" placeholder="Type Cash on Delivery Amount"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div>
+                                    <label
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Invoice</label>
+                                    <input type="text" placeholder="Type Invoice (If any)"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div>
+                                    <label
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Item
+                                        Description</label>
+                                    <textarea placeholder="Type Item Description (max. 400 Chars)" rows="3"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
+                                </div>
+
+                                <div>
+                                    <label
+                                        class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Note</label>
+                                    <textarea placeholder="Type Note (max. 400 Chars)" rows="3"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Weight
+                                            (KG)</label>
+                                        <input type="number" value="0"
+                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                    </div>
+                                    <div>
+                                        <label
+                                            class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Alternative
+                                            Phone</label>
+                                        <input type="text" placeholder="Type Alternative Phone"
+                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                    </div>
+                                </div>
+
+                                <div class="mt-auto pt-6">
+                                    <button type="submit"
+                                        class="w-full bg-[#003EB7] text-white rounded-xl py-4 font-bold text-base hover:bg-[#002D87] shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Submit</button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+
+                    <!-- Express Form Grid -->
+                    <div id="express-form-container" class="create-parcel-form-content" style="display: none;">
+                        <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Left Column: Recipient Details -->
+                            <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-[#1E293B] mb-2.5">Express Priority Check</label>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Phone</label>
+                                            <input type="text" placeholder="Type Phone Number"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Name</label>
+                                            <input type="text" placeholder="Type Recipient Name"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Delivery Address</label>
+                                    <input type="text" placeholder="House 12, Road 7, Sector 3, Uttara, Dhaka"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">District</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>Dhaka</option>
+                                                <option>Chittagong</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Express Slot</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>Morning (9 AM - 1 PM)</option>
+                                                <option>Afternoon (1 PM - 6 PM)</option>
+                                                <option>Night (6 PM - 10 PM)</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Urgent Instruction</label>
+                                    <input type="text" placeholder="e.g. Leave with guard if not at home"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Express Details -->
+                            <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6 flex flex-col">
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">COD Amount</label>
+                                    <input type="text" placeholder="Type Cash on Delivery Amount"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Invoice Number</label>
+                                    <input type="text" placeholder="Type Invoice (If any)"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Item Description</label>
+                                    <textarea placeholder="Type Item Description (max. 400 Chars)" rows="3"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all resize-none"></textarea>
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Weight (KG)</label>
+                                        <input type="number" value="1"
+                                            class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Express Service Type</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>Same Day Delivery</option>
+                                                <option>Next Day Delivery</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-auto pt-6">
+                                    <button type="submit"
+                                        class="w-full bg-[#003EB7] text-white rounded-xl py-4 font-bold text-base hover:bg-[#002D87] shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Submit Express Shipment</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Pick & Drop Form Grid -->
+                    <div id="pick-drop-form-container" class="create-parcel-form-content" style="display: none;">
+                        <form class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            <!-- Left Column: Pickup Details -->
+                            <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6">
+                                <div>
+                                    <h3 class="text-lg font-bold text-[#1E293B] mb-4">1. Pickup Location Details</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Sender Phone</label>
+                                            <input type="text" placeholder="Type Sender Phone Number"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Sender Name</label>
+                                            <input type="text" placeholder="Type Sender Name"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Full Pickup Address</label>
+                                    <input type="text" placeholder="Type Pickup House, Road, Area"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Pickup District</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>Dhaka</option>
+                                                <option>Chittagong</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Preferred Pickup Time</label>
+                                        <div class="relative">
+                                            <select
+                                                class="appearance-none w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all cursor-pointer">
+                                                <option>ASAP (Within 1 hour)</option>
+                                                <option>Morning (9 AM - 12 PM)</option>
+                                                <option>Afternoon (2 PM - 5 PM)</option>
+                                            </select>
+                                            <i class="fas fa-chevron-down absolute right-4 top-1/2 -translate-y-1/2 text-[#94A3B8] pointer-events-none text-xs"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Dropoff Details -->
+                            <div class="bg-white rounded-[24px] p-8 border border-[#F1F5F9] shadow-sm space-y-6 flex flex-col">
+                                <div>
+                                    <h3 class="text-lg font-bold text-[#1E293B] mb-4">2. Dropoff & Item Details</h3>
+                                    <div class="space-y-4">
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Recipient Phone</label>
+                                            <input type="text" placeholder="Type Recipient Phone Number"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Recipient Name</label>
+                                            <input type="text" placeholder="Type Recipient Name"
+                                                class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Full Dropoff Address</label>
+                                    <input type="text" placeholder="Type Dropoff House, Road, Area"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div>
+                                    <label class="block text-xs font-semibold text-[#64748B] mb-2 uppercase tracking-wider">Package Description</label>
+                                    <input type="text" placeholder="e.g. Documents, Keys, Electronics"
+                                        class="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl px-4 py-3.5 text-sm text-[#1E293B] outline-none focus:border-[#003EB7] focus:ring-1 focus:ring-[#003EB7] transition-all">
+                                </div>
+
+                                <div class="mt-auto pt-6">
+                                    <button type="submit"
+                                        class="w-full bg-[#003EB7] text-white rounded-xl py-4 font-bold text-base hover:bg-[#002D87] shadow-lg shadow-blue-100 transition-all active:scale-[0.98]">Confirm Pick & Drop</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
             </main>

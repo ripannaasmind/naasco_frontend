@@ -779,17 +779,13 @@
                         </div>
 
                         <!-- Pagination -->
-                        <div class="px-8 py-6 flex items-center justify-between border-t border-[#F1F5F9]">
-                            <div id="pagination-info" class="text-sm text-[#64748B]">
-                                Showing <span class="font-medium">1</span> to <span class="font-medium">15</span> of
-                                <span class="font-medium">45</span> entries
+                        <div
+                            class="px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#F1F5F9] bg-white">
+                            <div id="pagination-info" class="text-sm text-[#64748B] text-center md:text-left">
+                                <!-- Dynamic Info -->
                             </div>
-                            <div id="pagination-container" class="flex gap-2">
-                                <button class="pagination-btn disabled">Previous</button>
-                                <button class="pagination-btn active">1</button>
-                                <button class="pagination-btn">2</button>
-                                <button class="pagination-btn">3</button>
-                                <button class="pagination-btn">Next</button>
+                            <div id="pagination-container" class="flex flex-wrap justify-center gap-2">
+                                <!-- Dynamic Buttons -->
                             </div>
                         </div>
                     </div>

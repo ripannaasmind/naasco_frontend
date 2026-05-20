@@ -25,6 +25,89 @@ $(function () {
         return pages;
     }
 
+    // Unified jQuery Pagination Plugin
+    $.fn.setupPagination = function (options) {
+        const settings = $.extend({
+            totalItems: 0,
+            itemsPerPage: 10,
+            currentPage: 1,
+            infoSelector: null,
+            onPageChange: null,
+            isMobile: false
+        }, options);
+
+        return this.each(function () {
+            const $container = $(this);
+            if (!$container.length) return;
+
+            $container.empty();
+
+            const totalPages = Math.ceil(settings.totalItems / settings.itemsPerPage);
+            if (totalPages <= 1) {
+                // Update Info even if totalPages is 0 or 1
+                if (settings.infoSelector) {
+                    const $info = $(settings.infoSelector);
+                    if ($info.length) {
+                        if (settings.totalItems === 0) {
+                            $info.html('No entries found');
+                        } else {
+                            $info.html(`Showing <span class="font-medium">1</span> to <span class="font-medium">${settings.totalItems}</span> of <span class="font-medium">${settings.totalItems}</span> entries`);
+                        }
+                    }
+                }
+                return;
+            }
+
+            // Update Info
+            if (settings.infoSelector) {
+                const $info = $(settings.infoSelector);
+                if ($info.length) {
+                    const start = (settings.currentPage - 1) * settings.itemsPerPage + 1;
+                    const end = Math.min(settings.currentPage * settings.itemsPerPage, settings.totalItems);
+                    $info.html(`Showing <span class="font-medium">${start}</span> to <span class="font-medium">${end}</span> of <span class="font-medium">${settings.totalItems}</span> entries`);
+                }
+            }
+
+            // Previous Button
+            const $prevBtn = $('<button></button>')
+                .addClass(`pagination-btn ${settings.currentPage === 1 ? 'disabled' : ''}`)
+                .html('<i class="fas fa-chevron-left"></i>');
+
+            if (settings.currentPage > 1) {
+                $prevBtn.on('click', () => settings.onPageChange(settings.currentPage - 1));
+            }
+            $container.append($prevBtn);
+
+            const pages = getPaginationPages(settings.currentPage, totalPages, settings.isMobile);
+
+            pages.forEach(p => {
+                if (p.type === 'page') {
+                    const $btn = $('<button></button>')
+                        .addClass(`pagination-btn ${settings.currentPage === p.value ? 'active' : ''}`)
+                        .text(p.value);
+
+                    $btn.on('click', () => settings.onPageChange(p.value));
+                    $container.append($btn);
+                } else if (p.type === 'dots') {
+                    const $dots = $('<span></span>')
+                        .addClass('px-2 self-center text-gray-400')
+                        .text('...');
+                    $container.append($dots);
+                }
+            });
+
+            // Next Button
+            const $nextBtn = $('<button></button>')
+                .addClass(`pagination-btn ${settings.currentPage === totalPages ? 'disabled' : ''}`)
+                .html('<i class="fas fa-chevron-right"></i>');
+
+            if (settings.currentPage < totalPages) {
+                $nextBtn.on('click', () => settings.onPageChange(settings.currentPage + 1));
+            }
+            $container.append($nextBtn);
+        });
+    };
+
     // Clone header items into sidebar for mobile menu if not already cloned
     const $sidebarMenu = $('.sidebar .nav-menu');
     if ($sidebarMenu.length && !$('.sidebar-mobile-utilities').length) {
@@ -421,61 +504,17 @@ $(function () {
                 $tbody.append(row);
             });
 
-            updatePaginationInfo();
-            renderPaginationButtons();
-        };
-
-        const updatePaginationInfo = () => {
-            const startIndex = (currentPage - 1) * rowsPerPage + 1;
-            const endIndex = Math.min(currentPage * rowsPerPage, filteredParcels.length);
-            const total = filteredParcels.length;
-
-            const $infoElement = $('#pagination-info');
-            if ($infoElement.length) {
-                $infoElement.html(total > 0 ? `Showing <span class="font-medium">${startIndex}</span> to <span class="font-medium">${endIndex}</span> of <span class="font-medium">${total}</span> entries` : 'No entries found');
-            }
-        };
-
-        const renderPaginationButtons = () => {
-            const totalPages = Math.ceil(filteredParcels.length / rowsPerPage);
-            const $paginationContainer = $('#pagination-container');
-            if (!$paginationContainer.length) return;
-
-            $paginationContainer.empty();
-
-            if (totalPages <= 1) return;
-
-            // Previous Button
-            const $prevBtn = $('<button></button>');
-            $prevBtn.addClass(`pagination-btn ${currentPage === 1 ? 'disabled' : ''}`);
-            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-            $prevBtn.on('click', () => { if (currentPage > 1) { currentPage--; renderTable(); } });
-            $paginationContainer.append($prevBtn);
-
-            const isMobile = $(window).width() < 475;
-            const pages = getPaginationPages(currentPage, totalPages, isMobile);
-
-            pages.forEach(p => {
-                if (p.type === 'page') {
-                    const $pageBtn = $('<button></button>');
-                    $pageBtn.addClass(`pagination-btn ${currentPage === p.value ? 'active' : ''}`);
-                    $pageBtn.text(p.value);
-                    $pageBtn.on('click', () => { currentPage = p.value; renderTable(); });
-                    $paginationContainer.append($pageBtn);
-                } else if (p.type === 'dots') {
-                    const $dots = $('<span></span>');
-                    $dots.addClass('px-2 self-center text-gray-400');
-                    $dots.text('...');
-                    $paginationContainer.append($dots);
+            $('#pagination-container').setupPagination({
+                totalItems: filteredParcels.length,
+                itemsPerPage: rowsPerPage,
+                currentPage: currentPage,
+                infoSelector: '#pagination-info',
+                isMobile: $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    currentPage = newPage;
+                    renderTable();
                 }
             });
-
-            // Next Button
-            const $nextBtn = $('<button></button>');
-            $nextBtn.addClass(`pagination-btn ${currentPage === totalPages ? 'disabled' : ''}`);
-            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-            $nextBtn.on('click', () => { if (currentPage < totalPages) { currentPage++; renderTable(); } });
-            $paginationContainer.append($nextBtn);
         };
 
         // Filter & Sort Events
@@ -1902,6 +1941,116 @@ $(function () {
             e.preventDefault();
             $('#my-orders-track-view').hide();
             $('#my-orders-list-view').show();
+        });
+    }
+
+    // ==========================================
+    // Login History Page Logic
+    // ==========================================
+    if ($('.table-card h3:contains("Login History")').length) {
+        const loginData = [
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 03:17 PM', relativeTime: '30 min ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 11:24 AM', relativeTime: '4 hours ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 03:17 PM', relativeTime: '30 min ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 03:17 PM', relativeTime: '30 min ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 03:17 PM', relativeTime: '30 min ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-03-2026 . 03:17 PM', relativeTime: '30 min ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Failed', statusClass: 'bg-red-100 text-red-600', dateTime: '05-02-2026 . 09:15 PM', relativeTime: '1 day ago', ip: '103.95.209.12', browser: 'Firefox', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-02-2026 . 08:30 AM', relativeTime: '1 day ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-01-2026 . 04:45 PM', relativeTime: '2 days ago', ip: '103.95.209.0', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+            { status: 'Success', statusClass: 'bg-[#D1FAE5] text-[#059669]', dateTime: '05-01-2026 . 02:10 PM', relativeTime: '2 days ago', ip: '103.95.209.0', browser: 'Safari', os: 'iOS', device: 'Mobile' }
+        ];
+
+        // Generate additional dummy entries to total 35 entries for demonstration of pagination
+        for (let i = 11; i <= 35; i++) {
+            loginData.push({
+                status: i % 5 === 0 ? 'Failed' : 'Success',
+                statusClass: i % 5 === 0 ? 'bg-red-100 text-red-600' : 'bg-[#D1FAE5] text-[#059669]',
+                dateTime: `04-${(30 - i % 28).toString().padStart(2, '0')}-2026 . 10:15 AM`,
+                relativeTime: `${i} days ago`,
+                ip: `192.168.1.${i}`,
+                browser: i % 3 === 0 ? 'Firefox' : (i % 3 === 1 ? 'Safari' : 'Chrome'),
+                os: i % 3 === 1 ? 'iOS' : 'Windows',
+                device: i % 3 === 1 ? 'Mobile' : 'Desktop'
+            });
+        }
+
+        let currentLoginPage = 1;
+        const loginRowsPerPage = 10;
+
+        const renderLoginTable = () => {
+            const $tbody = $('.table-card table tbody');
+            if ($tbody.length) {
+                $tbody.empty();
+
+                const start = (currentLoginPage - 1) * loginRowsPerPage;
+                const end = start + loginRowsPerPage;
+                const paginatedData = loginData.slice(start, end);
+
+                $.each(paginatedData, function (index, item) {
+                    const $tr = $('<tr></tr>');
+                    $tr.addClass('border-b border-[#F1F5F9] hover:bg-slate-50 transition-colors');
+                    $tr.html(`
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full ${item.statusClass} text-[13px] font-medium">${item.status}</span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="text-[14px] font-medium text-[#64748B]">${item.dateTime}</div>
+                            <div class="text-[13px] text-[#94A3B8] mt-0.5">${item.relativeTime}</div>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-[14px] font-medium text-[#64748B]">${item.ip}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-[14px] font-medium text-[#64748B]">${item.browser}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-[14px] font-medium text-[#64748B]">${item.os}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-[14px] font-medium text-[#64748B]">${item.device}</td>
+                    `);
+                    $tbody.append($tr);
+                });
+            }
+
+            $('#pagination-container').setupPagination({
+                totalItems: loginData.length,
+                itemsPerPage: loginRowsPerPage,
+                currentPage: currentLoginPage,
+                infoSelector: '#pagination-info',
+                isMobile: $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    currentLoginPage = newPage;
+                    renderLoginTable();
+                }
+            });
+        };
+
+        renderLoginTable();
+    }
+
+    // ==========================================
+    // Create Parcel Page Tab Switcher
+    // ==========================================
+    if ($('.create-parcel-tab').length) {
+        $('.create-parcel-tab button').on('click', function (e) {
+            e.preventDefault();
+            const tabId = $(this).attr('id');
+
+            // 1. Update button classes to highlight active tab
+            $('.create-parcel-tab button')
+                .removeClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100')
+                .addClass('text-[#64748B] hover:bg-slate-50');
+            
+            $(this)
+                .removeClass('text-[#64748B] hover:bg-slate-50')
+                .addClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100');
+
+            // 2. Hide all form containers first
+            $('.create-parcel-form-content').hide();
+
+            // 3. Show matching form container
+            if (tabId === 'tab-regular') {
+                $('#regular-form-container').fadeIn(250);
+            } else if (tabId === 'tab-express') {
+                $('#express-form-container').fadeIn(250);
+            } else if (tabId === 'tab-pick-drop') {
+                $('#pick-drop-form-container').fadeIn(250);
+            }
         });
     }
 
