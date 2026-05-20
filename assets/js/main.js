@@ -1803,146 +1803,7 @@ $(function () {
         }, 300);
     });
 
-    // ==========================================
-    // My Orders Page Logic
-    // ==========================================
-    const $myOrderTableBody = $('#my-order-table-body');
-    if ($myOrderTableBody.length) {
-        const myOrdersData = [];
-        const statuses = ['Delivered', 'Pending', 'Cancelled'];
-        const badges = {
-            'Delivered': 'bg-[#DCFCE7] text-[#16A34A]',
-            'Pending': 'bg-[#FFEDD5] text-[#EA580C]',
-            'Cancelled': 'bg-[#FEE2E2] text-[#EF4444]'
-        };
-        const merchants = ['ShopEase', 'QuickBuy', 'BD Mart', 'EasyShop', 'TrendyBD'];
-        const names = ['Rahim Uddin', 'Karim Hasan', 'Nusrat Jahan', 'Tanvir Ahmed', 'Imran Hossain'];
-        const addresses = ['Dhaka, Bangladesh', 'Chittagong', 'Sylhet, Bangladesh', 'Khulna, Bangladesh', 'Rajshahi'];
-
-        // Generate 45 dummy orders
-        for (let i = 1; i <= 45; i++) {
-            const status = statuses[Math.floor(Math.random() * statuses.length)];
-            myOrdersData.push({
-                sl: i.toString().padStart(2, '0'),
-                date: `Apr ${Math.floor(Math.random() * 30) + 1}, 2026`,
-                time: `${Math.floor(Math.random() * 59) + 1} min ago`,
-                code: `TRK5821${Math.random().toString(36).substring(2, 4).toUpperCase()}`,
-                name: names[Math.floor(Math.random() * names.length)],
-                address: addresses[Math.floor(Math.random() * addresses.length)],
-                cod: `${Math.floor(Math.random() * 1500) + 500} $`,
-                merchant: merchants[Math.floor(Math.random() * merchants.length)],
-                status: status,
-                badgeClass: badges[status]
-            });
-        }
-
-        // Override the first 4 to match the static design perfectly
-        myOrdersData[0] = { sl: '01', date: 'Apr 21, 2026', time: '30 min ago', code: 'TRK5821A9', name: 'Rahim Uddin', address: 'Dhaka, Bangladesh', cod: '1200 $', merchant: 'ShopEase', status: 'Delivered', badgeClass: 'bg-[#DCFCE7] text-[#16A34A]' };
-        myOrdersData[1] = { sl: '02', date: 'Apr 21, 2026', time: '30 min ago', code: 'TRK5821B1', name: 'Karim Hasan', address: 'Chittagong', cod: '850 $', merchant: 'QuickBuy', status: 'Pending', badgeClass: 'bg-[#FFEDD5] text-[#EA580C]' };
-        myOrdersData[2] = { sl: '03', date: 'Apr 21, 2026', time: '30 min ago', code: 'TRK5821C3', name: 'Nusrat Jahan', address: 'Sylhet, Bangladesh', cod: '1000 $', merchant: 'BD Mart', status: 'Delivered', badgeClass: 'bg-[#DCFCE7] text-[#16A34A]' };
-        myOrdersData[3] = { sl: '04', date: 'Apr 21, 2026', time: '30 min ago', code: 'TRK5821D7', name: 'Tanvir Ahmed', address: 'Khulna, Bangladesh', cod: '1500 $', merchant: 'EasyShop', status: 'Cancelled', badgeClass: 'bg-[#FEE2E2] text-[#EF4444]' };
-
-        let currentOrderPage = 1;
-        const ordersPerPage = 15;
-
-        const renderMyOrdersTable = () => {
-            $myOrderTableBody.empty();
-
-            const start = (currentOrderPage - 1) * ordersPerPage;
-            const end = start + ordersPerPage;
-            const paginatedData = myOrdersData.slice(start, end);
-
-            $.each(paginatedData, function (index, item) {
-                const rowHtml = `
-                    <tr class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.sl}</td>
-                        <td class="px-6 py-5">
-                            <div class="text-[14px] font-medium text-[#64748B]">${item.date}</div>
-                            <div class="text-[13px] text-[#94A3B8] mt-1">${item.time}</div>
-                        </td>
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.code}</td>
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.name}</td>
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.address}</td>
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">${item.cod}</td>
-                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.merchant}</td>
-                        <td class="px-6 py-5 text-center">
-                            <span class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium ${item.badgeClass}">${item.status}</span>
-                        </td>
-                        <td class="px-6 py-5 text-center">
-                            <a href="#" class="track-btn text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
-                        </td>
-                    </tr>
-                `;
-                $myOrderTableBody.append(rowHtml);
-            });
-
-            // Update Info
-            const $info = $('#my-order-pagination-info');
-            if ($info.length) {
-                $info.html(`Showing <span class="font-medium text-[#475569]">${start + 1}</span> to <span class="font-medium text-[#475569]">${Math.min(end, myOrdersData.length)}</span> of <span class="font-medium text-[#475569]">${myOrdersData.length}</span> entries`);
-            }
-
-            renderMyOrdersPagination();
-        };
-
-        const renderMyOrdersPagination = () => {
-            const $container = $('#my-order-pagination-container');
-            if (!$container.length) return;
-            $container.empty();
-
-            const totalPages = Math.ceil(myOrdersData.length / ordersPerPage);
-            if (totalPages <= 1) return;
-
-            // Prev Button
-            const $prevBtn = $('<button></button>');
-            $prevBtn.addClass(`pagination-btn ${currentOrderPage === 1 ? 'disabled' : ''}`);
-            $prevBtn.html('<i class="fas fa-chevron-left"></i>');
-            $prevBtn.on('click', () => { if (currentOrderPage > 1) { currentOrderPage--; renderMyOrdersTable(); } });
-            $container.append($prevBtn);
-
-            const isMobile = $(window).width() < 475;
-            const pages = getPaginationPages(currentOrderPage, totalPages, isMobile);
-
-            pages.forEach(p => {
-                if (p.type === 'page') {
-                    const $btn = $('<button></button>');
-                    $btn.addClass(`pagination-btn ${currentOrderPage === p.value ? 'active' : ''}`);
-                    $btn.text(p.value);
-                    $btn.on('click', () => { currentOrderPage = p.value; renderMyOrdersTable(); });
-                    $container.append($btn);
-                } else if (p.type === 'dots') {
-                    const $dots = $('<span></span>');
-                    $dots.addClass('px-2 self-center text-gray-400');
-                    $dots.text('...');
-                    $container.append($dots);
-                }
-            });
-
-            // Next Button
-            const $nextBtn = $('<button></button>');
-            $nextBtn.addClass(`pagination-btn ${currentOrderPage === totalPages ? 'disabled' : ''}`);
-            $nextBtn.html('<i class="fas fa-chevron-right"></i>');
-            $nextBtn.on('click', () => { if (currentOrderPage < totalPages) { currentOrderPage++; renderMyOrdersTable(); } });
-            $container.append($nextBtn);
-        };
-
-        renderMyOrdersTable();
-
-        // Track View Toggle Logic
-        $myOrderTableBody.on('click', '.track-btn', function (e) {
-            e.preventDefault();
-            $('#my-orders-list-view').hide();
-            $('#my-orders-track-view').show();
-            // Scroll to top of the dashboard
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
-        $('#btn-back-to-orders').on('click', function (e) {
-            e.preventDefault();
-            $('#my-orders-track-view').hide();
-            $('#my-orders-list-view').show();
-        });
-    }
+    // My Orders Page Logic is handled below in the My Orders Page Pagination Logic section.
 
     // ==========================================
     // Login History Page Logic
@@ -2035,7 +1896,7 @@ $(function () {
             $('.create-parcel-tab button')
                 .removeClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100')
                 .addClass('text-[#64748B] hover:bg-slate-50');
-            
+
             $(this)
                 .removeClass('text-[#64748B] hover:bg-slate-50')
                 .addClass('bg-[#003EB7] text-white shadow-lg shadow-blue-100');
@@ -2113,14 +1974,14 @@ $(function () {
     // ==========================================
     if ($('#my-order-table-body').length) {
         const statusList = [
-            { text: 'Delivered',  bg: '#DCFCE7', color: '#16A34A' },
-            { text: 'Pending',    bg: '#FFEDD5', color: '#EA580C' },
-            { text: 'Cancelled',  bg: '#FEE2E2', color: '#EF4444' },
+            { text: 'Delivered', bg: '#DCFCE7', color: '#16A34A' },
+            { text: 'Pending', bg: '#FFEDD5', color: '#EA580C' },
+            { text: 'Cancelled', bg: '#FEE2E2', color: '#EF4444' },
             { text: 'In Transit', bg: '#DBEAFE', color: '#2563EB' }
         ];
-        const merchants  = ['ShopEase', 'QuickBuy', 'BD Mart', 'EasyShop', 'Daraz', 'Aarong'];
-        const customers  = ['Rahim Uddin', 'Karim Hasan', 'Nusrat Jahan', 'Tanvir Ahmed', 'Sadia Islam', 'Rafiqul Islam', 'Mousumi Akter', 'Ariful Haq'];
-        const addresses  = ['Dhaka, Bangladesh', 'Chittagong', 'Sylhet, Bangladesh', 'Khulna, Bangladesh', 'Rajshahi', 'Barisal'];
+        const merchants = ['ShopEase', 'QuickBuy', 'BD Mart', 'EasyShop', 'Daraz', 'Aarong'];
+        const customers = ['Rahim Uddin', 'Karim Hasan', 'Nusrat Jahan', 'Tanvir Ahmed', 'Sadia Islam', 'Rafiqul Islam', 'Mousumi Akter', 'Ariful Haq'];
+        const addresses = ['Dhaka, Bangladesh', 'Chittagong', 'Sylhet, Bangladesh', 'Khulna, Bangladesh', 'Rajshahi', 'Barisal'];
         const trackCodes = ['TRK5821A9', 'TRK5821B1', 'TRK5821C3', 'TRK5821D7', 'TRK5821E2', 'TRK5821F5'];
 
         // Build 45 sample rows
@@ -2128,15 +1989,15 @@ $(function () {
         for (let i = 1; i <= 45; i++) {
             const s = statusList[i % statusList.length];
             myOrderData.push({
-                sl:       i.toString().padStart(2, '0'),
-                date:     'Apr 21, 2026',
-                ago:      `${(i % 60) + 1} min ago`,
+                sl: i.toString().padStart(2, '0'),
+                date: 'Apr 21, 2026',
+                ago: `${(i % 60) + 1} min ago`,
                 tracking: trackCodes[i % trackCodes.length] + i,
                 customer: customers[i % customers.length],
-                address:  addresses[i % addresses.length],
-                cod:      `${(Math.floor(Math.random() * 15) + 5) * 100} $`,
+                address: addresses[i % addresses.length],
+                cod: `${(Math.floor(Math.random() * 15) + 5) * 100} $`,
                 merchant: merchants[i % merchants.length],
-                status:   s
+                status: s
             });
         }
 
@@ -2168,18 +2029,18 @@ $(function () {
                                   style="background:${item.status.bg};color:${item.status.color}">${item.status.text}</span>
                         </td>
                         <td class="px-6 py-5 text-center">
-                            <a href="#" class="track-order-link text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                            <a href="#" class="track-btn text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
                         </td>
                     </tr>
                 `);
             });
 
             $('#my-order-pagination-container').setupPagination({
-                totalItems:   myOrderData.length,
+                totalItems: myOrderData.length,
                 itemsPerPage: myOrderRowsPerPage,
-                currentPage:  myOrderCurrentPage,
+                currentPage: myOrderCurrentPage,
                 infoSelector: '#my-order-pagination-info',
-                isMobile:     $(window).width() < 475,
+                isMobile: $(window).width() < 475,
                 onPageChange: function (newPage) {
                     myOrderCurrentPage = newPage;
                     renderMyOrderTable();
@@ -2189,13 +2050,27 @@ $(function () {
 
         renderMyOrderTable();
 
+        // Track view toggle
+        $('#my-order-table-body').on('click', '.track-btn', function (e) {
+            e.preventDefault();
+            $('#my-orders-list-view').hide();
+            $('#my-orders-track-view').show();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        $('#btn-back-to-orders').on('click', function (e) {
+            e.preventDefault();
+            $('#my-orders-track-view').hide();
+            $('#my-orders-list-view').show();
+        });
+
         $(window).on('resize.myorder', function () {
             $('#my-order-pagination-container').setupPagination({
-                totalItems:   myOrderData.length,
+                totalItems: myOrderData.length,
                 itemsPerPage: myOrderRowsPerPage,
-                currentPage:  myOrderCurrentPage,
+                currentPage: myOrderCurrentPage,
                 infoSelector: '#my-order-pagination-info',
-                isMobile:     $(window).width() < 475,
+                isMobile: $(window).width() < 475,
                 onPageChange: function (newPage) {
                     myOrderCurrentPage = newPage;
                     renderMyOrderTable();

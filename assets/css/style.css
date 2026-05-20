@@ -1831,7 +1831,7 @@ body.no-scroll {
 
     .dashboard-container {
         margin: 16px auto;
-        padding: 20px;
+        padding: 20px 10px;
         width: calc(100% - 32px);
         min-width: 0;
     }
@@ -1867,6 +1867,14 @@ body.no-scroll {
         flex: 1;
         justify-content: center;
     }
+
+    .tracking-style {
+        gap: 50px;
+    }
+
+    .track-border-style {
+        left: 145px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -1886,6 +1894,17 @@ body.no-scroll {
     .stat-value {
         font-size: 24px;
     }
+}
+
+@media (max-width: 440px) {
+    .tracking-style {
+        gap: 0px;
+    }
+
+    .track-border-style {
+        left: 95px;
+    }
+
 }
 
 .sidebar-overlay {
