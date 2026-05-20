@@ -2107,6 +2107,102 @@ $(function () {
             $('.notification-dropdown, .profile-dropdown').removeClass('show-mobile');
         }
     });
+
+    // ==========================================
+    // My Orders Page Pagination Logic
+    // ==========================================
+    if ($('#my-order-table-body').length) {
+        const statusList = [
+            { text: 'Delivered',  bg: '#DCFCE7', color: '#16A34A' },
+            { text: 'Pending',    bg: '#FFEDD5', color: '#EA580C' },
+            { text: 'Cancelled',  bg: '#FEE2E2', color: '#EF4444' },
+            { text: 'In Transit', bg: '#DBEAFE', color: '#2563EB' }
+        ];
+        const merchants  = ['ShopEase', 'QuickBuy', 'BD Mart', 'EasyShop', 'Daraz', 'Aarong'];
+        const customers  = ['Rahim Uddin', 'Karim Hasan', 'Nusrat Jahan', 'Tanvir Ahmed', 'Sadia Islam', 'Rafiqul Islam', 'Mousumi Akter', 'Ariful Haq'];
+        const addresses  = ['Dhaka, Bangladesh', 'Chittagong', 'Sylhet, Bangladesh', 'Khulna, Bangladesh', 'Rajshahi', 'Barisal'];
+        const trackCodes = ['TRK5821A9', 'TRK5821B1', 'TRK5821C3', 'TRK5821D7', 'TRK5821E2', 'TRK5821F5'];
+
+        // Build 45 sample rows
+        const myOrderData = [];
+        for (let i = 1; i <= 45; i++) {
+            const s = statusList[i % statusList.length];
+            myOrderData.push({
+                sl:       i.toString().padStart(2, '0'),
+                date:     'Apr 21, 2026',
+                ago:      `${(i % 60) + 1} min ago`,
+                tracking: trackCodes[i % trackCodes.length] + i,
+                customer: customers[i % customers.length],
+                address:  addresses[i % addresses.length],
+                cod:      `${(Math.floor(Math.random() * 15) + 5) * 100} $`,
+                merchant: merchants[i % merchants.length],
+                status:   s
+            });
+        }
+
+        let myOrderCurrentPage = 1;
+        const myOrderRowsPerPage = 15;
+
+        const renderMyOrderTable = () => {
+            const $tbody = $('#my-order-table-body');
+            $tbody.empty();
+
+            const start = (myOrderCurrentPage - 1) * myOrderRowsPerPage;
+            const pageItems = myOrderData.slice(start, start + myOrderRowsPerPage);
+
+            $.each(pageItems, function (_, item) {
+                $tbody.append(`
+                    <tr class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.sl}</td>
+                        <td class="px-6 py-5">
+                            <div class="text-[14px] font-medium text-[#64748B]">${item.date}</div>
+                            <div class="text-[13px] text-[#94A3B8] mt-1">${item.ago}</div>
+                        </td>
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.tracking}</td>
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.customer}</td>
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.address}</td>
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#475569]">${item.cod}</td>
+                        <td class="px-6 py-5 text-[14px] font-medium text-[#64748B]">${item.merchant}</td>
+                        <td class="px-6 py-5 text-center">
+                            <span class="inline-flex items-center justify-center px-4 py-1.5 rounded-full text-[13px] font-medium"
+                                  style="background:${item.status.bg};color:${item.status.color}">${item.status.text}</span>
+                        </td>
+                        <td class="px-6 py-5 text-center">
+                            <a href="#" class="track-order-link text-[14px] font-medium text-[#2563EB] hover:text-[#1D4ED8] underline decoration-1 underline-offset-2">Track</a>
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#my-order-pagination-container').setupPagination({
+                totalItems:   myOrderData.length,
+                itemsPerPage: myOrderRowsPerPage,
+                currentPage:  myOrderCurrentPage,
+                infoSelector: '#my-order-pagination-info',
+                isMobile:     $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    myOrderCurrentPage = newPage;
+                    renderMyOrderTable();
+                }
+            });
+        };
+
+        renderMyOrderTable();
+
+        $(window).on('resize.myorder', function () {
+            $('#my-order-pagination-container').setupPagination({
+                totalItems:   myOrderData.length,
+                itemsPerPage: myOrderRowsPerPage,
+                currentPage:  myOrderCurrentPage,
+                infoSelector: '#my-order-pagination-info',
+                isMobile:     $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    myOrderCurrentPage = newPage;
+                    renderMyOrderTable();
+                }
+            });
+        });
+    }
 });
 
 
