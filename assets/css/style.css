@@ -1519,7 +1519,8 @@ table td a:not(.btn):hover,
 }
 
 /* Base Badge Style */
-.badge-status, .badge {
+.badge-status,
+.badge {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1531,21 +1532,84 @@ table td a:not(.btn):hover,
 }
 
 /* Status Colors — all badge-xxx and status-xxx variants */
-.badge-pending,    .status-pending    { background-color: #FEF3C7 !important; color: #D97706 !important; }
-.badge-delivered,  .status-delivered  { background-color: #DCFCE7 !important; color: #16A34A !important; }
-.badge-cancelled,  .status-cancelled  { background-color: #FEE2E2 !important; color: #DC2626 !important; }
-.badge-exceptional,.status-exceptional{ background-color: #FCE7F3 !important; color: #DB2777 !important; }
-.badge-transit,    .status-transit    { background-color: #E0E7FF !important; color: #4F46E5 !important; }
-.badge-out-delivery,.status-out-delivery { background-color: #DBEAFE !important; color: #2563EB !important; }
-.badge-returned,   .status-returned   { background-color: #FEE2E2 !important; color: #EF4444 !important; }
-.badge-in-review,  .status-in-review  { background-color: #FEF9C3 !important; color: #CA8A04 !important; }
-.badge-approval-pending,  .status-approval-pending  { background-color: #FEF3C7 !important; color: #D97706 !important; }
-.badge-partly-delivered,  .status-partly-delivered  { background-color: #F3E8FF !important; color: #9333EA !important; }
+.badge-pending,
+.status-pending {
+    background-color: #FEF3C7 !important;
+    color: #D97706 !important;
+}
+
+.badge-delivered,
+.status-delivered {
+    background-color: #DCFCE7 !important;
+    color: #16A34A !important;
+}
+
+.badge-cancelled,
+.status-cancelled {
+    background-color: #FEE2E2 !important;
+    color: #DC2626 !important;
+}
+
+.badge-exceptional,
+.status-exceptional {
+    background-color: #FCE7F3 !important;
+    color: #DB2777 !important;
+}
+
+.badge-transit,
+.status-transit {
+    background-color: #E0E7FF !important;
+    color: #4F46E5 !important;
+}
+
+.badge-out-delivery,
+.status-out-delivery {
+    background-color: #DBEAFE !important;
+    color: #2563EB !important;
+}
+
+.badge-returned,
+.status-returned {
+    background-color: #FEE2E2 !important;
+    color: #EF4444 !important;
+}
+
+.badge-in-review,
+.status-in-review {
+    background-color: #FEF9C3 !important;
+    color: #CA8A04 !important;
+}
+
+.badge-approval-pending,
+.status-approval-pending {
+    background-color: #FEF3C7 !important;
+    color: #D97706 !important;
+}
+
+.badge-partly-delivered,
+.status-partly-delivered {
+    background-color: #F3E8FF !important;
+    color: #9333EA !important;
+}
 
 /* Active / Inactive / Assigned badges (moderator + pickup request pages) */
-.badge-active,   .status-active   { background-color: #DCFCE7 !important; color: #16A34A !important; }
-.badge-inactive, .status-inactive { background-color: #FEE2E2 !important; color: #DC2626 !important; }
-.badge-assigned, .status-assigned { background-color: #DBEAFE !important; color: #2563EB !important; }
+.badge-active,
+.status-active {
+    background-color: #DCFCE7 !important;
+    color: #16A34A !important;
+}
+
+.badge-inactive,
+.status-inactive {
+    background-color: #FEE2E2 !important;
+    color: #DC2626 !important;
+}
+
+.badge-assigned,
+.status-assigned {
+    background-color: #DBEAFE !important;
+    color: #2563EB !important;
+}
 
 
 .rider-name {
@@ -2412,7 +2476,7 @@ button {
     }
 
     .notification-dropdown {
-        width: 300px !important;
+        width: 270px !important;
         right: -44px !important;
     }
 
@@ -2422,7 +2486,7 @@ button {
     }
 
     .profile-dropdown {
-        width: 260px !important;
+        width: 243px !important;
         right: 0px !important;
     }
 

@@ -3211,7 +3211,7 @@ table td a:not(.btn):hover, .details-link:hover, .view-link:hover, .action-link:
   background-color: #FEE2E2 !important;
   color: #DC2626 !important;
 }
-.badge-exceptional,.status-exceptional {
+.badge-exceptional, .status-exceptional {
   background-color: #FCE7F3 !important;
   color: #DB2777 !important;
 }
@@ -3219,7 +3219,7 @@ table td a:not(.btn):hover, .details-link:hover, .view-link:hover, .action-link:
   background-color: #E0E7FF !important;
   color: #4F46E5 !important;
 }
-.badge-out-delivery,.status-out-delivery {
+.badge-out-delivery, .status-out-delivery {
   background-color: #DBEAFE !important;
   color: #2563EB !important;
 }
@@ -3951,14 +3951,14 @@ button {
     width: 140px !important;
   }
   .notification-dropdown {
-    width: 300px !important;
+    width: 270px !important;
     right: -44px !important;
   }
   .notification-dropdown::before {
     right: 57px !important;
   }
   .profile-dropdown {
-    width: 260px !important;
+    width: 243px !important;
     right: 0px !important;
   }
   .profile-dropdown::before {
