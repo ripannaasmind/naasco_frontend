@@ -2304,7 +2304,6 @@ html.no-scroll, body.no-scroll {
   border: 1px solid var(--border-color);
   animation: slideDownFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   transition: var(--transition);
-  overflow: hidden;
 }
 .search-box {
   background-color: #FFFFFF;
@@ -2859,6 +2858,12 @@ html.no-scroll, body.no-scroll {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
   background-color: #FFFFFF;
 }
+@media (max-width: 768px) {
+  .search-style {
+    flex-wrap: wrap !important;
+    gap: 30px;
+  }
+}
 .badge {
   padding: 6px 16px;
   border-radius: 9999px;
@@ -3059,6 +3064,18 @@ html.no-scroll, body.no-scroll {
   visibility: visible;
   opacity: 1;
   transform: translateY(0);
+}
+.profile-dropdown::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  width: 12px;
+  height: 12px;
+  background: white;
+  transform: rotate(45deg);
+  border-left: 1px solid #F1F5F9;
+  border-top: 1px solid #F1F5F9;
 }
 .profile-item {
   display: flex;
@@ -3873,14 +3890,17 @@ button {
   }
   .notification-dropdown {
     width: 300px !important;
-    right: -80px !important;
+    right: -44px !important;
   }
   .notification-dropdown::before {
-    right: 93px !important;
+    right: 57px !important;
   }
   .profile-dropdown {
     width: 260px !important;
-    right: -10px !important;
+    right: 0px !important;
+  }
+  .profile-dropdown::before {
+    right: 13px !important;
   }
 }
 @media (max-width: 480px) {

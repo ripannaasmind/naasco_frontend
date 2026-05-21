@@ -518,7 +518,12 @@ $(function () {
         };
 
         // Filter & Sort Events
-        const renderSummaryView = () => {
+        let summaryCurrentPage = 1;
+        const summaryRowsPerPage = 10;
+
+        const renderSummaryView = (page) => {
+            if (page) summaryCurrentPage = page;
+
             const $dashboardBody = $('.dashboard-container');
             if (!$dashboardBody.length) return;
 
@@ -540,25 +545,33 @@ $(function () {
                 return new Date(y2, m2 - 1, d2) - new Date(y1, m1 - 1, d1);
             });
 
+            // Paginate
+            const startIndex = (summaryCurrentPage - 1) * summaryRowsPerPage;
+            const paginatedDates = sortedDates.slice(startIndex, startIndex + summaryRowsPerPage);
+
             let tableRows = '';
-            $.each(sortedDates, function (index, date) {
+            $.each(paginatedDates, function (index, date) {
                 tableRows += `
                         <tr>
-                            <td>${date}</td>
-                            <td>${grouped[date]}</td>
-                            <td><a href="#" class="view-link" onclick="event.preventDefault(); window.restoreDashboard();">View</a></td>
+                            <td class="text-gray-medium">${date}</td>
+                            <td class="text-gray-medium">${grouped[date]}</td>
+                            <td><a href="#" class="details-link" onclick="event.preventDefault(); window.restoreDashboard();">View</a></td>
                         </tr>
                     `;
             });
 
             $dashboardBody.html(`
-                    <div class="summary-view-header">
-                        <h2>List By Date</h2>
-                        <button class="btn-all-consignments" onclick="window.restoreDashboard()">All Consignments</button>
+                    <div class="dashboard-header mb-4">
+                        <div class="header-left-content">
+                            <h1 class="text-[28px] font-bold text-[#111827] tracking-tight">List By Date</h1>
+                        </div>
+                        <div class="header-actions">
+                            <button class="bg-[#003EB7] text-white rounded-full px-6 py-2.5 text-sm font-semibold hover:bg-[#002D87] transition-all shadow-sm cursor-pointer" onclick="window.restoreDashboard()">All Consignments</button>
+                        </div>
                     </div>
                     <div class="summary-table-container">
-                        <div class="summary-table-inner">
-                            <table class="summary-table">
+                        <div class="summary-table-inner overflow-x-auto">
+                            <table class="consignments-table">
                                 <thead>
                                     <tr>
                                         <th>Date</th>
@@ -571,8 +584,29 @@ $(function () {
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination -->
+                        <div class="px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-[#F1F5F9] bg-white">
+                            <div id="summary-pagination-info" class="text-sm text-[#64748B] text-center md:text-left">
+                            </div>
+                            <div id="summary-pagination-container" class="flex flex-wrap justify-center gap-2">
+                            </div>
+                        </div>
                     </div>
                 `);
+
+            // Setup pagination controls
+            $('#summary-pagination-container').setupPagination({
+                totalItems: sortedDates.length,
+                itemsPerPage: summaryRowsPerPage,
+                currentPage: summaryCurrentPage,
+                infoSelector: '#summary-pagination-info',
+                isMobile: $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    summaryCurrentPage = newPage;
+                    renderSummaryView();
+                }
+            });
         };
 
         window.restoreDashboard = () => {
@@ -2078,6 +2112,301 @@ $(function () {
             });
         });
     }
+
+    // ==========================================
+    // Pickup Request 2 Page Table Logic
+    // ==========================================
+    if ($('#pickup-table-body').length) {
+        const pickupRequests = [
+            {
+                date: 'May 7, 2024',
+                time: '01:38 PM',
+                id: '#1784873',
+                address: 'House no 6#, KADdinabag, Rayerbag, kadam toli, DSCC,\nWord no-59, Dhaka Hub: Kadamtoli Hub',
+                phone: '',
+                status: 'Completed',
+                riderName: '',
+                riderArea: '',
+                riderPhone: ''
+            },
+            {
+                date: 'May 7, 2024',
+                time: '01:38 PM',
+                id: '#1784873',
+                address: 'House no 6#, Modinabag, Rayerbag, kodamtoli, DSCC,\nWord no-59, Dhaka Hub: Kadamtoli Hub',
+                phone: 'Phone: +008 58362868548',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+            {
+                date: 'May 7, 2024',
+                time: '01:38 PM',
+                id: '#1784873',
+                address: 'House no 6#, Modinabag, Rayerbag, kodamtoli, DSCC,\nWord no-59, Dhaka Hub: Kadamtoli Hub',
+                phone: 'Phone: +008 58362868548',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+            {
+                date: 'May 7, 2024',
+                time: '01:38 PM',
+                id: '#1784873',
+                address: 'House no 6#, Modinabag, Rayerbag, kodamtoli, DSCC,\nWord no-59, Dhaka Hub: Kadamtoli Hub',
+                phone: 'Phone: +008 58362868548',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+            {
+                date: 'May 7, 2024',
+                time: '01:38 PM',
+                id: '#1784873',
+                address: 'House no 6#, Modinabag, Rayerbag, kodamtoli, DSCC,\nWord no-59, Dhaka Hub: Kadamtoli Hub',
+                phone: 'Phone: +008 58362868548',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+            {
+                date: 'March 1, 2024',
+                time: '10:31 AM',
+                id: '#1054478',
+                address: 'DHUPKHOLA MAm\nGENDARIA S/J\nSASHIBUSHO CHATERGY\nLANE Hub: Sutrapur Hub',
+                phone: '',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+            {
+                date: 'Feb 18, 2024',
+                time: '03:15 PM',
+                id: '#1785200',
+                address: 'Flat 4B, Block C, Mirpur-10,\nDhaka Hub: Mirpur Hub',
+                phone: 'Phone: +008 58362123456',
+                status: 'Assigned',
+                riderName: 'Rahul Mia',
+                riderArea: 'Mirpur',
+                riderPhone: '01712345678'
+            },
+            {
+                date: 'Feb 15, 2024',
+                time: '11:00 AM',
+                id: '#1785099',
+                address: 'House 12, Road 5, Banani,\nDhaka Hub: Banani Hub',
+                phone: 'Phone: +008 58367654321',
+                status: 'Completed',
+                riderName: '',
+                riderArea: '',
+                riderPhone: ''
+            },
+            {
+                date: 'Feb 10, 2024',
+                time: '09:45 AM',
+                id: '#1784950',
+                address: 'Shop 3, Nawabpur Road,\nDhaka Hub: Gulistan Hub',
+                phone: 'Phone: +008 58369988776',
+                status: 'Assigned',
+                riderName: 'Karim Hossain',
+                riderArea: 'Gulistan',
+                riderPhone: '01811223344'
+            },
+            {
+                date: 'Jan 28, 2024',
+                time: '02:20 PM',
+                id: '#1784801',
+                address: 'Plot 8, Sector 7, Uttara,\nDhaka Hub: Uttara Hub',
+                phone: '',
+                status: 'Completed',
+                riderName: '',
+                riderArea: '',
+                riderPhone: ''
+            },
+            {
+                date: 'Jan 20, 2024',
+                time: '04:10 PM',
+                id: '#1784710',
+                address: 'House 25, Dhanmondi 27,\nDhaka Hub: Dhanmondi Hub',
+                phone: 'Phone: +008 58361122334',
+                status: 'Assigned',
+                riderName: 'Nasim Uddin',
+                riderArea: 'Dhanmondi',
+                riderPhone: '01955667788'
+            },
+            {
+                date: 'Jan 14, 2024',
+                time: '12:30 PM',
+                id: '#1784622',
+                address: 'Flat 2A, Eskaton Garden,\nDhaka Hub: Moghbazar Hub',
+                phone: 'Phone: +008 58365544332',
+                status: 'Assigned',
+                riderName: 'Shoriful Islam',
+                riderArea: 'Kodamtoli',
+                riderPhone: '01941622785'
+            },
+        ];
+
+        let pickupCurrentPage = 1;
+        const pickupRowsPerPage = 10;
+
+        const getStatusBadge = (status) => {
+            if (status === 'Completed') {
+                return `<span style="display:inline-flex;align-items:center;justify-content:center;padding:5px 16px;border-radius:999px;background:#D1FAE5;color:#059669;font-size:13px;font-weight:500;white-space:nowrap;">${status}</span>`;
+            } else if (status === 'Assigned') {
+                return `<span style="display:inline-flex;align-items:center;justify-content:center;padding:5px 16px;border-radius:999px;background:#DBEAFE;color:#2563EB;font-size:13px;font-weight:500;white-space:nowrap;">${status}</span>`;
+            }
+            return `<span style="display:inline-flex;align-items:center;justify-content:center;padding:5px 16px;border-radius:999px;background:#F1F5F9;color:#64748B;font-size:13px;font-weight:500;white-space:nowrap;">${status}</span>`;
+        };
+
+        const getRiderCell = (item) => {
+            if (!item.riderName) {
+                return `<span style="font-size:14px;color:#94A3B8;">Unassigned</span>`;
+            }
+            return `
+                <div style="font-size:14px;font-weight:500;color:#1E293B;">${item.riderName}</div>
+                <div style="font-size:13px;color:#64748B;margin-top:2px;">${item.riderArea}</div>
+                <div style="font-size:13px;color:#64748B;">${item.riderPhone}</div>
+            `;
+        };
+
+        const renderPickupTable = () => {
+            const $tbody = $('#pickup-table-body');
+            $tbody.empty();
+
+            const start = (pickupCurrentPage - 1) * pickupRowsPerPage;
+            const pageItems = pickupRequests.slice(start, start + pickupRowsPerPage);
+
+            $.each(pageItems, function (_, item) {
+                const addressLines = item.address.split('\n').join('<br>');
+                const phoneHtml = item.phone ? `<div style="font-size:13px;color:#64748B;margin-top:3px;">${item.phone}</div>` : '';
+
+                $tbody.append(`
+                    <tr class="border-b border-[#F1F5F9] last:border-none hover:bg-slate-50/50 transition-colors">
+                        <td class="px-6 py-5">
+                            <div style="font-size:14px;font-weight:500;color:#1E293B;">${item.date}</div>
+                            <div style="font-size:13px;color:#64748B;margin-top:2px;">${item.time}</div>
+                            <div style="font-size:13px;color:#94A3B8;margin-top:1px;">${item.id}</div>
+                        </td>
+                        <td class="px-6 py-5" style="max-width:280px;">
+                            <div style="font-size:14px;color:#374151;line-height:1.5;">${addressLines}</div>
+                            ${phoneHtml}
+                        </td>
+                        <td class="px-6 py-5">
+                            ${getStatusBadge(item.status)}
+                        </td>
+                        <td class="px-6 py-5">
+                            ${getRiderCell(item)}
+                        </td>
+                    </tr>
+                `);
+            });
+
+            $('#pickup-pagination-container').setupPagination({
+                totalItems: pickupRequests.length,
+                itemsPerPage: pickupRowsPerPage,
+                currentPage: pickupCurrentPage,
+                infoSelector: '#pickup-pagination-info',
+                isMobile: $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    pickupCurrentPage = newPage;
+                    renderPickupTable();
+                }
+            });
+        };
+
+        renderPickupTable();
+
+        $(window).on('resize.pickup', function () {
+            $('#pickup-pagination-container').setupPagination({
+                totalItems: pickupRequests.length,
+                itemsPerPage: pickupRowsPerPage,
+                currentPage: pickupCurrentPage,
+                infoSelector: '#pickup-pagination-info',
+                isMobile: $(window).width() < 475,
+                onPageChange: function (newPage) {
+                    pickupCurrentPage = newPage;
+                    renderPickupTable();
+                }
+            });
+        });
+    }
+
+    // ==========================================
+    // Pickup Type Card Click Navigation
+    // ==========================================
+    // If we are on pickup-request.html (no table body), clicking a card
+    // navigates to pickup-request2.html with the type as a query param.
+    // If we are on pickup-request2.html (table body present), clicking
+    // a card highlights it as the active selection.
+    if ($('.pickup-type-card').length) {
+        if (!$('#pickup-table-body').length) {
+            // pickup-request.html — navigate on click
+            $(document).on('click', '.pickup-type-card', function () {
+                const type = encodeURIComponent($(this).data('pickup-type') || 'Regular');
+                window.location.href = 'pickup-request2.html?type=' + type;
+            });
+        } else {
+            // pickup-request2.html — highlight active card on click
+            $(document).on('click', '.pickup-type-card', function () {
+                $('.pickup-type-card').css({
+                    'border-color': '#F1F5F9',
+                    'box-shadow': '0 2px 10px -4px rgba(0,0,0,0.05)'
+                });
+                $(this).css({
+                    'border-color': '#003EB7',
+                    'box-shadow': '0 4px 16px -4px rgba(0,62,183,0.18)'
+                });
+            });
+
+            // Highlight the card matching the URL query param on load
+            const urlParams = new URLSearchParams(window.location.search);
+            const activeType = urlParams.get('type');
+            if (activeType) {
+                const $activeCard = $(`.pickup-type-card[data-pickup-type="${activeType}"]`);
+                if ($activeCard.length) {
+                    $activeCard.css({
+                        'border-color': '#003EB7',
+                        'box-shadow': '0 4px 16px -4px rgba(0,62,183,0.18)'
+                    });
+                }
+            } else {
+                // Default: highlight Regular card
+                $('.pickup-type-card[data-pickup-type="Regular"]').css({
+                    'border-color': '#003EB7',
+                    'box-shadow': '0 4px 16px -4px rgba(0,62,183,0.18)'
+                });
+            }
+        }
+    }
+
+    // Mobile Dropdown Toggle Logic
+    $('.notification-bell, .user-profile').on('click', function(e) {
+        if ($(window).width() <= 992) {
+            e.stopPropagation();
+            const $dropdown = $(this).find('.notification-dropdown, .profile-dropdown');
+            
+            // Close other dropdowns
+            $('.notification-dropdown, .profile-dropdown').not($dropdown).removeClass('show-mobile');
+            
+            // Toggle current
+            $dropdown.toggleClass('show-mobile');
+        }
+    });
+
+    // Close dropdowns when clicking outside
+    $(document).on('click', function(e) {
+        if ($(window).width() <= 992) {
+            if (!$(e.target).closest('.notification-bell, .user-profile').length) {
+                $('.notification-dropdown, .profile-dropdown').removeClass('show-mobile');
+            }
+        }
+    });
 });
 
 
